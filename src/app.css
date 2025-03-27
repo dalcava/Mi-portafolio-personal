@@ -1,0 +1,73 @@
+@import 'tailwindcss';
+@plugin '@tailwindcss/forms';
+@plugin '@tailwindcss/typography';
+
+@font-face {
+    font-family: 'Thunder';
+    src: url('/fonts/Thunder/Thunder-LC.ttf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Thunder Extra';
+    src: url('/fonts/Thunder/Thunder-ExtraBoldLC.ttf') format('opentype');
+    font-weight: 800;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Funnel Display';
+    src: url('/fonts/Funnel_Display/FunnelDisplay-VariableFont_wght.ttf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Publica Sans Bold';
+    src: url('/fonts/Publica/PublicaSans-Medium.otf') format('opentype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Publica Sans';
+    src: url('/fonts/Publica/PublicaSans-Light.otf') format('opentype');
+    font-weight: 100;
+}
+
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Publica Sans', sans-serif;
+}
+
+:root {
+    --Azul-claro: #95DEFF;
+    --Azul-oscuro: #004B6B;
+    --Azul-muy-oscuro: #052240;
+    --blanco: #F6F6F6;
+    --Verde-claro: #09A186;
+    --Verde: #077E69;
+    --Verde-oscuro: #044338;
+    --Gris-claro: #D1D1D6;
+    --Gris: #8E8E93;
+    --Gris-oscuro: #6D6D6D;
+    --Transparente: #00000000;
+
+    --font-size-XS: 14px;
+    --font-size-S: 16px;
+    --font-size-M: 20px;
+    --font-size-L: 28px;
+    --font-size-XL: 40px;
+    --font-size-XXL: 64px;
+    --font-size-XXXL: 96px;
+
+    --mobile: 768px;
+    --tablet: 1024px;
+    --desktop: 1440px;
+    --desktopXL: 1920px;
+}
