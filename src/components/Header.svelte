@@ -1,10 +1,54 @@
 <script>
-  // Aquí podrías manejar navegación o eventos más adelante
+  import { onMount } from 'svelte';
+  import gsap from 'gsap';
+
+  let palabraFrente;
+
+  const palabras = [
+    "a UI/UX Designer", "an Experience Architect", "a 3D Artist", "an Animator", 
+    "a Motion Designer", "a Digital Illustrator", "a 3D Modeler", "an Impostor", 
+    "an Interaction Designer", "a Prototyper", "an Interface Creator", "a Visual Storyteller", 
+    "a Graphic Designer", "a Product Designer", "Obsessive Compulsive", "a VFX Artist", 
+    "a User", "a Digital Experience Manager", "an Illustrator", 
+    "Motion Graphics", "a Concept Developer", "Parametric", 
+    "a Responsive Design", "a Cat"
+
+  ];
+
+  function aleatorio(min, max) {
+    return Math.floor(Math.random() * (max - min + 1) + min);
+  }
+
+  function crearPalabra() {
+    const index = aleatorio(0, palabras.length - 1);
+    gsap.to(palabraFrente, {
+      opacity: 0,
+      y: -50,
+      duration: 0.2,
+      onComplete: () => {
+        palabraFrente.innerHTML = palabras[index];
+        gsap.to(palabraFrente, {
+          opacity: 1,
+          y: 0,
+          duration: 0.3
+        });
+      }
+    });
+  }
+
+  onMount(() => {
+    crearPalabra();
+    const interval = setInterval(crearPalabra, 2400);
+    return () => clearInterval(interval);
+  });
 </script>
 
 <header id="header" class="header-section start">
-  <div class="personal-photo">
-    <img src="/Recursos/header/personal-photo.svg" alt="Personal photo" />
+  <div class="profile-info">
+    <div class="personal-photo">
+      <img src="/Recursos/header/personal-photo.svg" alt="Personal photo" />
+    </div>
+    <h2 class="main-subtitle">I'm <sp><span bind:this={palabraFrente}></span></h2>
   </div>
 
   <div class="header-content">
@@ -22,19 +66,20 @@
     </div>
   </div>
 
-  <div class="icon-button Lightbulb">
+  <div class="Lightbulb">
     <img src="/Recursos/header/Scroll.gif" alt="Lightbulb" />
   </div>
 </header>
 
 
+<!-- Estilos -->
 <style>
   .header-section {
     display: flex;
     justify-content: flex-start;
     align-items: center;
     width: 100%;
-    height: 128px;
+    height: 100px;
     position: fixed;
     z-index: 3;
     gap: 25%;
@@ -43,10 +88,16 @@
   }
 
   .personal-photo {
-    width: 64px;
+    min-width: 64px;
     height: 64px;
-    object-fit: cover;
     cursor: pointer;
+  }
+
+  .personal-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
   }
 
   .personal-photo:hover img {
@@ -54,21 +105,52 @@
     transition: all 0.2s ease-out;
   }
 
+  .profile-info {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 600px;
+  }
+
+  .main-subtitle {
+    font-family: "Publica Sans", sans-serif;
+    font-size: var(--font-size-XS);
+    font-weight: 300;
+    color: var(--Gris-oscuro);
+  }
+  .main-subtitle span{
+    font-family: "Publica Sans", sans-serif;
+    font-size: var(--font-size-XS);
+    font-weight: 300;
+    color: var(--Verde-claro);
+  }
+
   .header-content {
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
     width: 100%;
+    height: 100%;
+    padding-right: 56px;
   }
 
   .icon-buttons {
     display: flex;
-    justify-content: center;
+    flex-direction: row-reverse;
     align-items: center;
-    width: 100%;
+    justify-content: center;
+    height: 64px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: 0.2s ease-out;
+    position: relative;
   }
-
+  .icon-button span {
+    font-family: "Publica Sans", sans-serif;
+    font-size: var(--font-size-XS) !important;
+    font-weight: 300 !important;
+  }
   .icon-button {
     display: flex;
     flex-direction: column;
@@ -79,6 +161,10 @@
     cursor: pointer;
     transition: 0.2s ease-out;
     position: relative;
+    top: 16px;
+  }
+  .icon-button:hover {
+    top: 0px;
   }
 
   .icon-button img {
@@ -115,12 +201,19 @@
     width: 100%;
   }
 
-  .Lightbulb img {
-    width: 64px;
+  .Lightbulb {
+    min-width: 64px;
     height: 64px;
     cursor: pointer;
-    transition: transform 0.2s ease-out;
   }
+
+  .Lightbulb img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* o 'cover' si quieres llenado completo */
+    display: block;
+  }
+
 
   .Lightbulb:hover img {
     transform: scale(1.1);
@@ -133,4 +226,5 @@
   .contact {
     color: var(--Gris);
   }
+
 </style>
