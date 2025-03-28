@@ -123,7 +123,8 @@
     border-radius: 4px 32px 4px 32px; /* Add rounded corners */
     overflow: hidden; /* Ensures child elements respect the clip-path */
     clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); /* Custom shape */
-    z-index: 1;
+    z-index: 1;    
+    padding-bottom: 240px;
 }
 .white-overlay {
     position: fixed;

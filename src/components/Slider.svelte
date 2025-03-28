@@ -81,7 +81,7 @@
         gsap.fromTo(
           '.swiper-pagination-bullet-active',
           { scale: 0.8, opacity: 0.5 },
-          { scale: 1.2, opacity: 1, duration: 0.3, ease: 'power2.out' }
+          { scale: 1, opacity: 1, duration: 0.3, ease: 'power2.out' }
         );
   
         // Bullet shape
@@ -119,14 +119,14 @@
   
     <!-- Controles -->
     <div class="control-container">
-      <div class="swiper-button-container">
+<!--       <div class="swiper-button-container">
         <div class="swiper-button-prev">
           <img src="/Recursos/slider/arrow-left.svg" alt="Previous" class="new-icon" />
         </div>
         <div class="swiper-button-next">
           <img src="/Recursos/slider/arrow-right.svg" alt="Next" class="new-icon" />
         </div>
-      </div>
+      </div> -->
       <div class="pagination-container">
         <div class="swiper-pagination"></div>
       </div>
@@ -158,7 +158,9 @@
                         <span>Subtítulo del proyecto</span>
                     </div>
                 </div>
-                <div class="blur"></div>
+                <div class="blur-container">
+                    <div class="blur"></div>
+                </div>
             </div>
             <div class="swiper-slide" data-url="./Control.html">
                 <div class="image-container static-img">
@@ -182,7 +184,9 @@
                         <span>Subtítulo del proyecto</span>
                     </div>
                 </div>
-                <div class="blur"></div>
+                <div class="blur-container">
+                    <div class="blur"></div>
+                </div>
             </div>
             <div class="swiper-slide" data-url="./Aval_pay_center.html">
                 <div class="image-container static-img">
@@ -206,7 +210,9 @@
                         <span>Subtítulo del proyecto</span>
                     </div>
                 </div>
-                <div class="blur"></div>
+                <div class="blur-container">
+                    <div class="blur"></div>
+                </div>
             </div>
             <div class="swiper-slide">
                 <div class="image-container static-img">
@@ -230,7 +236,9 @@
                         <span>Subtítulo del proyecto</span>
                     </div>
                 </div>
-                <div class="blur"></div>
+                <div class="blur-container">
+                    <div class="blur"></div>
+                </div>
             </div>
             <div class="swiper-slide">
                 <div class="image-container static-img">
@@ -254,7 +262,9 @@
                         <span>Subtítulo del proyecto</span>
                     </div>
                 </div>
-                <div class="blur"></div>
+                <div class="blur-container">
+                    <div class="blur"></div>
+                </div>
             </div>
         </div>
     </div>
@@ -483,17 +493,6 @@ transition: all 0.1s ease-out;
     justify-content: space-between;
     flex-direction: column;
 }
-.control-container1 {
-    display: flex;
-    width: 100%;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    z-index: 10;
-    justify-content: space-between;
-    flex-direction: column;
-    margin-top: 48px;
-}
 
 .pagination-container {
     display: flex;
@@ -507,30 +506,12 @@ transition: all 0.1s ease-out;
     flex-wrap: nowrap;
     flex-direction: row;
 }
-.pagination-container1 {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    position: relative;
-    gap: 20px;
-    z-index: 10;
-    width: 75%;
-    height: 100%;
-    flex-wrap: nowrap;
-    flex-direction: row;
-}
 
-.swiper-pagination {
+:global(.swiper-pagination) {
     display: flex;
     justify-content: center;
 }
-.swiper-pagination1 {
-    bottom: 30px; /* Adjust position */
-    display: flex;
-    justify-content: center;
-}
-
-.swiper-horizontal>.swiper-pagination-bullets, .swiper-pagination-bullets.swiper-pagination-horizontal, .swiper-pagination-custom, .swiper-pagination-fraction {
+:global(.swiper-horizontal>.swiper-pagination-bullets, .swiper-pagination-bullets.swiper-pagination-horizontal, .swiper-pagination-custom, .swiper-pagination-fraction) {
     bottom: var(--swiper-pagination-bottom, 8px);
     top: var(--swiper-pagination-top, auto);
     left: 0;
@@ -540,11 +521,11 @@ transition: all 0.1s ease-out;
     gap: 8px;
 }
 
-.swiper-pagination-bullet {
-  width: 24px;
-  height: 24px;
-  border: 2px solid var(--Verde); /* Borde visible */
-  background-color: transparent;
+:global(.swiper-pagination-bullet) {
+  width: 12px;
+  height: 12px;
+  border: 1px solid var(--Verde); /* Borde visible */
+  background-color: var(--Transparente);
   border-radius: 50%;
   opacity: 1;
   position: relative;
@@ -553,8 +534,8 @@ transition: all 0.1s ease-out;
 }
 
 /* Bullet activo */
-.swiper-pagination-bullet-active {
-    background-color: var(--Gris);
+:global(.swiper-pagination-bullet-active) {
+    background-color: var(--Transparente);
     transform: scale(1); /* Aumenta ligeramente el tamaño */
     opacity: 1;
     border-radius: 8px;
@@ -562,7 +543,7 @@ transition: all 0.1s ease-out;
     width: 64px;
 }
 
-.pagination-shape {
+:global(.pagination-shape) {
     position: absolute;
     left: -18px; /* Moves shape in front of bullet */
     top: 50%;
@@ -572,7 +553,7 @@ transition: all 0.1s ease-out;
     border-radius: 8px; /* Change to square for different shapes */
     transition: all 0.3s ease-in-out;
 }
-.swiper-button-container {
+:global(.swiper-button-container) {
     display: flex;
     align-items: center;
     justify-content: start;
@@ -647,16 +628,23 @@ transition: all 0.1s ease-out;
     border-radius: 8px; /* Rounded corners */
 }
 
-.blur {
+.blur-container {
     width: 200.5%;
-    height: 114px;
-    border-top: 1px solid rgba(246, 246, 246, 0.5);
+    height: 120px;
+    border-top: 1px solid var(--blanco);
     background: linear-gradient(180deg, rgba(144, 144, 144, 0.00) 0%, rgba(246, 246, 246, 0.01) 37.15%);
+    transform: translateY(0px);    
     backdrop-filter: blur(2px);
-    transform: translateY(430px);
     z-index: 2;
     position: relative;
-    border-bottom: 1px solid rgba(246, 246, 246, 0.1);
+    border-bottom: 1px solid var(--blanco);
+}
+.blur {
+    width: 200.5%;
+    height: 120px;
+    background: linear-gradient(180deg, rgba(144, 144, 144, 0.00) 0%, rgba(246, 246, 246, 0.01) 37.15%);
+    z-index: 2;
+    position: relative;
 }
 
   </style>
