@@ -36,9 +36,9 @@
   
         if (distance < mouse.radius) {
           let t = distance / mouse.radius;
-          this.color = interpolateColor('#F6F6F6', '#f6f6f6', t);
+          this.color = interpolateColor('#F6F6F6', '#BAE0D9', t);
         } else {
-          this.color = '#BAE0D9';
+          this.color = '#D1D1D6';
         }
   
         if (distance < mouse.radius + this.size) {
@@ -75,15 +75,15 @@
   
     function initParticles() {
       particlesArray = [];
-      const rows = 180;
-      const cols = 16;
+      const rows = 140;
+      const cols = 32;
       const gridWidth = canvas.width / cols;
       const gridHeight = canvas.height / rows;
-      const size = Math.min(canvas.width, canvas.height) * 0.00075;
+      const size = Math.min(canvas.width, canvas.height) * 0.00085;
   
       for (let row = 0; row < rows; row++) {
         for (let col = 0; col < cols; col++) {
-          let x = col * gridWidth + gridWidth / 0.131;
+          let x = col * gridWidth + gridWidth / 0.07535;
           let y = row * gridHeight + gridHeight / 2;
           let moveHorizontal = Math.random() > 0.5;
           let directionX = moveHorizontal ? (Math.random() * 0.2) - 0.1 : 0;
@@ -115,7 +115,7 @@
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
       ctx = canvas.getContext('2d');
-      mouse.radius = (canvas.height / 50) * (canvas.width / 95);
+      mouse.radius = (canvas.height / 81) * (canvas.width / 81);
     }
   
     onMount(() => {

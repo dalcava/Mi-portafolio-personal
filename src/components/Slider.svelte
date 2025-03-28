@@ -380,7 +380,7 @@
 
 .swiper {
 position: relative;
-width: 100%;
+width: 95.5%;
 height: 480px;
 border-radius: 16px;
 overflow: hidden;
