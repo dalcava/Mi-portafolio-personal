@@ -168,7 +168,7 @@
   }
 
   .icon-button img {
-    width: 24px;
+    width: 16px;
     height: 24px;
     opacity: 0;
     transform: translateX(-55%);
@@ -196,7 +196,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 280px;
+    gap: 160px;
     max-width: 320px;
     width: 100%;
   }
@@ -217,6 +217,7 @@
 
   .Lightbulb:hover img {
     transform: scale(1.1);
+    transition: all 0.2s ease-out;
   }
 
   .work {

@@ -24,40 +24,40 @@
 
   
     onMount(() => {
-      swiper = new Swiper('.swiper', {
-        effect: 'slide',
-        grabCursor: true,
-        centeredSlides: true,
-        initialSlide: 0,
-        speed: 800,
-        preventClicks: true,
-        loop: true,
-        slidesPerView: '1',
-        spaceBetween: 16,
-        pagination: {
-          el: '.swiper-pagination',
-          clickable: true
-        },
-        navigation: {
-          nextEl: '.swiper-button-next',
-          prevEl: '.swiper-button-prev'
-        },
-        autoplay: {
-          delay: 4800,
-          disableOnInteraction: false
-        },
-        simulateTouch: true,
-        allowTouchMove: true,
-        breakpoints: {
-          551: { slidesPerView: '1' },
-          701: { slidesPerView: '1' },
-          1001: { slidesPerView: '1' },
-          1201: { slidesPerView: '1.2' },
-          1441: { slidesPerView: '1.325' },
-          1921: { slidesPerView: '1.5' }
-        }
-      });
-      updateDescription();
+        swiper = new Swiper('.swiper', {
+            effect: "slide",
+            slidesPerView: 'auto',
+            centeredSlides: true,
+            initialSlide: 6,
+            loop: false,
+            spaceBetween: 16,
+            // Resto de opciones que necesites
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true
+            },
+            
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev'
+            },
+            autoplay: {
+                delay: 4800,
+                disableOnInteraction: false,
+                reverseDirection: true
+            },
+            speed: 800,
+            simulateTouch: true,
+            allowTouchMove: true,
+            preventClicks: true,
+            initialSlide: 0,
+            // Para que reaccione bien a cambios de ancho dinámico
+            observer: true,
+            observeParents: true,
+            
+        });
+
+        updateDescription();
   
     swiper.on('slideChange', () => {
         // Animación bullet
@@ -105,6 +105,92 @@
       document.querySelectorAll('.swiper-slide').forEach(slide => {
         observer.observe(slide, { attributes: true, attributeFilter: ['class'] });
       });
+
+
+      // Hover dinámico: transición entre imagen estática y GIF
+        document.querySelectorAll(".swiper-slide").forEach((slide) => {
+        const staticImg = slide.querySelector(".static-img");
+        const activeGif = slide.querySelector(".active-gif");
+
+        if (!activeGif || !staticImg) return;
+
+        let lastX = 100;
+        let lastY = 100;
+        let isInside = false;
+
+        function removeEffect() {
+            activeGif.style.maskImage = "none";
+            activeGif.style.webkitMaskImage = "none";
+            activeGif.style.opacity = "0";
+            staticImg.style.opacity = "1";
+            staticImg.style.filter = "brightness(1)";
+        }
+
+        window.addEventListener("mousemove", (e) => {
+            if (
+            slide.classList.contains("swiper-slide-prev") ||
+            slide.classList.contains("swiper-slide-next")
+            ) {
+            removeEffect();
+            return;
+            }
+
+            const rect = slide.getBoundingClientRect();
+            const isInsideBounds =
+            e.clientX >= rect.left &&
+            e.clientX <= rect.right &&
+            e.clientY >= rect.top &&
+            e.clientY <= rect.bottom;
+
+            if (isInsideBounds) {
+            isInside = true;
+            let offsetX = e.clientX - rect.left - 15;
+            let offsetXPercentage = (offsetX / rect.width) * 100;
+            lastX = Math.min(100, Math.max(0, offsetXPercentage));
+            lastY = ((e.clientY - rect.top) / rect.height) * 100;
+
+            activeGif.style.maskImage = `radial-gradient(circle at ${lastX}% ${lastY}%, black 24%, transparent 48%)`;
+            activeGif.style.webkitMaskImage = `radial-gradient(circle at ${lastX}% ${lastY}%, black 37%, transparent 38%)`;
+            activeGif.style.opacity = "1";
+            staticImg.style.opacity = "1";
+            staticImg.style.filter = "brightness(0.85) saturate(0.5)";
+            }
+        });
+
+        slide.addEventListener("mouseleave", () => {
+            if (slide.classList.contains("swiper-slide-prev")) {
+            removeEffect();
+            return;
+            }
+
+            isInside = false;
+            let scale = 36.5;
+            let interval = setInterval(() => {
+            if (isInside || scale <= 0) {
+                clearInterval(interval);
+                removeEffect();
+            } else {
+                scale -= 24;
+                activeGif.style.maskImage = `radial-gradient(circle at ${lastX}% ${lastY}%, black ${scale}%, transparent ${scale + 1}%)`;
+                activeGif.style.webkitMaskImage = `radial-gradient(circle at ${lastX}% ${lastY}%, black ${scale}%, transparent ${scale + 1}%)`;
+            }
+            }, 30);
+        });
+
+        const observer = new MutationObserver((mutationsList) => {
+            mutationsList.forEach((mutation) => {
+            if (
+                mutation.type === "attributes" &&
+                slide.classList.contains("swiper-slide-prev")
+            ) {
+                removeEffect();
+            }
+            });
+        });
+
+        observer.observe(slide, { attributes: true, attributeFilter: ["class"] });
+        });
+
     });
 
     
@@ -133,6 +219,11 @@
             title: "CR Project",
             category: "UX Strategy",
             text: "Estrategia centrada en la experiencia del usuario con diseño minimalista y arquitectura de información clara."
+        },
+        {
+            title: "Chasms call",
+            category: "UX Strategy",
+            text: "This project is a tribute to The Legend of Zelda series, featuring a personalized custom skin for the Nintendo Switch Pro Controller. It showcases a fully 3D animated product presentation, created as a practice piece and an homage to the iconic game franchise. The animation highlights a unique Zelda-themed design, crafted to celebrate the artistic and legendary world of Hyrule."
         }
     ];
     
@@ -250,6 +341,24 @@
                     <div class="blur"></div>
                 </div>
             </div>
+            <div class="swiper-slide">
+                <div class="image-container static-img">
+                    <img src="/Recursos/Slider/Chasms call.webp" alt="Static Image 5" class="imagen-contenida">
+                    <div class="grid">
+                        <div class="grid-collumn"></div>
+                        <div class="grid-collumn"></div>
+                        <div class="grid-collumn"></div>
+                        <div class="grid-collumn"></div>
+                        <div class="grid-collumn"></div>
+                        <div class="grid-collumn"></div>
+                        <div class="grid-collumn"></div>
+                    </div>
+                </div>
+                <img src="/Recursos/Slider/Chasms call.webp" alt="Active GIF 5" class="active-gif">
+                <div class="blur-container">
+                    <div class="blur"></div>
+                </div>
+            </div>
         </div>
     </div>
     <div class="project-description">
@@ -284,10 +393,18 @@ transition: all 0.1s ease-out;
 
 .swiper-slide {
     position: relative;
-    width: 1506px;
-    aspect-ratio: 3/4;
-    transition: height 0.25s ease-in;
+    width: 320px;
+    transition: all 0.5s ease-out;
     border-radius: 16px;
+}
+:global(.swiper-slide-active) {
+    width: 1048px !important;
+}
+:global(.swiper-slide .grid) {
+    opacity: 0 !important;
+}
+:global(.swiper-slide-active .grid) {
+    opacity: .25 !important;
 }
 .swiper-slide img {
     display: block;
@@ -308,6 +425,10 @@ transition: all 0.1s ease-out;
     z-index: 0;
     transition: all 0.2s ease-out;
     pointer-events: none;
+}
+
+.swiper-slide-prev.swiper-slide-next {
+    transform: translate3d(190px, -70px, -855px) rotateX(0deg) rotateY(0deg) scale(.5);
 }
 
 .swiper-slide .imagen-contenida {
