@@ -132,7 +132,7 @@
     align-items: center;
     width: 100%;
     height: 100%;
-    padding-right: 56px;
+    padding-right: 10%;
   }
 
   .icon-buttons {

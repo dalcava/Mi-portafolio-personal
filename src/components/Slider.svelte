@@ -5,41 +5,23 @@
     import gsap from 'gsap';
   
     let swiper;
+
+/* Referencias a los elementos del DOM para la descripción */
+    let titleElement;
+    let categoryElement;
+    let textElement;
   
-    function updateSlidePositions(smooth = true) {
-      const activeIndex = swiper.activeIndex;
-  
-      document.querySelectorAll('.swiper-slide').forEach((slide, index) => {
-        const image = slide.querySelector('.imagen-contenida');
-        if (!image) return;
-  
-        image.style.willChange = 'transform, clip-path, filter';
-  
-        if (
-          slide.classList.contains('swiper-slide-active') ||
-          (!slide.classList.contains('swiper-slide-prev') &&
-            !slide.classList.contains('swiper-slide-next'))
-        ) {
-          gsap.to(image, {
-            duration: smooth ? 1 : 0,
-            ease: 'power3.out',
-            x: 0,
-            clipPath: 'inset(0% 0% 0% 0%)'
-          });
-        } else {
-          const baseOffset = (index - activeIndex) * -2.5;
-          const parallaxOffset = (slide.progress || 0) * 1;
-          const finalOffset = baseOffset + parallaxOffset;
-  
-          gsap.to(image, {
-            duration: smooth ? 1 : 0,
-            ease: 'power3.out',
-            x: `${finalOffset}%`,
-            clipPath: 'inset(0% 5% 0% 5%)'
-          });
+    function updateDescription() {
+        const index = swiper.realIndex;
+        const desc = descriptions[index];
+
+        if (desc) {
+            titleElement.textContent = desc.title;
+            categoryElement.textContent = desc.category;
+            textElement.textContent = desc.text;
         }
-      });
     }
+
   
     onMount(() => {
       swiper = new Swiper('.swiper', {
@@ -75,27 +57,39 @@
           1921: { slidesPerView: '1.5' }
         }
       });
+      updateDescription();
   
-      swiper.on('slideChange', () => {
+    swiper.on('slideChange', () => {
         // Animación bullet
         gsap.fromTo(
-          '.swiper-pagination-bullet-active',
-          { scale: 0.8, opacity: 0.5 },
-          { scale: 1, opacity: 1, duration: 0.3, ease: 'power2.out' }
+            '.swiper-pagination-bullet-active',
+            { scale: 0.8, opacity: 0.5 },
+            { scale: 1, opacity: 1, duration: 0.3, ease: 'power2.out' }
         );
-  
+
         // Bullet shape
         document.querySelectorAll('.swiper-pagination-bullet').forEach(b => (b.innerHTML = ''));
         const active = document.querySelector('.swiper-pagination-bullet-active');
         if (active) {
-          const shape = document.createElement('div');
-          shape.classList.add('pagination-shape');
-          active.prepend(shape);
-          gsap.fromTo(shape, { width: '12px' }, { width: '72px', duration: 5.5, ease: 'linear' });
+            const shape = document.createElement('div');
+            shape.classList.add('pagination-shape');
+            active.prepend(shape);
+            gsap.fromTo(shape, { width: '12px' }, { width: '72px', duration: 5.5, ease: 'linear' });
         }
-  
-        swiper.autoplay.start();
-      });
+
+        swiper.autoplay.start(); // Esto ya está
+
+        // Descripción del slide
+        const index = swiper.realIndex; // Ignora duplicados por loop
+        const desc = descriptions[index];
+
+        if (desc) {
+            titleElement.textContent = desc.title;
+            categoryElement.textContent = desc.category;
+            textElement.textContent = desc.text;
+        }
+    });
+
   
       swiper.on('slideChangeTransitionStart', () => updateSlidePositions(true));
       swiper.on('slideChangeTransitionEnd', () => updateSlidePositions(true));
@@ -112,7 +106,37 @@
         observer.observe(slide, { attributes: true, attributeFilter: ['class'] });
       });
     });
-  </script>
+
+    
+    let descriptions = [
+        {
+            title: "Kinetic Rush",
+            category: "3D Motion",
+            text: "Exploración dinámica del movimiento cinético en entornos digitales con efectos de profundidad envolventes."
+        },
+        {
+            title: "Control",
+            category: "UI Design",
+            text: "This project is a tribute to The Legend of Zelda series, featuring a personalized custom skin for the Nintendo Switch Pro Controller. It showcases a fully 3D animated product presentation, created as a practice piece and an homage to the iconic game franchise. The animation highlights a unique Zelda-themed design, crafted to celebrate the artistic and legendary world of Hyrule."
+        },
+        {
+            title: "Aval Pay Center",
+            category: "Branding + App",
+            text: "Solución integral para pagos digitales con identidad visual sólida y accesibilidad multiplataforma."
+        },
+        {
+            title: "Duraznos",
+            category: "Experimental Visual",
+            text: "Una pieza visual poética que mezcla elementos naturales y técnicas de animación abstracta."
+        },
+        {
+            title: "CR Project",
+            category: "UX Strategy",
+            text: "Estrategia centrada en la experiencia del usuario con diseño minimalista y arquitectura de información clara."
+        }
+    ];
+    
+</script>
   
   <!-- HTML de tu slider adaptado -->
   <div class="boolean-container">
@@ -150,14 +174,6 @@
                     </div>
                 </div>
                 <img src="/Recursos/Slider/Kinetic rush-active.gif" alt="Active GIF 1" class="active-gif">
-                <div class="project-title">
-                    <div class="title">
-                        <span>Nombre del proyecto</span>
-                    </div>
-                    <div class="subtitle">
-                        <span>Subtítulo del proyecto</span>
-                    </div>
-                </div>
                 <div class="blur-container">
                     <div class="blur"></div>
                 </div>
@@ -176,14 +192,6 @@
                     </div>
                 </div>
                 <img src="/Recursos/Slider/Control-active.gif" alt="Active GIF 2" class="active-gif">
-                <div class="project-title">
-                    <div class="title">
-                        <span>Nombre del proyecto</span>
-                    </div>
-                    <div class="subtitle">
-                        <span>Subtítulo del proyecto</span>
-                    </div>
-                </div>
                 <div class="blur-container">
                     <div class="blur"></div>
                 </div>
@@ -202,14 +210,6 @@
                     </div>
                 </div>
                 <img src="/Recursos/Slider/AvalPay-Active.gif" alt="Active GIF 3" class="active-gif">
-                <div class="project-title">
-                    <div class="title">
-                        <span>Nombre del proyecto</span>
-                    </div>
-                    <div class="subtitle">
-                        <span>Subtítulo del proyecto</span>
-                    </div>
-                </div>
                 <div class="blur-container">
                     <div class="blur"></div>
                 </div>
@@ -228,14 +228,6 @@
                     </div>
                 </div>
                 <img src="/Recursos/Slider/Duraznos active.gif" alt="Active GIF 3" class="active-gif">
-                <div class="project-title">
-                    <div class="title">
-                        <span>Nombre del proyecto</span>
-                    </div>
-                    <div class="subtitle">
-                        <span>Subtítulo del proyecto</span>
-                    </div>
-                </div>
                 <div class="blur-container">
                     <div class="blur"></div>
                 </div>
@@ -254,18 +246,23 @@
                     </div>
                 </div>
                 <img src="/Recursos/Slider/AvalPay-Active.gif" alt="Active GIF 4" class="active-gif">
-                <div class="project-title">
-                    <div class="title">
-                        <span>Nombre del proyecto</span>
-                    </div>
-                    <div class="subtitle">
-                        <span>Subtítulo del proyecto</span>
-                    </div>
-                </div>
                 <div class="blur-container">
                     <div class="blur"></div>
                 </div>
             </div>
+        </div>
+    </div>
+    <div class="project-description">
+        <div class="project-description-head">
+            <div class="project-title">
+              <h2 bind:this={titleElement}>  </h2>
+            </div>
+            <div class="project-category">
+              <a href="#" bind:this={categoryElement}>  </a>
+            </div>
+        </div>
+        <div class="project-text">
+          <p bind:this={textElement}>  </p>
         </div>
     </div>
   </div>
@@ -352,6 +349,7 @@ transition: all 0.1s ease-out;
     transform: translateY(-100%);
     position: relative;
     padding: 0% 11.2%;
+    opacity: .25;    
 }
 .grid-collumn {
     width: 100%;
@@ -388,75 +386,6 @@ transition: all 0.1s ease-out;
     height: var(--swiper-scrollbar-size, 4px);
     width: calc(100% - 2* var(--swiper-scrollbar-sides-offset, 1%));
     display: none;
-}
-
-.project-title {
-    position: absolute;
-    bottom: 5px;
-    left: 50%;
-    transform: translate(-50%, -105%);
-    /* width: max-content; */
-    text-align: center;
-    /* padding: 0px 8px; */
-    /* background: rgba(46, 39, 39, 0); */
-    z-index: 3;
-    pointer-events: none;
-    width: 100%;
-    height: auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 16px;
-}
-
-.title {
-    position: relative;
-    bottom: 5px;
-    width: max-content;
-    text-align: center;
-    /* padding: 10px 18px; */
-    background: rgba(46, 39, 39, 0);
-    z-index: 3;
-    pointer-events: none;
-}
-
-.title span {
-    color: var(--Transparente);
-    font-family: "Publica Sans";
-    font-size: var(--font-size-XL);
-    font-style: normal;
-    font-weight: 300;
-    line-height: normal;
-    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
-}
-
-.swiper-slide-active .title span{
-    color: var(--blanco);
-}
-
-.subtitle {
-    position: relative;
-    bottom: 5px;
-    width: max-content;
-    text-align: center;
-    /* padding: 10px 18px; */
-    background: rgba(46, 39, 39, 0);
-    z-index: 3;
-    pointer-events: none;
-}
-
-.subtitle span {
-    color: var(--Transparente);
-    font-family: "Publica Sans";
-    font-size: var(--font-size-S);
-    font-style: normal;
-    font-weight: 200;
-    line-height: normal;
-    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-}
-
-.swiper-slide-active .subtitle span {
-    color: var(--blanco);
 }
 
 .boolean-container {
@@ -524,7 +453,7 @@ transition: all 0.1s ease-out;
 :global(.swiper-pagination-bullet) {
   width: 12px;
   height: 12px;
-  border: 1px solid var(--Verde); /* Borde visible */
+  border: 1px solid var(--Verde-claro); /* Borde visible */
   background-color: var(--Transparente);
   border-radius: 50%;
   opacity: 1;
@@ -631,13 +560,13 @@ transition: all 0.1s ease-out;
 .blur-container {
     width: 200.5%;
     height: 120px;
-    border-top: 1px solid var(--blanco);
+    border-top: 1px solid #f6f6f625;
     background: linear-gradient(180deg, rgba(144, 144, 144, 0.00) 0%, rgba(246, 246, 246, 0.01) 37.15%);
-    transform: translateY(0px);    
+    transform: translateY(16px);    
     backdrop-filter: blur(2px);
     z-index: 2;
     position: relative;
-    border-bottom: 1px solid var(--blanco);
+    border-bottom: 1px solid #f6f6f625;
 }
 .blur {
     width: 200.5%;
@@ -646,6 +575,41 @@ transition: all 0.1s ease-out;
     z-index: 2;
     position: relative;
 }
+
+/*Proyects description*/
+.project-description {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-start;
+    padding: 0 37.5%;
+}
+
+.project-title h2 {
+  font-family: 'Publica Sans', sans-serif;
+  font-weight: bold;
+  font-size: 24px;
+  color: var(--Gris-muy-oscuro);
+  line-height: 1.2;
+}
+.project-category a {
+  font-family: 'Publica Sans', sans-serif;
+  font-weight: 100;
+  font-size: 12px;
+  color: var(--Verde-claro);
+  text-decoration: none;
+  display: inline-block;
+  margin-bottom: 8px;
+}
+.project-text p {
+  font-family: 'Publica Sans', sans-serif;
+  font-weight: 100;
+  font-size: 14px;
+  color: var(--Gris-oscuro);
+  line-height: 120%;
+  max-width: 540px;
+}
+
 
   </style>
   
