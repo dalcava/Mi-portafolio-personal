@@ -14,6 +14,8 @@
     let titleElement;
     let categoryElement;
     let textElement;
+    const AUTOPLAY_DELAY = 480000;
+
 
     const descriptions = [
         {
@@ -75,21 +77,31 @@
     };
 
     function animateBullet() {
-        gsap.fromTo(
-            '.swiper-pagination-bullet-active',
-            { scale: 0.8, opacity: 0.5 },
-            { scale: 1, opacity: 1, duration: 0.3, ease: 'power2.out' }
-        );
+    gsap.fromTo(
+        '.swiper-pagination-bullet-active',
+        { scale: 0.8, opacity: 0.5 },
+        { scale: 1, opacity: 1, duration: 0.3, ease: 'power2.out' }
+    );
 
-        document.querySelectorAll('.swiper-pagination-bullet').forEach(b => (b.innerHTML = ''));
-        const active = document.querySelector('.swiper-pagination-bullet-active');
-        if (active) {
-            const shape = document.createElement('div');
-            shape.classList.add('pagination-shape');
-            active.prepend(shape);
-            gsap.fromTo(shape, { width: '12px' }, { width: '72px', duration: 5.5, ease: 'linear' });
-        }
+    document.querySelectorAll('.swiper-pagination-bullet').forEach(b => (b.innerHTML = ''));
+
+    const active = document.querySelector('.swiper-pagination-bullet-active');
+    if (active) {
+        const shape = document.createElement('div');
+        shape.classList.add('pagination-shape');
+        active.prepend(shape);
+
+        gsap.fromTo(
+            shape,
+            { width: '12px' },
+            {
+                width: '72px',
+                duration: (AUTOPLAY_DELAY + 600) / 1000,
+                ease: 'linear'
+            }
+        );
     }
+}
 
     function handleWheel(e) {
         const now = Date.now();
@@ -101,14 +113,16 @@
     }
 
 
-    /* -------------------------------------------Aquí empieza swiper ---------------------------------------------- */
+    /* ----------------------------------------------------------------------------------------------------------
+    -------------------------------------------Aquí empieza swiper ---------------------------------------------- 
+    -------------------------------------------------------------------------------------------------------------*/
 
     onMount(() => {
         swiper = new Swiper('.swiper', {
             effect: "slide",
             slidesPerView: '5.7',
             centeredSlides: true,
-            initialSlide: 1,
+            initialSlide: 5,
             loop: false,
             spaceBetween: 16,
             pagination: {
@@ -120,7 +134,7 @@
                 prevEl: '.swiper-button-prev'
             },
             autoplay: {
-                delay: 4800,
+                delay: AUTOPLAY_DELAY,
                 disableOnInteraction: false,
                 reverseDirection: true
             },
@@ -130,6 +144,30 @@
             preventClicks: true,
             observer: true,
             observeParents: true,
+
+            breakpoints: {
+                200: {
+                // >= 1000px
+                slidesPerView: "1",
+                },
+                1201: {
+                // >= 1200px
+                slidesPerView: "4",
+                },
+                1360: {
+                // >= 1200px
+                slidesPerView: "5.42",
+                },
+                1441: {
+                // >= 1440px
+                slidesPerView: "5.7",
+                },
+                1921: {
+                // >= 1440px
+                slidesPerView: "6.5",
+                },
+
+            },
         });
 
         updateDescription();
@@ -492,8 +530,7 @@ transition: all 0.1s ease-out;
     width: 100%; /* Asegura que ocupe todo el espacio asignado */
     height: 100%;
     overflow: hidden; /* Evita que el zoom de la imagen salga del contenedor */
-    border-radius: 8px; /* Bordes redondeados */
-/*     transform: translateX(312px); */
+    border-radius: 16px;
 }
 
 .image-container::after {
@@ -666,38 +703,6 @@ transition: all 0.1s ease-out;
     transform: translateY(10px);
     opacity: 0;
 }
-
-.swiper-button-prev, .swiper-button-next {
-    background: none;
-    border: none;
-    color: rgb(255, 255, 255, 0);
-    width: 40px;
-    height: 24px;
-    display: block;
-    transition: transform 0.3s ease, background-color 0.3s ease;
-    pointer-events: auto;
-    position: relative;
-    transform: scale(.75);
-}
-.swiper-button-prev img:hover,
-.swiper-button-next img:hover,
-.swiper-pause img:hover {
-    filter: brightness(0) invert(1); /* Inverts the color */
-    cursor: pointer;
-}
-
-.new-icon {
-    width: 24px;
-    height: auto;
-    object-fit: contain;
-    transition: transform 0.15s ease-in;
-    /* transform: scale(0.75); */
-    filter: brightness(8.5);
-}
-.swiper-button-prev:hover .new-icon,
-.swiper-button-next:hover .new-icon {
-    transform: scaleX(1.25) scaleY(1); /* Slightly enlarge on hover */
-}
 :global(.swiper-wrapper) {
     transition-timing-function: ease-out !important; /* Smooth easing effect */
 }
@@ -798,6 +803,57 @@ transition: all 0.1s ease-out;
   color: var(--Gris-oscuro);
   line-height: 120%;
   max-width: 540px;
+}
+
+
+
+/*--------------------------------------------------------------------------------------------------------------------
+------------------------------------------- Aquí empiezan los breackpoints -------------------------------------------
+--------------------------------------------------------------------------------------------------------------------*/
+
+@media (max-width: 1360px) {
+    .Description-container{
+        width: 60%;
+    }
+    :global(.swiper-slide-active) {
+        width: 58.6% !important;
+    }
+}
+@media (max-width: 1200px) {
+    .swiper {
+        width: 100%;
+        height: 420px;
+    }
+    :global(.swiper-slide-active) {
+        width: 100% !important;
+    }
+    .Description-container{
+        width: 80%;
+    }
+}
+
+@media (max-width: 800px) {
+    .Description-container{
+        width: 100%;
+    }
+}
+
+@media (max-width: 600px) {
+    .boolean-container {
+        padding-top: 160px;
+    }
+    .swiper {
+        height: 560px;
+    }
+    .active-gif{
+        display: none;
+    }
+    .Lightbulb {
+        display: none;
+    }
+    .project-text p {
+        display: none;
+    }
 }
 
 
