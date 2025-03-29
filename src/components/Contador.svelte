@@ -6,10 +6,10 @@
 <svelte:window bind:innerWidth={width} bind:innerHeight={height} />
 
 <div class="contador">
-  <h1>Screen Size</h1>
   <p>
     {width} x {height} px
   </p>
+  <h1>Screen</h1>
 </div>
 
 <style>

@@ -362,17 +362,23 @@
             </div>
         </div>
     </div>
-    <div class="project-description">
-        <div class="project-description-head">
-            <div class="project-title">
-              <h2 bind:this={titleElement}>  </h2>
-            </div>
-            <div class="project-category">
-              <a href="#" bind:this={categoryElement}>  </a>
-            </div>
+    <div class="Description-container">
+        <div>
+
         </div>
-        <div class="project-text">
-          <p bind:this={textElement}>  </p>
+
+        <div class="project-description">
+            <div class="project-description-head">
+                <div class="project-category">
+                  <a href="#" bind:this={categoryElement}>  </a>
+                </div>
+                <div class="project-title">
+                  <h2 bind:this={titleElement}>  </h2>
+                </div>
+            </div>
+            <div class="project-text">
+              <p bind:this={textElement}>  </p>
+            </div>
         </div>
     </div>
   </div>
@@ -699,6 +705,18 @@ transition: all 0.1s ease-out;
 }
 
 /*Proyects description*/
+
+.Description-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    height: 100%;
+    padding: 0 4.5%;
+    gap: 16px;
+    z-index: 10;
+}
 .project-description {
     display: flex;
     flex-direction: column;
@@ -707,21 +725,22 @@ transition: all 0.1s ease-out;
     padding: 0 4.5%;
 }
 
-.project-title h2 {
-  font-family: 'Publica Sans', sans-serif;
-  font-weight: bold;
-  font-size: 24px;
-  color: var(--Gris-muy-oscuro);
-  line-height: 1.2;
-}
 .project-category a {
   font-family: 'Publica Sans', sans-serif;
   font-weight: 100;
   font-size: 12px;
-  color: var(--Verde-claro);
+  color: var(--Gris);
   text-decoration: none;
   display: inline-block;
   margin-bottom: 8px;
+  line-height: 0;
+}
+.project-title h2 {
+  font-family: 'Thunder extra', sans-serif;
+  font-weight: bold;
+  font-size: var(--font-size-XL);
+  color: var(--Verde-claro);
+  line-height: 1.2;
 }
 .project-text p {
   font-family: 'Publica Sans', sans-serif;

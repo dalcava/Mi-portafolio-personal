@@ -84,6 +84,8 @@
   padding: 0px 80px;
   bottom: 0;
   left: 0;
+  background: #f6f6f625;
+  backdrop-filter: blur(8px);
 }
 
   .personal-photo {
@@ -107,7 +109,7 @@
   .profile-info {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 32px;
   width: 600px;
   }
 
