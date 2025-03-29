@@ -3,198 +3,19 @@
     import Swiper from 'swiper/bundle';
     import 'swiper/css/bundle';
     import gsap from 'gsap';
-  
+    import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
     let swiper;
 
-/* Referencias a los elementos del DOM para la descripción */
+    let isAnimating = false;
+    let scrollThrottle = 0;
+
+    /* Referencias a los elementos del DOM para la descripción */
     let titleElement;
     let categoryElement;
     let textElement;
-  
-    function updateDescription() {
-        const index = swiper.realIndex;
-        const desc = descriptions[index];
 
-        if (desc) {
-            titleElement.textContent = desc.title;
-            categoryElement.textContent = desc.category;
-            textElement.textContent = desc.text;
-        }
-    }
-
-  
-    onMount(() => {
-        swiper = new Swiper('.swiper', {
-            effect: "slide",
-            slidesPerView: 'auto',
-            centeredSlides: true,
-            initialSlide: 6,
-            loop: false,
-            spaceBetween: 16,
-            // Resto de opciones que necesites
-            pagination: {
-                el: '.swiper-pagination',
-                clickable: true
-            },
-            
-            navigation: {
-                nextEl: '.swiper-button-next',
-                prevEl: '.swiper-button-prev'
-            },
-            autoplay: {
-                delay: 4800,
-                disableOnInteraction: false,
-                reverseDirection: true
-            },
-            speed: 800,
-            simulateTouch: true,
-            allowTouchMove: true,
-            preventClicks: true,
-            initialSlide: 0,
-            // Para que reaccione bien a cambios de ancho dinámico
-            observer: true,
-            observeParents: true,
-            
-        });
-
-        updateDescription();
-  
-    swiper.on('slideChange', () => {
-        // Animación bullet
-        gsap.fromTo(
-            '.swiper-pagination-bullet-active',
-            { scale: 0.8, opacity: 0.5 },
-            { scale: 1, opacity: 1, duration: 0.3, ease: 'power2.out' }
-        );
-
-        // Bullet shape
-        document.querySelectorAll('.swiper-pagination-bullet').forEach(b => (b.innerHTML = ''));
-        const active = document.querySelector('.swiper-pagination-bullet-active');
-        if (active) {
-            const shape = document.createElement('div');
-            shape.classList.add('pagination-shape');
-            active.prepend(shape);
-            gsap.fromTo(shape, { width: '12px' }, { width: '72px', duration: 5.5, ease: 'linear' });
-        }
-
-        swiper.autoplay.start(); // Esto ya está
-
-        // Descripción del slide
-        const index = swiper.realIndex; // Ignora duplicados por loop
-        const desc = descriptions[index];
-
-        if (desc) {
-            titleElement.textContent = desc.title;
-            categoryElement.textContent = desc.category;
-            textElement.textContent = desc.text;
-        }
-    });
-
-  
-      swiper.on('slideChangeTransitionStart', () => updateSlidePositions(true));
-      swiper.on('slideChangeTransitionEnd', () => updateSlidePositions(true));
-      swiper.on('sliderMove', () => requestAnimationFrame(() => updateSlidePositions(false)));
-  
-      let correctionTimeout;
-      swiper.on('touchEnd', () => {
-        clearTimeout(correctionTimeout);
-        correctionTimeout = setTimeout(() => updateSlidePositions(true), 100);
-      });
-  
-      const observer = new MutationObserver(() => updateSlidePositions(true));
-      document.querySelectorAll('.swiper-slide').forEach(slide => {
-        observer.observe(slide, { attributes: true, attributeFilter: ['class'] });
-      });
-
-
-      // Hover dinámico: transición entre imagen estática y GIF
-        document.querySelectorAll(".swiper-slide").forEach((slide) => {
-        const staticImg = slide.querySelector(".static-img");
-        const activeGif = slide.querySelector(".active-gif");
-
-        if (!activeGif || !staticImg) return;
-
-        let lastX = 100;
-        let lastY = 100;
-        let isInside = false;
-
-        function removeEffect() {
-            activeGif.style.maskImage = "none";
-            activeGif.style.webkitMaskImage = "none";
-            activeGif.style.opacity = "0";
-            staticImg.style.opacity = "1";
-            staticImg.style.filter = "brightness(1)";
-        }
-
-        window.addEventListener("mousemove", (e) => {
-            if (
-            slide.classList.contains("swiper-slide-prev") ||
-            slide.classList.contains("swiper-slide-next")
-            ) {
-            removeEffect();
-            return;
-            }
-
-            const rect = slide.getBoundingClientRect();
-            const isInsideBounds =
-            e.clientX >= rect.left &&
-            e.clientX <= rect.right &&
-            e.clientY >= rect.top &&
-            e.clientY <= rect.bottom;
-
-            if (isInsideBounds) {
-            isInside = true;
-            let offsetX = e.clientX - rect.left - 15;
-            let offsetXPercentage = (offsetX / rect.width) * 100;
-            lastX = Math.min(100, Math.max(0, offsetXPercentage));
-            lastY = ((e.clientY - rect.top) / rect.height) * 100;
-
-            activeGif.style.maskImage = `radial-gradient(circle at ${lastX}% ${lastY}%, black 24%, transparent 48%)`;
-            activeGif.style.webkitMaskImage = `radial-gradient(circle at ${lastX}% ${lastY}%, black 37%, transparent 38%)`;
-            activeGif.style.opacity = "1";
-            staticImg.style.opacity = "1";
-            staticImg.style.filter = "brightness(0.85) saturate(0.5)";
-            }
-        });
-
-        slide.addEventListener("mouseleave", () => {
-            if (slide.classList.contains("swiper-slide-prev")) {
-            removeEffect();
-            return;
-            }
-
-            isInside = false;
-            let scale = 36.5;
-            let interval = setInterval(() => {
-            if (isInside || scale <= 0) {
-                clearInterval(interval);
-                removeEffect();
-            } else {
-                scale -= 24;
-                activeGif.style.maskImage = `radial-gradient(circle at ${lastX}% ${lastY}%, black ${scale}%, transparent ${scale + 1}%)`;
-                activeGif.style.webkitMaskImage = `radial-gradient(circle at ${lastX}% ${lastY}%, black ${scale}%, transparent ${scale + 1}%)`;
-            }
-            }, 30);
-        });
-
-        const observer = new MutationObserver((mutationsList) => {
-            mutationsList.forEach((mutation) => {
-            if (
-                mutation.type === "attributes" &&
-                slide.classList.contains("swiper-slide-prev")
-            ) {
-                removeEffect();
-            }
-            });
-        });
-
-        observer.observe(slide, { attributes: true, attributeFilter: ["class"] });
-        });
-
-    });
-
-    
-    let descriptions = [
+    const descriptions = [
         {
             title: "Kinetic Rush",
             category: "3D Motion",
@@ -226,8 +47,188 @@
             text: "This project is a tribute to The Legend of Zelda series, featuring a personalized custom skin for the Nintendo Switch Pro Controller. It showcases a fully 3D animated product presentation, created as a practice piece and an homage to the iconic game franchise. The animation highlights a unique Zelda-themed design, crafted to celebrate the artistic and legendary world of Hyrule."
         }
     ];
-    
+
+    function updateDescription() {
+        const index = swiper.realIndex;
+        const desc = descriptions[index];
+
+        if (desc) {
+            titleElement.textContent = desc.title;
+            categoryElement.textContent = desc.category;
+            textElement.textContent = desc.text;
+        }
+    }
+
+    const navigateSwiper = (direction) => {
+        if (isAnimating) return;
+
+        if (direction > 0) {
+            swiper.slideNext();
+        } else if (direction < 0) {
+            swiper.slidePrev();
+        }
+
+        isAnimating = true;
+        gsap.delayedCall(0.8, () => {
+            isAnimating = false;
+        });
+    };
+
+    function animateBullet() {
+        gsap.fromTo(
+            '.swiper-pagination-bullet-active',
+            { scale: 0.8, opacity: 0.5 },
+            { scale: 1, opacity: 1, duration: 0.3, ease: 'power2.out' }
+        );
+
+        document.querySelectorAll('.swiper-pagination-bullet').forEach(b => (b.innerHTML = ''));
+        const active = document.querySelector('.swiper-pagination-bullet-active');
+        if (active) {
+            const shape = document.createElement('div');
+            shape.classList.add('pagination-shape');
+            active.prepend(shape);
+            gsap.fromTo(shape, { width: '12px' }, { width: '72px', duration: 5.5, ease: 'linear' });
+        }
+    }
+
+    function handleWheel(e) {
+        const now = Date.now();
+        if (now - scrollThrottle < 200) return;
+        scrollThrottle = now;
+
+        const direction = Math.sign(e.deltaY);
+        navigateSwiper(direction);
+    }
+
+    onMount(() => {
+        swiper = new Swiper('.swiper', {
+            effect: "slide",
+            slidesPerView: 'auto',
+            centeredSlides: true,
+            initialSlide: 0,
+            loop: false,
+            spaceBetween: 16,
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev'
+            },
+            autoplay: {
+                delay: 4800,
+                disableOnInteraction: false,
+                reverseDirection: true
+            },
+            speed: 800,
+            simulateTouch: true,
+            allowTouchMove: true,
+            preventClicks: true,
+            observer: true,
+            observeParents: true,
+        });
+
+        updateDescription();
+        animateBullet();
+        swiper.autoplay.start();
+
+        window.addEventListener("wheel", handleWheel, { passive: true });
+
+        swiper.on('slideChange', () => {
+            updateDescription();
+            animateBullet();
+            swiper.autoplay.start();
+        });
+
+        swiper.on('slideChangeTransitionStart', () => updateSlidePositions(true));
+        swiper.on('slideChangeTransitionEnd', () => updateSlidePositions(true));
+        swiper.on('sliderMove', () => requestAnimationFrame(() => updateSlidePositions(false)));
+
+        let correctionTimeout;
+        swiper.on('touchEnd', () => {
+            clearTimeout(correctionTimeout);
+            correctionTimeout = setTimeout(() => updateSlidePositions(true), 100);
+        });
+
+        const observer = new MutationObserver(() => updateSlidePositions(true));
+        document.querySelectorAll('.swiper-slide').forEach(slide => {
+            observer.observe(slide, { attributes: true, attributeFilter: ['class'] });
+        });
+
+        document.querySelectorAll(".swiper-slide").forEach((slide) => {
+            const staticImg = slide.querySelector(".static-img");
+            const activeGif = slide.querySelector(".active-gif");
+
+            if (!activeGif || !staticImg) return;
+
+            let lastX = 100;
+            let lastY = 100;
+            let isInside = false;
+
+            function removeEffect() {
+                activeGif.style.maskImage = "none";
+                activeGif.style.webkitMaskImage = "none";
+                activeGif.style.opacity = "0";
+                staticImg.style.opacity = "1";
+                staticImg.style.filter = "brightness(1)";
+            }
+
+            window.addEventListener("mousemove", (e) => {
+                if (!slide.classList.contains("swiper-slide-active")) {
+                    removeEffect();
+                    return;
+                }
+
+                const rect = slide.getBoundingClientRect();
+                const isInsideBounds =
+                    e.clientX >= rect.left &&
+                    e.clientX <= rect.right &&
+                    e.clientY >= rect.top &&
+                    e.clientY <= rect.bottom;
+
+                if (isInsideBounds) {
+                    isInside = true;
+                    let offsetX = e.clientX - rect.left - 15;
+                    let offsetXPercentage = (offsetX / rect.width) * 100;
+                    lastX = Math.min(100, Math.max(0, offsetXPercentage));
+                    lastY = ((e.clientY - rect.top) / rect.height) * 100;
+
+                    activeGif.style.maskImage = `radial-gradient(circle at ${lastX}% ${lastY}%, black 24%, transparent 48%)`;
+                    activeGif.style.webkitMaskImage = `radial-gradient(circle at ${lastX}% ${lastY}%, black 47%, transparent 48%)`;
+                    activeGif.style.opacity = "1";
+                    staticImg.style.opacity = "1";
+                    staticImg.style.filter = "brightness(0.85) saturate(0.5)";
+                }
+            });
+
+            slide.addEventListener("mouseleave", () => {
+                if (slide.classList.contains("swiper-slide-prev")) {
+                    removeEffect();
+                    return;
+                }
+
+                isInside = false;
+                let scale = 36.5;
+                let interval = setInterval(() => {
+                    if (isInside || scale <= 0) {
+                        clearInterval(interval);
+                        removeEffect();
+                    } else {
+                        scale -= 24;
+                        activeGif.style.maskImage = `radial-gradient(circle at ${lastX}% ${lastY}%, black ${scale}%, transparent ${scale + 1}%)`;
+                        activeGif.style.webkitMaskImage = `radial-gradient(circle at ${lastX}% ${lastY}%, black ${scale}%, transparent ${scale + 1}%)`;
+                    }
+                }, 30);
+            });
+        });
+
+        return () => {
+            window.removeEventListener("wheel", handleWheel);
+        };
+    });
 </script>
+
   
   <!-- HTML de tu slider adaptado -->
   <div class="boolean-container">
@@ -527,9 +528,9 @@ transition: all 0.1s ease-out;
     transform: translateY(-50%);
     width: 517px;
     height: 72px;
-    background: transparent; /* No es necesario pintar */
+    background: transparent;
     z-index: 10;
-    pointer-events: none; /* No bloqueará la interacción con el slider */
+    pointer-events: none;
 }
 
 
@@ -574,7 +575,7 @@ transition: all 0.1s ease-out;
 :global(.swiper-pagination-bullet) {
   width: 12px;
   height: 12px;
-  border: 1px solid var(--Verde-claro); /* Borde visible */
+  border: 1px solid var(--Verde-claro);
   background-color: var(--Transparente);
   border-radius: 50%;
   opacity: 1;
@@ -586,7 +587,7 @@ transition: all 0.1s ease-out;
 /* Bullet activo */
 :global(.swiper-pagination-bullet-active) {
     background-color: var(--Transparente);
-    transform: scale(1); /* Aumenta ligeramente el tamaño */
+    transform: scale(1);
     opacity: 1;
     border-radius: 8px;
     transition: all 0.4s ease-out;
@@ -595,12 +596,12 @@ transition: all 0.1s ease-out;
 
 :global(.pagination-shape) {
     position: absolute;
-    left: -18px; /* Moves shape in front of bullet */
+    left: -18px;
     top: 50%;
     transform: translateY(-50%) translateX(10px);
     height: 14px;
-    background-color: var(--Verde-claro); /* Adjust color */
-    border-radius: 8px; /* Change to square for different shapes */
+    background-color: var(--Verde-claro); 
+    border-radius: 8px;
     transition: all 0.3s ease-in-out;
 }
 :global(.swiper-button-container) {
@@ -703,7 +704,7 @@ transition: all 0.1s ease-out;
     flex-direction: column;
     gap: 16px;
     align-items: flex-start;
-    padding: 0 37.5%;
+    padding: 0 4.5%;
 }
 
 .project-title h2 {

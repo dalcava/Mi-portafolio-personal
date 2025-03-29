@@ -1,6 +1,7 @@
 <script>
   import { onMount } from 'svelte';
   import gsap from 'gsap';
+  import Tabs from '../components/Tabs.svelte';
 
   let palabraFrente;
 
@@ -65,31 +66,29 @@
       </div>
     </div>
   </div>
-
-  <div class="Lightbulb">
-    <img src="/Recursos/header/Scroll.gif" alt="Lightbulb" />
-  </div>
 </header>
 
 
 <!-- Estilos -->
 <style>
-  .header-section {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    width: 100%;
-    height: 100px;
-    position: fixed;
-    z-index: 3;
-    gap: 25%;
-    transition: transform 0.3s ease-out;
-    padding: 0px 80px;
-  }
+.header-section {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  height: 100px;
+  position: fixed;
+  z-index: 3;
+  gap: 25%;
+  transition: transform 0.3s ease-out;
+  padding: 0px 80px;
+  bottom: 0;
+  left: 0;
+}
 
   .personal-photo {
     min-width: 64px;
-    height: 64px;
+    min-height: 64px;
     cursor: pointer;
   }
 
@@ -129,10 +128,9 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: flex-end;
     width: 100%;
     height: 100%;
-    padding-right: 10%;
   }
 
   .icon-buttons {
@@ -194,15 +192,16 @@
 
   .navigation-buttons {
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
-    gap: 160px;
+    gap: 80%;
     max-width: 320px;
     width: 100%;
+    flex-direction: row;
   }
 
   .Lightbulb {
-    min-width: 64px;
+    min-width: 100px;
     height: 64px;
     cursor: pointer;
   }
@@ -227,5 +226,7 @@
   .contact {
     color: var(--Gris);
   }
+
+  
 
 </style>

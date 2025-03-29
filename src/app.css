@@ -4,35 +4,35 @@
 
 @font-face {
     font-family: 'Thunder';
-    src: url('/fonts/Thunder/Thunder-LC.ttf') format('opentype');
+    src: url('/Fuentes/Thunder/Thunder-LC.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'Thunder Extra';
-    src: url('/fonts/Thunder/Thunder-ExtraBoldLC.ttf') format('opentype');
+    src: url('/Fuentes/Thunder/Thunder-ExtraBoldLC.ttf') format('truetype');
     font-weight: 800;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'Funnel Display';
-    src: url('/fonts/Funnel_Display/FunnelDisplay-VariableFont_wght.ttf') format('opentype');
+    src: url('/Fuentes/Funnel_Display/FunnelDisplay-VariableFont_wght.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'Publica Sans Bold';
-    src: url('/fonts/Publica/PublicaSans-Medium.otf') format('opentype');
+    src: url('/Fuentes/Publica/PublicaSans-Medium.otf') format('opentype');
     font-weight: bold;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'Publica Sans';
-    src: url('/fonts/Publica/PublicaSans-Light.otf') format('opentype');
+    src: url('/Fuentes/Publica/PublicaSans-Light.otf') format('opentype');
     font-weight: 100;
 }
 

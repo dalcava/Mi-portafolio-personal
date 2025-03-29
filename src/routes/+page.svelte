@@ -5,6 +5,7 @@
   import Slider from '../components/Slider.svelte';
   import CanvasParticles from '../components/CanvasParticles.svelte';
   import Contador from '../components/Contador.svelte';
+  import Tabs from '../components/Tabs.svelte';
   Contador
   onMount(() => {
     const loadingScreen = document.getElementById('loading-screen');
@@ -53,14 +54,14 @@
   <!-- Fondo animado con canvas -->
   
   <div class="hero">
+    <Tabs />
     <div class="white-overlay"></div>
     <CanvasParticles />
+    <!-- Slider principal -->
+    <Slider />
 
     <!-- Header superior -->
     <Header />
-
-    <!-- Slider principal -->
-    <Slider />
 
     <!-- Scrollbar opcional -->
     <div class="swiper-scrollbar"></div>
@@ -148,7 +149,8 @@
     position: fixed;
     bottom: 20px;
     left: 20px;
-    z-index: 2001; /* Ensure it's above most elements */
+    z-index: 1; /* Ensure it's above most elements */
   }
+  
 
 </style>

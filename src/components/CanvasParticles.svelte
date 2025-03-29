@@ -36,7 +36,7 @@
   
         if (distance < mouse.radius) {
           let t = distance / mouse.radius;
-          this.color = interpolateColor('#F6F6F6', '#BAE0D9', t);
+          this.color = interpolateColor('#F6F6F6', '#044338', t);
         } else {
           this.color = '#D1D1D6';
         }
@@ -153,8 +153,8 @@
     });
   </script>
   
-  <canvas id="canvas" bind:this={canvas}></canvas>
-  <div class="blur-layer"></div>
+  <canvas id="canvas" bind:this={canvas}></canvas><!-- 
+  <div class="blur-layer"></div> -->
   
   <style>
     #canvas {
@@ -167,7 +167,7 @@
       background: var(--blanco);
     }
   
-    .blur-layer {
+/*     .blur-layer {
       position: absolute;
       top: 0;
       left: 0;
@@ -175,14 +175,9 @@
       height: 100%;
       pointer-events: none;
       z-index: 1;
-      background: linear-gradient(180deg,
-        rgba(246, 246, 246, 1) 0%,
-        rgba(246, 246, 246, 0.1) 21%,
-        rgba(153, 153, 153, 0.15) 74%,
-        rgba(246, 246, 246, 0.85) 100%
-      );
+      background: var(--blanco);
       backdrop-filter: blur(1.5px);
       opacity: 0.1;
-    }
+    } */
   </style>
   
