@@ -86,6 +86,8 @@
   left: 0;
   background: #f6f6f625;
   backdrop-filter: blur(8px);
+  border-top: 1px solid #f6f6f625;
+  border-bottom: 1px solid #f6f6f625;
 }
 
   .personal-photo {

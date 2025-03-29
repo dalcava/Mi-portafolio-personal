@@ -19,7 +19,7 @@
         {
             title: "Kinetic Rush",
             category: "3D Motion",
-            text: "Exploración dinámica del movimiento cinético en entornos digitales con efectos de profundidad envolventes."
+            text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
         },
         {
             title: "Control",
@@ -29,17 +29,17 @@
         {
             title: "Aval Pay Center",
             category: "Branding + App",
-            text: "Solución integral para pagos digitales con identidad visual sólida y accesibilidad multiplataforma."
+            text: "Solución integral para pagos digitales con identidad visual sólida y accesibilidad multiplataforma.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore."
         },
         {
             title: "Duraznos",
             category: "Experimental Visual",
-            text: "Una pieza visual poética que mezcla elementos naturales y técnicas de animación abstracta."
+            text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
         },
         {
             title: "CR Project",
             category: "UX Strategy",
-            text: "Estrategia centrada en la experiencia del usuario con diseño minimalista y arquitectura de información clara."
+            text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
         },
         {
             title: "Chasms call",
@@ -100,12 +100,15 @@
         navigateSwiper(direction);
     }
 
+
+    /* -------------------------------------------Aquí empieza swiper ---------------------------------------------- */
+
     onMount(() => {
         swiper = new Swiper('.swiper', {
             effect: "slide",
-            slidesPerView: 'auto',
+            slidesPerView: '5.7',
             centeredSlides: true,
-            initialSlide: 0,
+            initialSlide: 1,
             loop: false,
             spaceBetween: 16,
             pagination: {
@@ -223,10 +226,49 @@
             });
         });
 
+        // Animaciones iniciales del slider con GSAP
+        const sliderIntro = gsap.timeline({ delay: 0.2 });
+        
+        sliderIntro
+        .fromTo(
+            ".swiper-slide",
+            { clipPath: "inset(0 100% 0 0 0)", y: 250 },
+            { clipPath: "inset(0 0% 0 0)", y: 0, duration: 1.5, ease: "elastic.out(1, 0.9)" },
+            "=1.2"
+        )
+          .fromTo(
+            ".swiper",
+            { opacity: 0, y: 0 }, // Start invisible and slightly below
+            { opacity: 1, y: 0, duration: 0.05, ease: "power4.out", stagger: 0.5 }, // Fade and move in
+            "-=1.5"
+        )
+          .fromTo(
+            ".pagination-container",
+            { opacity: 0, y: 0 }, // Start invisible and slightly below
+            { opacity: 1, y: 0, duration: 0.35, ease: "power4.out", stagger: 0.5 }, // Fade and move in
+            "-=0.75"
+        )
+          .fromTo(
+            ".project-text",
+            { clipPath: "inset(0 100% 0 0)" },
+            { clipPath: "inset(0 0% 0 0)", duration: 1, ease: "power4.out" },
+            "-=0.25"
+          )
+          .fromTo(
+            ".project-description",
+            { clipPath: "inset(0 100% 0 0)" },
+            { clipPath: "inset(0 0% 0 0)", duration: 1, ease: "power4.out" },
+            "-=1.25"
+          );
+
+          
         return () => {
             window.removeEventListener("wheel", handleWheel);
         };
+
     });
+
+
 </script>
 
   
@@ -363,8 +405,8 @@
         </div>
     </div>
     <div class="Description-container">
-        <div>
-
+        <div class="Lightbulb">
+            <img src="/Recursos/header/Scroll.gif" alt="Lightbulb" />
         </div>
 
         <div class="project-description">
@@ -405,7 +447,7 @@ transition: all 0.1s ease-out;
     border-radius: 16px;
 }
 :global(.swiper-slide-active) {
-    width: 1048px !important;
+    width: 58.35% !important;
 }
 :global(.swiper-slide .grid) {
     opacity: 0 !important;
@@ -526,6 +568,7 @@ transition: all 0.1s ease-out;
     gap: 16px;
     display: flex;
     flex-direction: column;
+    transform: translateY(-28px);
 }
 .custom-box-left,
 .custom-box-right {
@@ -655,7 +698,7 @@ transition: all 0.1s ease-out;
 .swiper-button-next:hover .new-icon {
     transform: scaleX(1.25) scaleY(1); /* Slightly enlarge on hover */
 }
-.swiper-wrapper {
+:global(.swiper-wrapper) {
     transition-timing-function: ease-out !important; /* Smooth easing effect */
 }
 
@@ -709,14 +752,20 @@ transition: all 0.1s ease-out;
 .Description-container {
     display: flex;
     flex-direction: row;
-    justify-content: center;
-    align-items: center;
+    justify-content: flex-start;
+    align-items: flex-start;
     width: 50%;
-    height: 100%;
-    padding: 0 4.5%;
-    gap: 16px;
+    height: auto;
+    /* gap: 72px; */
     z-index: 10;
 }
+.Lightbulb {
+    width: 80px;
+    cursor: pointer;
+    z-index: 10;
+    margin: 56px;
+}
+
 .project-description {
     display: flex;
     flex-direction: column;
@@ -728,7 +777,7 @@ transition: all 0.1s ease-out;
 .project-category a {
   font-family: 'Publica Sans', sans-serif;
   font-weight: 100;
-  font-size: 12px;
+  font-size: var(--font-size-XXS);
   color: var(--Gris);
   text-decoration: none;
   display: inline-block;

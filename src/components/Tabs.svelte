@@ -2,7 +2,7 @@
   import { onMount } from 'svelte';
   import gsap from 'gsap';
   
-  export let tabs = ['3D', '2D'];
+  export let tabs = ['3D', 'UX'];
   let activeTab = tabs[0]; // Tab activa inicialmente
 
   const setActiveTab = (tab) => {
@@ -56,7 +56,7 @@
     user-select: none;
     transform: translateY(-20px);
     height: 72px;
-    transition: all 0.25s ease-out;
+    transition: all 0.2s ease-out;
     cursor: pointer;
   }
 

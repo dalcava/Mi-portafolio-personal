@@ -75,16 +75,16 @@
   
     function initParticles() {
       particlesArray = [];
-      const rows = 140;
+      const rows = 120;
       const cols = 32;
       const gridWidth = canvas.width / cols;
       const gridHeight = canvas.height / rows;
-      const size = Math.min(canvas.width, canvas.height) * 0.00085;
+      const size = Math.min(canvas.width, canvas.height) * 0.00075;
   
       for (let row = 0; row < rows; row++) {
         for (let col = 0; col < cols; col++) {
           let x = col * gridWidth + gridWidth / 0.07535;
-          let y = row * gridHeight + gridHeight / 2;
+          let y = row * gridHeight + gridHeight / 1;
           let moveHorizontal = Math.random() > 0.5;
           let directionX = moveHorizontal ? (Math.random() * 0.2) - 0.1 : 0;
           let directionY = moveHorizontal ? 0 : (Math.random() * 0.2) - 0.1;
