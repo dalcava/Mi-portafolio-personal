@@ -4,7 +4,8 @@
   import Header from '../components/Header.svelte';
   import Slider from '../components/Slider.svelte';
   import CanvasParticles from '../components/CanvasParticles.svelte';
-
+  import Contador from '../components/Contador.svelte';
+  Contador
   onMount(() => {
     const loadingScreen = document.getElementById('loading-screen');
     const tl = gsap.timeline({
@@ -63,6 +64,10 @@
 
     <!-- Scrollbar opcional -->
     <div class="swiper-scrollbar"></div>
+  </div>
+
+  <div class="contador-container">
+    <Contador />
   </div>
 </div>
 
@@ -137,5 +142,13 @@
     opacity: 0; /* Hidden initially */
     pointer-events: none;
 }
+
+  /* Position Contador in bottom-left corner */
+  .contador-container {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    z-index: 2001; /* Ensure it's above most elements */
+  }
 
 </style>
