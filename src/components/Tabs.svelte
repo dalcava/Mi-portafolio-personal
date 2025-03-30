@@ -1,14 +1,18 @@
 <script>
-  import { onMount } from 'svelte';
+  import { createEventDispatcher, onMount } from 'svelte';
   import gsap from 'gsap';
-  
+
   export let tabs = ['3D', 'UX'];
-  let activeTab = tabs[0]; // Tab activa inicialmente
+  let activeTab = tabs[0];
+
+  const dispatch = createEventDispatcher();
 
   const setActiveTab = (tab) => {
     activeTab = tab;
+    dispatch('tabChange', tab); // ← Dispara el evento al padre
   };
 </script>
+
 
 <div class="tabs-carrusel-fixed">
   <div class="tabs-carrusel">

@@ -21,8 +21,11 @@
   
       draw() {
         ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
-        ctx.fillStyle = this.color;
+        let gradient = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.size * 1.5);
+        gradient.addColorStop(0, this.color); // centro del punto
+        gradient.addColorStop(1, 'rgba(0, 0, 0, 0)'); // borde difuso
+        ctx.fillStyle = gradient;
+        ctx.arc(this.x, this.y, this.size * 1.5, 0, Math.PI * 2, false);
         ctx.fill();
       }
   
@@ -75,15 +78,15 @@
   
     function initParticles() {
       particlesArray = [];
-      const rows = 120;
-      const cols = 32;
+      const rows = 80;
+      const cols = 32.3;
       const gridWidth = canvas.width / cols;
       const gridHeight = canvas.height / rows;
       const size = Math.min(canvas.width, canvas.height) * 0.00075;
   
       for (let row = 0; row < rows; row++) {
         for (let col = 0; col < cols; col++) {
-          let x = col * gridWidth + gridWidth / 0.07535;
+          let x = col * gridWidth + gridWidth / 0.0737;
           let y = row * gridHeight + gridHeight / 1;
           let moveHorizontal = Math.random() > 0.5;
           let directionX = moveHorizontal ? (Math.random() * 0.2) - 0.1 : 0;
@@ -100,7 +103,7 @@
     }
   
     function checkCanvasSize() {
-      if (window.innerWidth < 601) {
+      if (window.innerWidth < 1201) {
         cancelAnimationFrame(animationFrameId);
         canvas.style.display = 'none';
       } else {
@@ -115,7 +118,7 @@
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
       ctx = canvas.getContext('2d');
-      mouse.radius = (canvas.height / 81) * (canvas.width / 81);
+      mouse.radius = (canvas.height / 60) * (canvas.width / 60);
     }
   
     onMount(() => {
@@ -179,5 +182,11 @@
       backdrop-filter: blur(1.5px);
       opacity: 0.1;
     } */
+
+@media (max-width: 1200px) {
+    #canvas {
+      display: none !important;
+    }
+  }
   </style>
   

@@ -4,6 +4,8 @@
     import 'swiper/css/bundle';
     import gsap from 'gsap';
     import { ScrollTrigger } from 'gsap/ScrollTrigger';
+    import { goto } from '$app/navigation';
+
 
     let swiper;
 
@@ -14,9 +16,22 @@
     let titleElement;
     let categoryElement;
     let textElement;
-    const AUTOPLAY_DELAY = 480000;
+    const AUTOPLAY_DELAY = 4800;
+    let isInitialLoad = true;
 
 
+    import { createEventDispatcher } from 'svelte';
+	const dispatch = createEventDispatcher();
+
+	function handleClick(event) {
+		const slide = event.currentTarget.closest('.swiper-slide');
+		const nextPage = slide?.dataset?.url;
+		if (nextPage) {
+			dispatch('slideClick', { nextPage, image: slide.querySelector('.imagen-contenida') });
+		}
+	}
+
+/* ----------------------------------------- Acá irán los textos de las descripciones ---------------------------------------- */
     const descriptions = [
         {
             title: "Kinetic Rush",
@@ -25,22 +40,12 @@
         },
         {
             title: "Control",
-            category: "UI Design",
+            category: "3D Motion",
             text: "This project is a tribute to The Legend of Zelda series, featuring a personalized custom skin for the Nintendo Switch Pro Controller. It showcases a fully 3D animated product presentation, created as a practice piece and an homage to the iconic game franchise. The animation highlights a unique Zelda-themed design, crafted to celebrate the artistic and legendary world of Hyrule."
-        },
-        {
-            title: "Aval Pay Center",
-            category: "Branding + App",
-            text: "Solución integral para pagos digitales con identidad visual sólida y accesibilidad multiplataforma.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore."
         },
         {
             title: "Duraznos",
             category: "Experimental Visual",
-            text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
-        },
-        {
-            title: "CR Project",
-            category: "UX Strategy",
             text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
         },
         {
@@ -112,6 +117,45 @@
         navigateSwiper(direction);
     }
 
+    function runIntroAnimation() {
+        const sliderIntro = gsap.timeline({ delay: isInitialLoad ? 3 : 0 });
+
+        sliderIntro
+        .fromTo(
+            ".swiper-slide",
+            { clipPath: "inset(0 100% 0 0)", y: 250 },
+            { clipPath: "inset(0 0% 0 0)", y: 0, duration: 1.5, ease: "elastic.out(1, 0.9)" },
+            "-=2.5"
+        )
+        .fromTo(
+            ".swiper",
+            { opacity: 0, y: 0 },
+            { opacity: 1, y: 0, duration: 0.05, ease: "power4.out", stagger: 0.5 },
+            "-=1.5"
+        )
+        .fromTo(
+            ".pagination-container",
+            { opacity: 0, y: 0 },
+            { opacity: 1, y: 0, duration: 0.35, ease: "power4.out", stagger: 0.5 },
+            "-=0.75"
+        )
+        .fromTo(
+            ".project-text",
+            { clipPath: "inset(0 100% 0 0)" },
+            { clipPath: "inset(0 0% 0 0)", duration: 1, ease: "power4.out" },
+            "-=0.25"
+        )
+        .fromTo(
+            ".project-description",
+            { clipPath: "inset(0 100% 0 0)" },
+            { clipPath: "inset(0 0% 0 0)", duration: 1, ease: "power4.out" },
+            "-=1.25"
+        );
+
+        isInitialLoad = false;
+    }
+
+
 
     /* ----------------------------------------------------------------------------------------------------------
     -------------------------------------------Aquí empieza swiper ---------------------------------------------- 
@@ -122,7 +166,7 @@
             effect: "slide",
             slidesPerView: '5.7',
             centeredSlides: true,
-            initialSlide: 5,
+            initialSlide: 1,
             loop: false,
             spaceBetween: 16,
             pagination: {
@@ -136,7 +180,7 @@
             autoplay: {
                 delay: AUTOPLAY_DELAY,
                 disableOnInteraction: false,
-                reverseDirection: true
+                reverseDirection: false
             },
             speed: 800,
             simulateTouch: true,
@@ -264,42 +308,8 @@
             });
         });
 
-        // Animaciones iniciales del slider con GSAP
-        const sliderIntro = gsap.timeline({ delay: 0.2 });
-        
-        sliderIntro
-        .fromTo(
-            ".swiper-slide",
-            { clipPath: "inset(0 100% 0 0 0)", y: 250 },
-            { clipPath: "inset(0 0% 0 0)", y: 0, duration: 1.5, ease: "elastic.out(1, 0.9)" },
-            "=1.2"
-        )
-          .fromTo(
-            ".swiper",
-            { opacity: 0, y: 0 }, // Start invisible and slightly below
-            { opacity: 1, y: 0, duration: 0.05, ease: "power4.out", stagger: 0.5 }, // Fade and move in
-            "-=1.5"
-        )
-          .fromTo(
-            ".pagination-container",
-            { opacity: 0, y: 0 }, // Start invisible and slightly below
-            { opacity: 1, y: 0, duration: 0.35, ease: "power4.out", stagger: 0.5 }, // Fade and move in
-            "-=0.75"
-        )
-          .fromTo(
-            ".project-text",
-            { clipPath: "inset(0 100% 0 0)" },
-            { clipPath: "inset(0 0% 0 0)", duration: 1, ease: "power4.out" },
-            "-=0.25"
-          )
-          .fromTo(
-            ".project-description",
-            { clipPath: "inset(0 100% 0 0)" },
-            { clipPath: "inset(0 0% 0 0)", duration: 1, ease: "power4.out" },
-            "-=1.25"
-          );
+        runIntroAnimation();  
 
-          
         return () => {
             window.removeEventListener("wheel", handleWheel);
         };
@@ -334,7 +344,7 @@
         <div class="swiper-wrapper">
             <div class="swiper-slide">
                 <div class="image-container static-img">
-                    <img src="/Recursos/Slider/Kinetic rush-static.webp" alt="Static Image 1" class="imagen-contenida">
+                    <img src="/Recursos/Slider/3D/Kinetic rush-static.webp" alt="Static Image 1" class="imagen-contenida">
                     <div class="grid">
                         <div class="grid-collumn"></div>
                         <div class="grid-collumn"></div>
@@ -345,14 +355,14 @@
                         <div class="grid-collumn"></div>
                     </div>
                 </div>
-                <img src="/Recursos/Slider/Kinetic rush-active.gif" alt="Active GIF 1" class="active-gif">
+                <img src="/Recursos/Slider/3D/Kinetic rush-active.gif" alt="Active GIF 1" class="active-gif">
                 <div class="blur-container">
                     <div class="blur"></div>
                 </div>
             </div>
-            <div class="swiper-slide" data-url="./Control.html">
+            <div class="swiper-slide" data-url="/Control" on:click={handleClick}>
                 <div class="image-container static-img">
-                    <img src="/Recursos/Slider/Control-static.webp" alt="Static Image 2" class="imagen-contenida">
+                    <img src="/Recursos/Slider/3D/Control-static.webp" alt="Static Image 2" class="imagen-contenida">
                     <div class="grid">
                         <div class="grid-collumn"></div>
                         <div class="grid-collumn"></div>
@@ -363,32 +373,14 @@
                         <div class="grid-collumn"></div>
                     </div>
                 </div>
-                <img src="/Recursos/Slider/Control-active.gif" alt="Active GIF 2" class="active-gif">
-                <div class="blur-container">
-                    <div class="blur"></div>
-                </div>
-            </div>
-            <div class="swiper-slide" data-url="./Aval_pay_center.html">
-                <div class="image-container static-img">
-                    <img src="/Recursos/Slider/AvalPay-Static.webp" alt="Static Image 3" class="imagen-contenida">
-                    <div class="grid">
-                        <div class="grid-collumn"></div>
-                        <div class="grid-collumn"></div>
-                        <div class="grid-collumn"></div>
-                        <div class="grid-collumn"></div>
-                        <div class="grid-collumn"></div>
-                        <div class="grid-collumn"></div>
-                        <div class="grid-collumn"></div>
-                    </div>
-                </div>
-                <img src="/Recursos/Slider/AvalPay-Active.gif" alt="Active GIF 3" class="active-gif">
+                <img src="/Recursos/Slider/3D/Control-active.gif" alt="Active GIF 2" class="active-gif">
                 <div class="blur-container">
                     <div class="blur"></div>
                 </div>
             </div>
             <div class="swiper-slide">
                 <div class="image-container static-img">
-                    <img src="/Recursos/Slider/Duraznos intro.gif" alt="Static Image 3" class="imagen-contenida">
+                    <img src="/Recursos/Slider/3D/Duraznos intro.gif" alt="Static Image 3" class="imagen-contenida">
                     <div class="grid">
                         <div class="grid-collumn"></div>
                         <div class="grid-collumn"></div>
@@ -399,14 +391,14 @@
                         <div class="grid-collumn"></div>
                     </div>
                 </div>
-                <img src="/Recursos/Slider/Duraznos active.gif" alt="Active GIF 3" class="active-gif">
+                <img src="/Recursos/Slider/3D/Duraznos active.gif" alt="Active GIF 3" class="active-gif">
                 <div class="blur-container">
                     <div class="blur"></div>
                 </div>
             </div>
             <div class="swiper-slide">
                 <div class="image-container static-img">
-                    <img src="/Recursos/Slider/CR.webp" alt="Static Image 4" class="imagen-contenida">
+                    <img src="/Recursos/Slider/3D/Chasms call.webp" alt="Static Image 5" class="imagen-contenida">
                     <div class="grid">
                         <div class="grid-collumn"></div>
                         <div class="grid-collumn"></div>
@@ -417,25 +409,7 @@
                         <div class="grid-collumn"></div>
                     </div>
                 </div>
-                <img src="/Recursos/Slider/AvalPay-Active.gif" alt="Active GIF 4" class="active-gif">
-                <div class="blur-container">
-                    <div class="blur"></div>
-                </div>
-            </div>
-            <div class="swiper-slide">
-                <div class="image-container static-img">
-                    <img src="/Recursos/Slider/Chasms call.webp" alt="Static Image 5" class="imagen-contenida">
-                    <div class="grid">
-                        <div class="grid-collumn"></div>
-                        <div class="grid-collumn"></div>
-                        <div class="grid-collumn"></div>
-                        <div class="grid-collumn"></div>
-                        <div class="grid-collumn"></div>
-                        <div class="grid-collumn"></div>
-                        <div class="grid-collumn"></div>
-                    </div>
-                </div>
-                <img src="/Recursos/Slider/Chasms call.webp" alt="Active GIF 5" class="active-gif">
+                <img src="/Recursos/Slider/3D/Chasms call.webp" alt="Active GIF 5" class="active-gif">
                 <div class="blur-container">
                     <div class="blur"></div>
                 </div>
@@ -769,6 +743,11 @@ transition: all 0.1s ease-out;
     cursor: pointer;
     z-index: 10;
     margin: 56px;
+    filter: saturate(0);
+}
+.Lightbulb:hover {
+    filter: saturate(1);
+    transition: filter 0.25s ease-in-out;
 }
 
 .project-description {
@@ -843,7 +822,7 @@ transition: all 0.1s ease-out;
         padding-top: 160px;
     }
     .swiper {
-        height: 560px;
+        height: 440px;
     }
     .active-gif{
         display: none;

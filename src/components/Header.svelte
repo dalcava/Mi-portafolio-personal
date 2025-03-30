@@ -85,7 +85,7 @@
   bottom: 0;
   left: 0;
   background: #f6f6f625;
-  backdrop-filter: blur(8px);
+  backdrop-filter: blur(2px);
   border-top: 1px solid #f6f6f625;
   border-bottom: 1px solid #f6f6f625;
 }

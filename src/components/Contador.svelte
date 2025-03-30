@@ -9,7 +9,7 @@
   <p>
     {width} x {height} px
   </p>
-  <h1>Screen</h1>
+  <h2>Screen</h2>
 </div>
 
 <style>
@@ -22,16 +22,16 @@
     z-index: 1000;
     text-align: start;
   }
-  h1 {
+  h2 {
     font-family: "Publica Sans", sans-serif;
     font-size: var(--font-size-XXS);
     font-weight: 100;
-    color: var(--Gris-oscuro);
+    color: var(--Gris-claro);
   }
   p {
     font-family: "Publica Sans", sans-serif;
     font-size: var(--font-size-S);
-    font-weight: 300;
-    color: var(--Gris-oscuro);
+    font-weight: 100;
+    color: var(--Gris);
   }
 </style>
