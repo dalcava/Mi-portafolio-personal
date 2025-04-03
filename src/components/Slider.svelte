@@ -84,9 +84,9 @@
         const desc = descriptions[index];
 
         if (desc) {
-            scrambleText(titleElement, desc.title, 0.25);
-            scrambleText(categoryElement, desc.category, 0.5);
-            scrambleText(textElement, desc.text, 0.5);
+            scrambleText(titleElement, desc.title, 0.05);
+            scrambleText(categoryElement, desc.category, 0.05);
+            scrambleText(textElement, desc.text, 0.1);
         }
     }
 
@@ -681,15 +681,17 @@ transition: all 0.1s ease-out;
 }
 
 :global(.pagination-shape) {
-    position: absolute;
-    left: -18px;
-    top: 50%;
-    transform: translateY(-50%) translateX(10px);
-    height: 14px;
-    background-color: var(--Verde-claro); 
-    border-radius: 8px;
-    transition: all 0.3s ease-in-out;
+  position: absolute;
+  left: -18px;
+  top: 50%;
+  transform: translateY(-50%) translateX(10px);
+  height: 14px;
+  border-radius: 8px;
+  transition: all 0.3s ease-in-out;
+
+  background: linear-gradient(76deg, rgba(9,161,134,1) 0%, rgb(25, 163, 138) 40%, rgba(9,161,134,1) 70%);
 }
+
 :global(.swiper-button-container) {
     display: flex;
     align-items: center;
@@ -760,17 +762,18 @@ transition: all 0.1s ease-out;
     flex-direction: row;
     justify-content: flex-start;
     align-items: flex-start;
-    width: 50%;
+    width: 40%;
     height: auto;
     /* gap: 72px; */
     z-index: 10;
 }
 .Lightbulb {
-    width: 80px;
+    min-width: 80px;
     cursor: pointer;
     z-index: 10;
     margin: 56px;
     filter: saturate(0);
+    max-width: 80px;
 }
 .Lightbulb:hover {
     filter: saturate(1);
@@ -796,12 +799,25 @@ transition: all 0.1s ease-out;
   line-height: 0;
 }
 .project-title h2 {
-    font-family: 'Publica Sans', sans-serif;
+  font-family: 'Publica Sans bold', sans-serif;
   font-weight: bold;
   font-size: var(--font-size-L);
-  color: var(--Verde-claro);
   line-height: 1.2;
+
+  background: linear-gradient(76deg, rgba(9,161,134,1) 10%, rgb(55, 211, 182) 40%, rgba(9,161,134,1) 70%);
+  background-size: 200%;
+  background-position: 0% 50%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shine 6s ease-in-out infinite;
 }
+@keyframes shine {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+
 .project-text p {
   font-family: 'Publica Sans', sans-serif;
   font-weight: 100;

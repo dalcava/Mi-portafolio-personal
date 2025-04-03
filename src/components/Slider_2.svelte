@@ -442,14 +442,13 @@
 <style>
 
 .swiper_2 {
-    position: relative;
-    width: 95.5%;
-    height: 480px;
-    border-radius: 16px;
-    overflow: hidden;
-    transition: all 0.1s ease-out;
+position: relative;
+width: 95.5%;
+height: 480px;
+border-radius: 16px;
+overflow: hidden;
+transition: all 0.1s ease-out;
 }
-
 .swiper_2-3d {
     perspective: 2600px;
 }
@@ -728,16 +727,17 @@
     flex-direction: row;
     justify-content: flex-start;
     align-items: flex-start;
-    width: 50%;
+    width: 40%;
     height: auto;
     z-index: 10;
 }
 .Lightbulb {
-    width: 80px;
+    min-width: 80px;
     cursor: pointer;
     z-index: 10;
     margin: 56px;
     filter: saturate(0);
+    max-width: 80px;
 }
 .Lightbulb:hover {
     filter: saturate(1);
@@ -763,7 +763,7 @@
   line-height: 0;
 }
 .project-title h2 {
-    font-family: 'Publica Sans', sans-serif;
+    font-family: 'Publica Sans bold', sans-serif;
   font-weight: bold;
   font-size: var(--font-size-L);
   color: var(--Verde-claro);

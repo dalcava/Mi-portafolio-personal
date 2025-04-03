@@ -121,12 +121,25 @@
     font-weight: 300;
     color: var(--Gris-oscuro);
   }
-  .main-subtitle span{
-    font-family: "Publica Sans", sans-serif;
-    font-size: var(--font-size-XS);
-    font-weight: 300;
-    color: var(--Verde-claro);
-  }
+  .main-subtitle span {
+  font-family: "Publica Sans", sans-serif;
+  font-size: var(--font-size-XS);
+  font-weight: 300;
+
+  background: linear-gradient(
+    76deg,
+    rgba(9, 161, 134, 1) 10%,
+    rgb(68, 196, 172) 40%,
+    rgba(9, 161, 134, 1) 70%
+  );
+  background-size: 200%;
+  background-position: 0% 50%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  animation: shine 6s ease-in-out infinite;
+}
+
 
   .header-content {
     display: flex;

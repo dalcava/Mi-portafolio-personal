@@ -1,8 +1,6 @@
-<!-- Este es el homepage -->
-
 <script>
   import { onMount } from "svelte";
-  import { goto } from "$app/navigation"; // Para navegación SvelteKit
+  import { goto } from "$app/navigation";
   import { gsap } from "gsap";
   import Header from '../components/Header.svelte';
   import Slider from '../components/Slider.svelte';
@@ -11,27 +9,21 @@
   import Contador from '../components/Contador.svelte';
   import Tabs from '../components/Tabs.svelte';
 
-  let activeTab = '3D'; // Pestaña activa por defecto
+  let activeTab = '3D';
 
-  // Se invoca al cambiar de tab
   function handleTabChange(event) {
     activeTab = event.detail;
     runIntroAnimation();
-    // Actualiza la descripción y ejecuta el efecto scrambleText
     updateDescription();
   }
 
-  // Función de animación de introducción (puedes personalizarla)
   function runIntroAnimation() {
     console.log("Animación de introducción activada");
-    // Aquí podrías agregar animaciones con gsap si lo requieres
   }
 
-  // Función que aplica el efecto "matrix" (letras aleatorias) sobre un elemento
-  // Recibe el elemento, el texto final y la duración (en segundos)
   function scrambleText(element, finalText, duration = 1) {
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    const frameRate = 30; // cuadros por segundo
+    const frameRate = 30;
     const totalFrames = Math.round(duration * frameRate);
     let frame = 0;
     const interval = setInterval(() => {
@@ -52,26 +44,20 @@
     }, 1000 / frameRate);
   }
 
-  // Función que actualiza la descripción según la pestaña activa
-  // y llama a scrambleText para animar el texto
   function updateDescription() {
     const element = document.getElementById('scrambled-text');
     if (!element) return;
-    // Define las descripciones para cada pestaña
     const descriptions = {
       '3D': 'Descripción para la pestaña 3D',
       'UX': 'Descripción para la pestaña UX',
       'UI': 'Descripción para la pestaña UI'
     };
     const finalText = descriptions[activeTab] || 'Descripción por defecto';
-    // Guarda el texto final (opcional, para referencia)
     element.dataset.finalText = finalText;
-    // Ejecuta la animación de scrambleText
     scrambleText(element, finalText, 1);
   }
 
   onMount(() => {
-    // Animación de la pantalla de carga
     const loadingScreen = document.getElementById('loading-screen');
     const tl = gsap.timeline({
       onComplete: () => {
@@ -99,7 +85,6 @@
       duration: 0.5
     });
 
-    // Transición al hacer clic en imágenes
     document.querySelectorAll(".image-container, .imagen-contenida, .active-gif").forEach((element) => {
       element.addEventListener("click", function () {
         const slide = this.closest(".swiper-slide");
@@ -131,7 +116,7 @@
 
         const tlClick = gsap.timeline({
           onComplete: () => {
-            goto(nextPage); // Navegación con goto de SvelteKit
+            goto(nextPage);
           },
         });
 
@@ -157,12 +142,11 @@
       });
     });
 
-    // Llamamos a updateDescription inicialmente para animar el texto en la pestaña activa por defecto
     updateDescription();
+
+    // Se ha eliminado la funcionalidad de la elipse del fondo
   });
 </script>
-
-
 
 <!-- Pantalla de carga -->
 <div id="loading-screen">
@@ -179,7 +163,7 @@
     <Tabs on:tabChange={handleTabChange} />
     <div class="white-overlay"></div>
     <CanvasParticles />
-
+    <!-- La imagen de la elipse se ha eliminado -->
     <!-- Dynamic Slider -->
     {#if activeTab === '3D'}
       <Slider />
@@ -277,5 +261,50 @@
     bottom: 20px;
     left: 20px;
     z-index: 1;
+  }
+
+  .noisy-gradient {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background:
+      linear-gradient(135deg, #f6f6f6, #d1d1d6),
+      url('https://www.transparenttextures.com/patterns/asfalt-dark.png');
+    background-blend-mode: multiply;
+    background-size: cover;
+    opacity: 0.35;
+    pointer-events: none;
+    mix-blend-mode: multiply;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .hero-text {
+    font-size: 2rem;
+    color: var(--blanco);
+  }
+
+  .swiper-scrollbar {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
+  }
+  .swiper-scrollbar-drag {
+    background-color: var(--Verde-claro);
+    border-radius: 10px;
+  }
+  .swiper-scrollbar-drag::before {
+    background-color: var(--Verde-claro);
+    border-radius: 10px;
   }
 </style>
