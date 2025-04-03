@@ -40,14 +40,38 @@
         }
     ];
 
+    // Función para animar el cambio de texto con efecto "matrix" (letras aleatorias)
+    function scrambleText(element, finalText, duration = 1) {
+        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        const frameRate = 30; // cuadros por segundo
+        const totalFrames = Math.round(duration * frameRate);
+        let frame = 0;
+        const interval = setInterval(() => {
+            frame++;
+            let output = '';
+            for (let i = 0; i < finalText.length; i++) {
+                if (frame / totalFrames > i / finalText.length) {
+                    output += finalText[i];
+                } else {
+                    output += chars[Math.floor(Math.random() * chars.length)];
+                }
+            }
+            element.textContent = output;
+            if (frame >= totalFrames) {
+                clearInterval(interval);
+                element.textContent = finalText;
+            }
+        }, 1000 / frameRate);
+    }
+
     function updateDescription() {
         const index = swiper_2.realIndex;
         const desc = descriptions[index];
 
         if (desc) {
-            titleElement.textContent = desc.title;
-            categoryElement.textContent = desc.category;
-            textElement.textContent = desc.text;
+            scrambleText(titleElement, desc.title, 0.5);
+            scrambleText(categoryElement, desc.category, 0.5);
+            scrambleText(textElement, desc.text, 0.75);
         }
     }
 
@@ -102,7 +126,6 @@
         navigateSwiper(direction);
     }
 
-
     function runIntroAnimation() {
         const sliderIntro = gsap.timeline({ delay: isInitialLoad ? 3 : 0 });
 
@@ -140,7 +163,6 @@
         
         isInitialLoad = false;
     }
-
 
     /* ----------------------------------------------------------------------------------------------------------
     -------------------------------------------Aquí empieza swiper_2 ----------------------------------------------
@@ -286,13 +308,19 @@
             });
         });
 
-        runIntroAnimation();    
+        runIntroAnimation();   
+        
+        scrambleText(); setTimeout(() => {
+            updateDescription();
+        }, 1000);
+
         return () => {
             window.removeEventListener("wheel", handleWheel);
         };
 
     });
 </script>
+
 
 <!-- HTML de tu slider adaptado -->
 <div class="boolean-container">
@@ -657,10 +685,11 @@
     height: 100%;
     opacity: 1;
     z-index: 1;
-}
-.swiper-slide:hover .static-img {
-    filter: brightness(0.75);
     transition: all 0.5s ease-in-out;
+}
+
+.swiper-slide:hover .static-img {
+  filter: brightness(0.6);
 }
 
 .active-gif {
@@ -734,9 +763,9 @@
   line-height: 0;
 }
 .project-title h2 {
-  font-family: 'Thunder extra', sans-serif;
+    font-family: 'Publica Sans', sans-serif;
   font-weight: bold;
-  font-size: var(--font-size-XL);
+  font-size: var(--font-size-L);
   color: var(--Verde-claro);
   line-height: 1.2;
 }

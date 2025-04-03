@@ -2,7 +2,7 @@
 
 <script>
   import { onMount } from "svelte";
-  import { goto } from "$app/navigation"; // Importa goto para navegación SvelteKit
+  import { goto } from "$app/navigation"; // Para navegación SvelteKit
   import { gsap } from "gsap";
   import Header from '../components/Header.svelte';
   import Slider from '../components/Slider.svelte';
@@ -13,15 +13,61 @@
 
   let activeTab = '3D'; // Pestaña activa por defecto
 
+  // Se invoca al cambiar de tab
   function handleTabChange(event) {
     activeTab = event.detail;
     runIntroAnimation();
+    // Actualiza la descripción y ejecuta el efecto scrambleText
+    updateDescription();
   }
 
-  // Función de animación de introducción (defínela según tus necesidades)
+  // Función de animación de introducción (puedes personalizarla)
   function runIntroAnimation() {
     console.log("Animación de introducción activada");
-    // Puedes agregar aquí animaciones con gsap si lo requieres
+    // Aquí podrías agregar animaciones con gsap si lo requieres
+  }
+
+  // Función que aplica el efecto "matrix" (letras aleatorias) sobre un elemento
+  // Recibe el elemento, el texto final y la duración (en segundos)
+  function scrambleText(element, finalText, duration = 1) {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const frameRate = 30; // cuadros por segundo
+    const totalFrames = Math.round(duration * frameRate);
+    let frame = 0;
+    const interval = setInterval(() => {
+      frame++;
+      let output = '';
+      for (let i = 0; i < finalText.length; i++) {
+        if (frame / totalFrames > i / finalText.length) {
+          output += finalText[i];
+        } else {
+          output += chars[Math.floor(Math.random() * chars.length)];
+        }
+      }
+      element.textContent = output;
+      if (frame >= totalFrames) {
+        clearInterval(interval);
+        element.textContent = finalText;
+      }
+    }, 1000 / frameRate);
+  }
+
+  // Función que actualiza la descripción según la pestaña activa
+  // y llama a scrambleText para animar el texto
+  function updateDescription() {
+    const element = document.getElementById('scrambled-text');
+    if (!element) return;
+    // Define las descripciones para cada pestaña
+    const descriptions = {
+      '3D': 'Descripción para la pestaña 3D',
+      'UX': 'Descripción para la pestaña UX',
+      'UI': 'Descripción para la pestaña UI'
+    };
+    const finalText = descriptions[activeTab] || 'Descripción por defecto';
+    // Guarda el texto final (opcional, para referencia)
+    element.dataset.finalText = finalText;
+    // Ejecuta la animación de scrambleText
+    scrambleText(element, finalText, 1);
   }
 
   onMount(() => {
@@ -85,7 +131,7 @@
 
         const tlClick = gsap.timeline({
           onComplete: () => {
-            goto(nextPage); // Usa goto para navegación SvelteKit
+            goto(nextPage); // Navegación con goto de SvelteKit
           },
         });
 
@@ -110,8 +156,12 @@
         }, "-=0.8");
       });
     });
+
+    // Llamamos a updateDescription inicialmente para animar el texto en la pestaña activa por defecto
+    updateDescription();
   });
 </script>
+
 
 
 <!-- Pantalla de carga -->

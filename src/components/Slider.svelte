@@ -31,7 +31,7 @@
 		}
 	}
 
-/* ----------------------------------------- Acá irán los textos de las descripciones ---------------------------------------- */
+    /* ----------------------------------------- Acá irán los textos de las descripciones ---------------------------------------- */
     const descriptions = [
         {
             title: "Kinetic Rush",
@@ -55,16 +55,41 @@
         }
     ];
 
+    // Función para animar el cambio de texto con efecto "matrix" (letras aleatorias)
+    function scrambleText(element, finalText, duration = 1) {
+        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        const frameRate = 620; // cuadros por segundo
+        const totalFrames = Math.round(duration * frameRate);
+        let frame = 0;
+        const interval = setInterval(() => {
+            frame++;
+            let output = '';
+            for (let i = 0; i < finalText.length; i++) {
+                if (frame / totalFrames > i / finalText.length) {
+                    output += finalText[i];
+                } else {
+                    output += chars[Math.floor(Math.random() * chars.length)];
+                }
+            }
+            element.textContent = output;
+            if (frame >= totalFrames) {
+                clearInterval(interval);
+                element.textContent = finalText;
+            }
+        }, 1000 / frameRate);
+    }
+
     function updateDescription() {
         const index = swiper.realIndex;
         const desc = descriptions[index];
 
         if (desc) {
-            titleElement.textContent = desc.title;
-            categoryElement.textContent = desc.category;
-            textElement.textContent = desc.text;
+            scrambleText(titleElement, desc.title, 0.25);
+            scrambleText(categoryElement, desc.category, 0.5);
+            scrambleText(textElement, desc.text, 0.5);
         }
     }
+
 
     const navigateSwiper = (direction) => {
         if (isAnimating) return;
@@ -82,31 +107,31 @@
     };
 
     function animateBullet() {
-    gsap.fromTo(
-        '.swiper-pagination-bullet-active',
-        { scale: 0.8, opacity: 0.5 },
-        { scale: 1, opacity: 1, duration: 0.3, ease: 'power2.out' }
-    );
-
-    document.querySelectorAll('.swiper-pagination-bullet').forEach(b => (b.innerHTML = ''));
-
-    const active = document.querySelector('.swiper-pagination-bullet-active');
-    if (active) {
-        const shape = document.createElement('div');
-        shape.classList.add('pagination-shape');
-        active.prepend(shape);
-
         gsap.fromTo(
-            shape,
-            { width: '12px' },
-            {
-                width: '72px',
-                duration: (AUTOPLAY_DELAY + 600) / 1000,
-                ease: 'linear'
-            }
+            '.swiper-pagination-bullet-active',
+            { scale: 0.8, opacity: 0.5 },
+            { scale: 1, opacity: 1, duration: 0.3, ease: 'power2.out' }
         );
+
+        document.querySelectorAll('.swiper-pagination-bullet').forEach(b => (b.innerHTML = ''));
+
+        const active = document.querySelector('.swiper-pagination-bullet-active');
+        if (active) {
+            const shape = document.createElement('div');
+            shape.classList.add('pagination-shape');
+            active.prepend(shape);
+
+            gsap.fromTo(
+                shape,
+                { width: '12px' },
+                {
+                    width: '72px',
+                    duration: (AUTOPLAY_DELAY + 600) / 1000,
+                    ease: 'linear'
+                }
+            );
+        }
     }
-}
 
     function handleWheel(e) {
         const now = Date.now();
@@ -155,10 +180,8 @@
         isInitialLoad = false;
     }
 
-
-
     /* ----------------------------------------------------------------------------------------------------------
-    -------------------------------------------Aquí empieza swiper ---------------------------------------------- 
+    -------------------------------------------Aquí empieza swiper ----------------------------------------------
     -------------------------------------------------------------------------------------------------------------*/
 
     onMount(() => {
@@ -191,24 +214,24 @@
 
             breakpoints: {
                 200: {
-                // >= 1000px
-                slidesPerView: "1",
+                    // >= 1000px
+                    slidesPerView: "1",
                 },
                 1201: {
-                // >= 1200px
-                slidesPerView: "4",
+                    // >= 1200px
+                    slidesPerView: "4",
                 },
                 1360: {
-                // >= 1200px
-                slidesPerView: "5.42",
+                    // >= 1200px
+                    slidesPerView: "5.42",
                 },
                 1441: {
-                // >= 1440px
-                slidesPerView: "5.7",
+                    // >= 1440px
+                    slidesPerView: "5.7",
                 },
                 1921: {
-                // >= 1440px
-                slidesPerView: "6.5",
+                    // >= 1440px
+                    slidesPerView: "6.5",
                 },
 
             },
@@ -309,15 +332,18 @@
         });
 
         runIntroAnimation();  
+        
+        scrambleText(); setTimeout(() => {
+            updateDescription();
+        }, 1000);
 
         return () => {
             window.removeEventListener("wheel", handleWheel);
         };
 
     });
-
-
 </script>
+
 
   
   <!-- HTML de tu slider adaptado -->
@@ -689,10 +715,11 @@ transition: all 0.1s ease-out;
     height: 100%;
     opacity: 1; /* Always visible unless covered by GIF */
     z-index: 1; /* Behind the GIF */
-}
-.swiper-slide:hover .static-img {
-    filter: brightness(0.75);
     transition: all 0.5s ease-in-out;
+}
+
+.swiper-slide:hover .static-img {
+  filter: brightness(0.6);
 }
 
 .active-gif {
@@ -769,9 +796,9 @@ transition: all 0.1s ease-out;
   line-height: 0;
 }
 .project-title h2 {
-  font-family: 'Thunder extra', sans-serif;
+    font-family: 'Publica Sans', sans-serif;
   font-weight: bold;
-  font-size: var(--font-size-XL);
+  font-size: var(--font-size-L);
   color: var(--Verde-claro);
   line-height: 1.2;
 }
