@@ -171,7 +171,6 @@
       <Slider_2 />
     {/if}
 
-    <!-- Header superior -->
     <Header />
 
     <!-- Scrollbar opcional -->

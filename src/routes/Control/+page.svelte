@@ -1,8 +1,28 @@
 <!-- Esta es la página de control -->
 
 <script>
-    import { onMount } from "svelte";
-    import gsap from "gsap";
+  import { onMount } from "svelte";
+  import { goto } from "$app/navigation";
+  import { gsap } from "gsap";
+  import Header from '../../components/Header.svelte';
+  import AboutProject from '../../components//Secciones reutilizables/About_Proj.svelte';
+  import CanvasParticles from '../../components/CanvasParticles 2.svelte';
+
+  const description = `
+    This project is a tribute to <strong>The Legend of Zelda series</strong>, featuring a personalized custom skin for the Nintendo Switch Pro Controller. It showcases a fully 3D animated product presentation, created as a practice piece and an homage to the iconic game franchise. The animation highlights a unique Zelda-themed design, crafted to celebrate the artistic and legendary world of Hyrule.
+  `;
+
+  const purpose = `
+    This fan-made project is intended for skill development and portfolio showcasing, focusing on 3D product visualization and custom design. It is not affiliated with Nintendo or The Legend of Zelda.
+  `;
+
+  const tools = [
+    { src: "/Projects/Control/Recursos proyecto/Blender-Icon.svg", alt: "Blender" },
+    { src: "/Projects/Control/Recursos proyecto/Illustrator-Icon.svg", alt: "Illustrator" },
+    { src: "/Projects/Control/Recursos proyecto/AE-Icon.svg", alt: "After Effects" },
+    { src: "/Projects/Control/Recursos proyecto/PR-Icon.svg", alt: "Premiere Pro" },
+  ];
+
   
     onMount(() => {
       // ANIMACIONES DE ENTRADA CON GSAP
@@ -62,58 +82,46 @@
   
   <div class="white-overlay"></div>
   <div id="loading-screen"></div>
+
+  <Header />
   
   <section class="hero control-content">
     <div class="hero-content">
       <div class="hero-text">
-        <button class="tag-btn">Passion Project</button>
-        <h1 class="main-title">Pro Controller</h1>
+<!--         <button class="tag-btn">Passion Project</button> -->
         <p class="main-subtitle">
-          Unofficial Motion Graphics Presentation Inspired by Nintendo's Iconic
-          Designs.
+          3d Motion Graphic
+          <!-- Unofficial Motion Graphics Presentation Inspired by Nintendo's Iconic
+          Designs. -->
         </p>
+        <h1 class="main-title">Pro Controller</h1>
       </div>
       <div class="hero-image">
         <iframe
-          id="vimeoPlayer"
-          src="https://player.vimeo.com/video/1041647005?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479&amp;autoplay=1&amp;loop=1&amp;muted=1&amp;controls=0"
-          frameborder="0"
-          allow="autoplay; picture-in-picture"
-          allowfullscreen
-          sandbox="allow-same-origin allow-scripts allow-pointer-lock allow-forms allow-popups"
+        id="vimeoPlayer"
+        src="https://player.vimeo.com/video/1041647005?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479&amp;autoplay=1&amp;loop=1&amp;muted=1&amp;controls=0"
+        frameborder="0"
+        allow="autoplay; picture-in-picture"
+        allowfullscreen
+        sandbox="allow-same-origin allow-scripts allow-pointer-lock allow-forms allow-popups"
         ></iframe>
+<!--         <div class="canvas-container">
+          <CanvasParticles />
+        </div> -->
       </div>
     </div>
   </section>
   
   <section class="content">
-    <div class="proj-description">
-      <div class="description-image">
-        <img src="/Projects/Control/Recursos proyecto/Tribal zelda.png" alt="" />
-      </div>
-      <div class="description">
-        <div class="about-project">
-          <h2 class="description-title">About <span>the project</span></h2>
-          <div class="description-content">
-            <p>
-              This project is a tribute to <strong>The Legend of Zelda series</strong>, featuring a personalized custom skin for the Nintendo Switch Pro Controller. It showcases a fully 3D animated product presentation, created as a practice piece and an homage to the iconic game franchise. The animation highlights a unique Zelda-themed design, crafted to celebrate the artistic and legendary world of Hyrule.
-              <br /><br />
-              <strong>Purpose:</strong> This fan-made project is intended for skill development and portfolio showcasing, focusing on 3D product visualization and custom design. It is not affiliated with Nintendo or The Legend of Zelda.
-            </p>
-          </div>
-          <div class="tools">
-            <h3>3D Product Animation / Fan Art</h3>
-            <div class="tools-icons">
-              <p><strong>Tools Used:</strong></p>
-              <img src="/Projects/Control/Recursos proyecto/Blender-Icon.svg" alt="Blender" />
-              <img src="/Projects/Control/Recursos proyecto/Illustrator-Icon.svg" alt="Adobe Illustrator" />
-              <img src="/Projects/Control/Recursos proyecto/AE-Icon.svg" alt="Adobe After Effects" />
-              <img src="/Projects/Control/Recursos proyecto/PR-Icon.svg" alt="Adobe Premiere Pro" />
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <AboutProject
+      imageSrc="/Projects/Control/Recursos proyecto/Tribal zelda.png"
+      imageAlt="Zelda controller"
+      title="About the project"
+      {description}
+      {purpose}
+      category="3D Product Animation / Fan Art"
+      {tools}
+    />
   
     <div class="gallery">
       <div class="gallery-row 1">
@@ -138,46 +146,9 @@
           ></iframe>
         </div>
       </div>
-  
-      <div class="gallery-row 2">
-        <div class="gallery-text">
-          <h2 class="description-title">About <span>the project</span></h2>
-          <div class="description-content">
-            <p>
-              This project is a tribute to <strong>The Legend of Zelda series</strong>, featuring a personalized custom skin for the Nintendo Switch Pro Controller...
-            </p>
-          </div>
-        </div>
-        <div class="gallery-item">
-          <img src="/Projects/Control/Recursos proyecto/Control-static.webp" alt="Controller Closeup 1" />
-        </div>
-      </div>
-  
-      <div class="gallery-row 3">
-        <div class="gallery-item large">
-          <img src="/Projects/Control/Recursos proyecto/controller3.png" alt="Controller Showcase" />
-        </div>
-      </div>
-  
-      <div class="gallery-row 2">
-        <div class="gallery-item">
-          <img src="/Projects/Control/Recursos proyecto/controller1.png" alt="Controller Closeup 1" />
-        </div>
-        <div class="gallery-text">
-          <h2 class="description-title">About <span>the project</span></h2>
-          <div class="description-content">
-            <p>
-              This project is a tribute to <strong>The Legend of Zelda series</strong>...
-            </p>
-          </div>
-        </div>
-      </div>
-  
-      <div class="gallery-row 3">
-        <div class="gallery-item large">
-          <img src="/Projects/Control/Recursos proyecto/controller3.png" alt="Controller Showcase" />
-        </div>
-      </div>
+
+
+
     </div>
   </section>
   

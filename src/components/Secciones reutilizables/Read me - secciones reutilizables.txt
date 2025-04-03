@@ -1,0 +1,64 @@
+<script>
+  import Seccion1 from '$lib/components/seccion_contenido_1.svelte';
+  import Seccion2 from '$lib/components/seccion_contenido_2.svelte';
+  import Seccion3 from '$lib/components/seccion_contenido_3.svelte';
+  import Seccion4 from '$lib/components/seccion_contenido_4.svelte';
+  import Seccion5 from '$lib/components/seccion_contenido_5.svelte';
+  import Seccion6 from '$lib/components/seccion_contenido_6.svelte';
+
+  const commonText = [
+    "Lorem ipsum dolor sit amet, <strong>consectetur adipiscing elit</strong>. Sed do eiusmod tempor incididunt ut labore.",
+    "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.",
+  ];
+</script>
+
+<!-- Sección 1 -->
+<Seccion1
+  title="01. Overview of <strong>the project</strong>"
+  subtitle="Project summary and context"
+  paragraphs={commonText}
+  image="/images/section1.png"
+/>
+
+<!-- Sección 2 -->
+<Seccion2
+  title="02. Development <strong>Process</strong>"
+  subtitle="From idea to execution"
+  paragraphs={commonText}
+  image="/images/section2.png"
+/>
+
+<!-- Sección 3 -->
+<Seccion3
+  title="03. <strong>Challenges</strong> & Learnings"
+  subtitle="What we learned"
+  paragraphs={commonText}
+/>
+
+<!-- Sección 4 -->
+<Seccion4
+  title="04. Design System <strong>Structure</strong>"
+  subtitle="Components and consistency"
+  paragraphs={[
+    "Column one with info about layout, grids or components.",
+    "Column two with more details on spacing or accessibility.",
+    "Column three with additional thoughts or tips."
+  ]}
+  image="/images/section4.png"
+/>
+
+<!-- Sección 5 -->
+<Seccion5
+  title="05. <strong>Visual Exploration</strong>"
+  subtitle="Image-led creative directions"
+  paragraphs={commonText}
+  image="/images/section5.png"
+/>
+
+<!-- Sección 6 -->
+<Seccion6
+  title="06. Final Results & <strong>Reflections</strong>"
+  subtitle="Key takeaways"
+  paragraphs={commonText}
+  image="/images/section6.png"
+/>

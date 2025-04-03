@@ -49,7 +49,7 @@
     <div class="personal-photo">
       <img src="/Recursos/header/personal-photo.svg" alt="Personal photo" />
     </div>
-    <h2 class="main-subtitle">I'm <sp><span bind:this={palabraFrente}></span></h2>
+    <h2 class="Header-subtitle">I'm <sp><span bind:this={palabraFrente}></span></h2>
   </div>
 
   <div class="header-content">
@@ -76,7 +76,7 @@
   justify-content: flex-start;
   align-items: center;
   width: 100%;
-  height: 100px;
+  height: 88px;
   position: fixed;
   z-index: 3;
   gap: 25%;
@@ -86,8 +86,7 @@
   left: 0;
   background: #f6f6f625;
   backdrop-filter: blur(2px);
-  border-top: 1px solid #f6f6f625;
-  border-bottom: 1px solid #f6f6f625;
+  border-top: 1px solid var(--Gris-claro);
 }
 
   .personal-photo {
@@ -115,13 +114,13 @@
   width: 600px;
   }
 
-  .main-subtitle {
+  .Header-subtitle {
     font-family: "Publica Sans", sans-serif;
     font-size: var(--font-size-XS);
     font-weight: 300;
     color: var(--Gris-oscuro);
   }
-  .main-subtitle span {
+  .Header-subtitle span {
   font-family: "Publica Sans", sans-serif;
   font-size: var(--font-size-XS);
   font-weight: 300;
