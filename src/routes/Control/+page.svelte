@@ -7,6 +7,15 @@
   import Header from '../../components/Header.svelte';
   import AboutProject from '../../components//Secciones reutilizables/About_Proj.svelte';
   import CanvasParticles from '../../components/CanvasParticles 2.svelte';
+  import Section1 from '../../components/Secciones reutilizables/seccion_contenido_1.svelte';
+  import Section2 from '../../components/Secciones reutilizables/seccion_contenido_2.svelte';
+  import Section3 from '../../components/Secciones reutilizables/seccion_contenido_3.svelte';
+  import Section4 from '../../components/Secciones reutilizables/seccion_contenido_4.svelte';
+  import Section5 from '../../components/Secciones reutilizables/seccion_contenido_5.svelte';
+  import Section6 from '../../components/Secciones reutilizables/seccion_contenido_6.svelte';
+
+  const challengeTitle = `03. <strong>Challenges</strong> & Learnings`;
+
 
   const description = `
     This project is a tribute to <strong>The Legend of Zelda series</strong>, featuring a personalized custom skin for the Nintendo Switch Pro Controller. It showcases a fully 3D animated product presentation, created as a practice piece and an homage to the iconic game franchise. The animation highlights a unique Zelda-themed design, crafted to celebrate the artistic and legendary world of Hyrule.
@@ -17,10 +26,10 @@
   `;
 
   const tools = [
-    { src: "/Projects/Control/Recursos proyecto/Blender-Icon.svg", alt: "Blender" },
-    { src: "/Projects/Control/Recursos proyecto/Illustrator-Icon.svg", alt: "Illustrator" },
-    { src: "/Projects/Control/Recursos proyecto/AE-Icon.svg", alt: "After Effects" },
-    { src: "/Projects/Control/Recursos proyecto/PR-Icon.svg", alt: "Premiere Pro" },
+    { src: "/Recursos/Projects/Control/Blender-Icon.svg", alt: "Blender" },
+    { src: "/Recursos/Projects/Control/Illustrator-Icon.svg", alt: "Illustrator" },
+    { src: "/Recursos/Projects/Control/AE-Icon.svg", alt: "After Effects" },
+    { src: "/Recursos/Projects/Control/PR-Icon.svg", alt: "Premiere Pro" },
   ];
 
   
@@ -88,34 +97,31 @@
   <section class="hero control-content">
     <div class="hero-content">
       <div class="hero-text">
-<!--         <button class="tag-btn">Passion Project</button> -->
         <p class="main-subtitle">
           3d Motion Graphic
-          <!-- Unofficial Motion Graphics Presentation Inspired by Nintendo's Iconic
-          Designs. -->
         </p>
         <h1 class="main-title">Pro Controller</h1>
       </div>
       <div class="hero-image">
-        <iframe
-        id="vimeoPlayer"
-        src="https://player.vimeo.com/video/1041647005?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479&amp;autoplay=1&amp;loop=1&amp;muted=1&amp;controls=0"
-        frameborder="0"
-        allow="autoplay; picture-in-picture"
-        allowfullscreen
-        sandbox="allow-same-origin allow-scripts allow-pointer-lock allow-forms allow-popups"
-        ></iframe>
-<!--         <div class="canvas-container">
-          <CanvasParticles />
-        </div> -->
+        <div class="video-wrapper">
+          <iframe
+            id="vimeoPlayer"
+            src="https://player.vimeo.com/video/1041647005?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479&amp;autoplay=1&amp;loop=1&amp;muted=1&amp;controls=0"
+            frameborder="0"
+            allow="autoplay; picture-in-picture"
+            allowfullscreen
+            sandbox="allow-same-origin allow-scripts allow-pointer-lock allow-forms allow-popups"
+          ></iframe>
+        </div>
       </div>
+      
     </div>
   </section>
   
   <section class="content">
     <AboutProject
-      imageSrc="/Projects/Control/Recursos proyecto/Tribal zelda.png"
-      imageAlt="Zelda controller"
+      imageSrc="/Recursos/Projects/Control/Tribal zelda.png"
+      imageAlt="Tribal Zelda Controller"
       title="About the project"
       {description}
       {purpose}
@@ -147,8 +153,69 @@
         </div>
       </div>
 
+      <Section1
+        title="01. <strong>Challenges</strong> & Learnings"
+        subtitle="What we learned"
+        paragraphs={[
+          "We explored advanced rigging for animation. Lighting setups were crucial for product realism. We optimized render times without losing quality. Experimented with camera motion and timing Learned effective storytelling in 10 seconds. Polished composition and color grading.  <br><br>  We explored advanced rigging for animation. Lighting setups were crucial for product realism. We optimized render times without losing quality. Experimented with camera motion and timing Learned effective storytelling in 10 seconds. Polished composition and color grading."
+        ]}
+        image="/Recursos/Projects/Control/Tribal zelda.png"
+        Alt="Process image"
+      />
+      <Section2
+        title="02. <strong>Challenges</strong> & Learnings"
+        subtitle="What we learned"
+        paragraphs={[
+          "We explored advanced rigging for animation. Lighting setups were crucial for product realism. We optimized render times without losing quality. Experimented with camera motion and timing Learned effective storytelling in 10 seconds. Polished composition and color grading."
+        ]}
+        image="/Recursos/Projects/Control/Tribal zelda.png"
+        Alt="Process image"
+      />
+    
+      <Section3
+        title="03. <strong>Challenges</strong> & Learnings"
+        subtitle="What we learned"
+        paragraphs={[
+          "We explored advanced rigging for animation. Lighting setups were crucial for product realism. We optimized render times without losing quality. Experimented with camera motion and timing Learned effective storytelling in 10 seconds. Polished composition and color grading.  <br><br>  We explored advanced rigging for animation. Lighting setups were crucial for product realism. We optimized render times without losing quality. Experimented with camera motion and timing Learned effective storytelling in 10 seconds. Polished composition and color grading."
+        ]}
+      />
+      <Section4
+        title="04. <strong>Challenges</strong> & Learnings"
+        subtitle="What we learned"
+        paragraphs={[
+          "We explored advanced rigging for animation. Lighting setups were crucial for product realism. We optimized render times without losing quality. Experimented with camera motion and timing Learned effective storytelling in 10 seconds. Polished composition and color grading.",
+          "We explored advanced rigging for animation. Lighting setups were crucial for product realism. We optimized render times without losing quality. Experimented with camera motion and timing Learned effective storytelling in 10 seconds. Polished composition and color grading.",
+          "We explored advanced rigging for animation. Lighting setups were crucial for product realism. We optimized render times without losing quality. Experimented with camera motion and timing Learned effective storytelling in 10 seconds. Polished composition and color grading."
+        ]}
+        image="/Recursos/Projects/Control/Tribal zelda.png"
+        Alt="Process image"
+      />
+      <Section5
+        title="05. <strong>Challenges</strong> & Learnings"
+        subtitle="What we learned"
+        paragraphs={[
+          "We explored advanced rigging for animation. Lighting setups were crucial for product realism. We optimized render times without losing quality. Experimented with camera motion and timing Learned effective storytelling in 10 seconds. Polished composition and color grading.  <br><br>  We explored advanced rigging for animation. Lighting setups were crucial for product realism. We optimized render times without losing quality. Experimented with camera motion and timing Learned effective storytelling in 10 seconds. Polished composition and color grading.   <br><br>  We explored advanced rigging for animation. Lighting setups were crucial for product realism. We optimized render times without losing quality. Experimented with camera motion and timing Learned effective storytelling in 10 seconds. Polished composition and color grading."
+        ]}
+        image="/Recursos/Projects/Control/Tribal zelda.png"
+        Alt="Process image"
+      />
+      <Section6
+        title="06. <strong>Challenges</strong> & Learnings"
+        subtitle="What we learned"
+        paragraphs={[
+          "We explored advanced rigging for animation. Lighting setups were crucial for product realism. We optimized render times without losing quality. Experimented with camera motion and timing Learned effective storytelling in 10 seconds. Polished composition and color grading.  <br><br>  We explored advanced rigging for animation. Lighting setups were crucial for product realism. We optimized render times without losing quality. Experimented with camera motion and timing Learned effective storytelling in 10 seconds. Polished composition and color grading."
+        ]}        
+        image="/Recursos/Projects/Control/Tribal zelda.png"
+        image2="/Recursos/Projects/Control/Tribal zelda.png"
+        Alt="Process image"
+        Alt2="Process image"
+      />
+    
+    
+    
+    
 
 
     </div>
-  </section>
+  </section>A
   

@@ -84,8 +84,8 @@
   padding: 0px 80px;
   bottom: 0;
   left: 0;
-  background: #f6f6f625;
-  backdrop-filter: blur(2px);
+  background: #f6f6f620;
+  backdrop-filter: blur(8px);
   border-top: 1px solid var(--Gris-claro);
 }
 

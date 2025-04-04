@@ -1,86 +1,25 @@
 <script>
-  import { onMount } from 'svelte';
-  import gsap from 'gsap';
-  import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
   export let title = "";
   export let subtitle = "";
   export let paragraphs = [];
   export let image = "";
   export let alt = "Ilustración";
-
-  let sectionRef;
-  let titleRef;
-  let subtitleRef;
-  let paragraphRefs = [];
-  let imageRef;
-
-  onMount(() => {
-    gsap.registerPlugin(ScrollTrigger);
-
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: sectionRef,
-        start: 'top 80%',
-        toggleActions: 'play none none reverse'
-      },
-      defaults: {
-        duration: 0.8,
-        ease: 'power3.out'
-      }
-    });
-
-    tl.fromTo(titleRef, {
-      clipPath: 'inset(100% 0% 0% 0%)',
-      opacity: 0
-    }, {
-      clipPath: 'inset(0% 0% 0% 0%)',
-      opacity: 1
-    });
-
-    if (subtitle) {
-      tl.fromTo(subtitleRef, {
-        clipPath: 'inset(100% 0% 0% 0%)',
-        opacity: 0
-      }, {
-        clipPath: 'inset(0% 0% 0% 0%)',
-        opacity: 1
-      }, "-=0.4");
-    }
-
-    if (paragraphRefs.length > 0) {
-      tl.fromTo(paragraphRefs, {
-        clipPath: 'inset(100% 0% 0% 0%)',
-        opacity: 0
-      }, {
-        clipPath: 'inset(0% 0% 0% 0%)',
-        opacity: 1,
-        stagger: 0.2
-      }, "-=0.4");
-    }
-
-    tl.fromTo(imageRef, {
-      clipPath: 'inset(100% 0% 0% 0%)',
-      opacity: 0
-    }, {
-      clipPath: 'inset(0% 0% 0% 0%)',
-      opacity: 1
-    }, "-=0.3");
-  });
 </script>
 
-<section bind:this={sectionRef} class="seccion dos">
+<section class="seccion dos">
   <div class="texto">
-    <h2 bind:this={titleRef}>{@html title}</h2>
-    {#if subtitle}
-      <h3 class="subtitle" bind:this={subtitleRef}>{@html subtitle}</h3>
-    {/if}
-    {#each paragraphs as p, i}
-      <p bind:this={(el) => paragraphRefs[i] = el}>{@html p}</p>
+    <div class="cabecera">
+      <h2>{@html title}</h2>
+      {#if subtitle}
+        <h3 class="subtitle">{@html subtitle}</h3>
+      {/if}
+    </div>
+    {#each paragraphs as p}
+      <p>{@html p}</p>
     {/each}
   </div>
   <div class="imagen">
-    <img bind:this={imageRef} src={image} alt={alt} />
+    <img src={image} alt={alt} />
   </div>
 </section>
 
@@ -89,41 +28,48 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 3rem;
+    gap: 195px;
     padding: 3rem 1rem;
-    max-width: 1200px;
+    max-width: 1760px;
+    width: 100%;
     margin: 0 auto;
   }
 
   .texto {
     flex: 1;
+    min-width: 725px;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .cabecera {
+    text-align: left;
   }
 
   .imagen {
-    flex: 1;
+    max-width: 865px;
+    max-height: 725px;
+    overflow: hidden;
   }
-
-  h2,
-  .subtitle,
-  p,
-  img {
-    clip-path: inset(100% 0% 0% 0%);
-    opacity: 0;
-    will-change: clip-path, opacity;
+  .imagen img {
+    min-width: 100%;
+    object-fit: contain;
+    height: auto;
   }
 
   h2 {
     font-family: 'Publica Sans Bold';
     font-size: var(--font-size-XXL);
     font-weight: bold;
-    color: #001537;
+    color: var(--Gris-muy-oscuro);
+    line-height: 140%;
   }
 
   .subtitle {
     font-family: 'Publica Sans';
     font-weight: 100;
     font-size: var(--font-size-M);
-    color: #888;
+    color: var(--Verde-claro);
     margin-bottom: 1rem;
   }
 
@@ -131,14 +77,8 @@
     font-family: 'Publica Sans';
     font-weight: 100;
     font-size: var(--font-size-S);
-    color: #1f2b3f;
-    line-height: 1.5;
-  }
-
-  img {
-    width: 100%;
-    background: #e0e4ea;
-    object-fit: cover;
+    color: var(--Gris-oscuro);
+    line-height: 140%;
   }
 
   @media (max-width: 768px) {
