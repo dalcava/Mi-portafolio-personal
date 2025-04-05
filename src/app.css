@@ -35,6 +35,11 @@
     src: url('/Fuentes/Publica/PublicaSans-Light.otf') format('opentype');
     font-weight: 100;
 }
+@font-face {
+    font-family: 'Publica Sans Thin';
+    src: url('/Fuentes/Publica/PublicaSans-Thin.otf') format('opentype');
+    font-weight: 100;
+}
 
 *,
 *::before,

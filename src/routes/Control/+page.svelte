@@ -7,12 +7,14 @@
   import Header from '../../components/Header.svelte';
   import AboutProject from '../../components//Secciones reutilizables/About_Proj.svelte';
   import CanvasParticles from '../../components/CanvasParticles 2.svelte';
+  import CustomCursor from '../../components/CustomCursor.svelte';
   import Section1 from '../../components/Secciones reutilizables/seccion_contenido_1.svelte';
   import Section2 from '../../components/Secciones reutilizables/seccion_contenido_2.svelte';
   import Section3 from '../../components/Secciones reutilizables/seccion_contenido_3.svelte';
   import Section4 from '../../components/Secciones reutilizables/seccion_contenido_4.svelte';
   import Section5 from '../../components/Secciones reutilizables/seccion_contenido_5.svelte';
   import Section6 from '../../components/Secciones reutilizables/seccion_contenido_6.svelte';
+  import NextProject from '../../components/Secciones reutilizables/NextProject.svelte';
 
   const challengeTitle = `03. <strong>Challenges</strong> & Learnings`;
 
@@ -93,7 +95,8 @@
   <div id="loading-screen"></div>
 
   <Header />
-  
+  <CustomCursor />
+
   <section class="hero control-content">
     <div class="hero-content">
       <div class="hero-text">
@@ -211,6 +214,14 @@
         Alt2="Process image"
       />
     
+      <NextProject
+        title="Kinetic rush"
+        description="This project was my submission for the Kinetic Rush challenge organized by Clint Jones. The challenge consisted of creating an animation featuring a character running towards or away from an objective. I decided to tell the story of an angel fleeing a chaotic heaven."
+        extraInfo="The scene depicts a crumbling celestial realm, ravaged by conflict. In the background, an explosion marks the demise of a cherub, while our protagonist struggles to escape, only to be ultimately captured by its fate."
+        tag="Passion project"
+        imageSrc="/Recursos/Slider/3D/Kinetic rush-static.webp"
+        imageAlt="Kinetic rush project preview"
+      />
     
     
     

@@ -62,9 +62,7 @@
     font-size: var(--font-size-XXL);
     font-weight: bold;
     color: var(--Gris-muy-oscuro);
-    line-height: 140%;
   }
-
   .subtitle {
     font-family: 'Publica Sans';
     font-weight: 100;

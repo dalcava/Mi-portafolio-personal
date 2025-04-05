@@ -14,7 +14,7 @@ body {
     color: var(--blanco);
     overflow: auto;
     flex-direction: column;
-    padding: 32px;
+    padding: 32px 32px 0px 32px;
 }
 
 html, body {
@@ -27,6 +27,10 @@ display: none; /* Chrome, Safari, etc. */
 
 #loading-screen {
   background-color: var(--Verde-claro);
+}
+
+iframe {
+  pointer-events: none;
 }
 
 /* .canvas-container {
@@ -163,9 +167,9 @@ transform: translate(0, 10px);
   display: flex;
   flex-direction: column;
   gap: 48px;
-  margin: 20px 0;
+  margin: 20px 0 0 0;
   width: 100%;
-  padding: 32px;
+  padding: 32px 32px 0px 32px;
 }
 
 .gallery-row {

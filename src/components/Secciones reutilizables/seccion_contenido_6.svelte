@@ -90,7 +90,6 @@
 
   img {
     width: 100%;
-    background: #e0e4ea;
     object-fit: contain;
   }
 

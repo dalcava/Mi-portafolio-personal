@@ -8,6 +8,7 @@
   import CanvasParticles from '../components/CanvasParticles.svelte';
   import Contador from '../components/Contador.svelte';
   import Tabs from '../components/Tabs.svelte';
+  import CustomCursor from '../components/CustomCursor.svelte';
 
   let activeTab = '3D';
 
@@ -172,6 +173,7 @@
     {/if}
 
     <Header />
+    <CustomCursor />
 
     <!-- Scrollbar opcional -->
     <div class="swiper-scrollbar"></div>
