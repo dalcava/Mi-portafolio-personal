@@ -207,6 +207,7 @@
       />
 
       <Accordion/>
+      
       <div class="scene-container">
         <Scene/>
       </div>

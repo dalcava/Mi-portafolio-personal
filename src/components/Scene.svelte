@@ -10,6 +10,8 @@
     import { FontLoader } from 'three/examples/jsm/loaders/FontLoader';
     import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry';
     import { Text } from 'troika-three-text';
+    
+    
 
   
     let container;
@@ -111,7 +113,7 @@ onMount(() => {
   });
 
   textMesh = new THREE.Mesh(textGeometry, textMaterial);
-  textMesh.position.set(-0.75, 1, 0.5); // ajusta según tu escena
+  textMesh.position.set(-0.25, 1, -0.25); // ajusta según tu escena
   scene.add(textMesh);
   updateScale();
 });
@@ -134,7 +136,7 @@ loader.load(
     resizeObserver.observe(container);
 
     // Posición y rotación
-    model.position.set(-0.75, 1, 0.5);
+    model.position.set(-0.25, 1, -0.25);
     model.rotation.set(0, 3, 0); // (x, y, z)
 
     // Material de vidrio tipo prisma ✨

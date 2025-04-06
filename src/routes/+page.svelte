@@ -2,61 +2,18 @@
   import { onMount } from "svelte";
   import { goto } from "$app/navigation";
   import { gsap } from "gsap";
-  import Slider from '../components/Slider.svelte';
-  import Slider_2 from '../components/Slider_2.svelte';
   import CanvasParticles from '../components/CanvasParticles.svelte';
   import Contador from '../components/Contador.svelte';
   import Tabs from '../components/Tabs.svelte';
+  import Scene from '../components/Scene.svelte';
 
 
-  let activeTab = '3D';
+  let activeTab = null;
 
-  
 
-  function handleTabChange(event) {
-    activeTab = event.detail;
-    runIntroAnimation();
-    updateDescription();
-  }
 
   function runIntroAnimation() {
     console.log("Animación de introducción activada");
-  }
-
-  function scrambleText(element, finalText, duration = 1) {
-    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    const frameRate = 30;
-    const totalFrames = Math.round(duration * frameRate);
-    let frame = 0;
-    const interval = setInterval(() => {
-      frame++;
-      let output = '';
-      for (let i = 0; i < finalText.length; i++) {
-        if (frame / totalFrames > i / finalText.length) {
-          output += finalText[i];
-        } else {
-          output += chars[Math.floor(Math.random() * chars.length)];
-        }
-      }
-      element.textContent = output;
-      if (frame >= totalFrames) {
-        clearInterval(interval);
-        element.textContent = finalText;
-      }
-    }, 1000 / frameRate);
-  }
-
-  function updateDescription() {
-    const element = document.getElementById('scrambled-text');
-    if (!element) return;
-    const descriptions = {
-      '3D': 'Descripción para la pestaña 3D',
-      'UX': 'Descripción para la pestaña UX',
-      'UI': 'Descripción para la pestaña UI'
-    };
-    const finalText = descriptions[activeTab] || 'Descripción por defecto';
-    element.dataset.finalText = finalText;
-    scrambleText(element, finalText, 1);
   }
 
   onMount(() => {
@@ -86,57 +43,6 @@
           ease: "elastic.out(1, 0.35)",
           duration: 0.5
         });
-
-    document.querySelectorAll(".image-container, .imagen-contenida, .active-gif").forEach((element) => {
-      element.addEventListener("click", function () {
-        const slide = this.closest(".swiper-slide");
-        const nextPage = slide?.getAttribute("data-url");
-        if (!nextPage) return;
-
-        const image = slide.querySelector(".imagen-contenida");
-        if (!image) return;
-
-        const rect = image.getBoundingClientRect();
-        const clone = image.cloneNode(true);
-
-        const tlClick = gsap.timeline({
-          onComplete: () => {
-            goto(nextPage);
-          }
-        });
-
-        tlClick
-          .to("#page-transition", {
-            transform: "translateY(0%)",
-            duration: 1,
-            ease: "power4.inOut"
-          });
-
-
-        tlClick.to(clone, {
-          top: "0px",
-          left: "0px",
-          width: "100vw",
-          height: "100vh",
-          duration: 0.8,
-          ease: "power2.inOut",
-          borderRadius: "16px",
-        })
-        .to(clone, {
-          clipPath: "inset(100% 0% 0% 0%)",
-          duration: 0.8,
-          ease: "power2.inOut",
-        }, "-=0.5")
-        .to(whiteOverlay, {
-          opacity: 1,
-          duration: 0.5,
-          ease: "power2.inOut",
-        }, "-=0.8");
-
-      });
-    });
-
-    updateDescription();
   });
 </script>
 
@@ -155,12 +61,15 @@
   <Tabs on:tabChange={handleTabChange} />
   <CanvasParticles />
 
-    {#if activeTab === '3D'}
-      <Slider />
-    {:else}
-      <Slider_2 />
-    {/if}
+  <div class="scene-wrap">
+    <Scene/>
+  </div>
+  <div class="Complementary-text">
 
+    <h1>Hi</h1>
+    <h2>A UX/UI designer and 3d artist</h2>
+    <h2>Welcome to my portfolio</h2>
+  </div>
 
     <div class="swiper-scrollbar"></div>
   </div>
@@ -225,7 +134,7 @@
     overflow: hidden;
     clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
     z-index: 1;    
-    padding-bottom: 240px;
+    padding: 24px 120px;
     background-color: var(--transparent);
   }
 
@@ -259,22 +168,49 @@
     justify-content: center;
     text-align: center;
   }
-
-  .swiper-scrollbar {
+  .scene-wrap.s-y_bCXRrkrYfP {
+    position: relative;
+    top: 0;
+    left: 190px;
+    width: 90%;
+    height: 100%;
+    z-index: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .Complementary-text {
+    width: 100%;
+    height: 100%;
     position: absolute;
-    bottom: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 1;
+    padding: 10% 16%;
   }
 
-  .swiper-scrollbar-drag {
-    background-color: var(--Verde-claro);
-    border-radius: 10px;
+  .Complementary-text h1 {
+    font-size: 100px;
+    color: var(--Verde-claro);
+    font-family: "Thunder";
+    font-weight: 700;
+    line-height: 1.2;
+    margin: 0;
+    padding: 0;
+    transform: translateY(0);
+    opacity: 1;
+    transition: transform 0.5s ease, opacity 0.5s ease;
+    width: 6%;
   }
-
-  .swiper-scrollbar-drag::before {
-    background-color: var(--Verde-claro);
-    border-radius: 10px;
+  .Complementary-text h2 {
+    font-size: var(--font-size-M);
+    color: var(--Gris-oscuro);
+    font-family: "Publica Sans thin";
+    line-height: 1.1;
+    margin: 0;
+    padding: 0;
+    transform: translateY(320px);
+    opacity: 1;
+    transition: transform 0.5s ease, opacity 0.5s ease;
+    width: 91%;
+    text-align: end;
   }
 </style>

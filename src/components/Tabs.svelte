@@ -3,7 +3,8 @@
   import gsap from 'gsap';
 
   export let tabs = ['3D', 'UX'];
-  let activeTab = tabs[0];
+  let activeTab = null; 
+;
 
   const dispatch = createEventDispatcher();
 
@@ -19,6 +20,7 @@
     {#each tabs as tab}
       <div
         class="tab {tab === activeTab ? 'active' : ''}"
+        class:active={tab === activeTab}
         on:click={() => setActiveTab(tab)}
       >
         {tab}
@@ -30,7 +32,7 @@
 <style>
   .tabs-carrusel-fixed {
     position: fixed;
-    top: 0;
+    top: -5px;
     right: 0;
     padding: 16px;
     z-index: 1; /* más alto que el overlay y loading */
@@ -48,9 +50,9 @@
   }
 
   .tab {
-    background-color: var(--blanco);
+    background-color: var(--Verde-claro);
     font-family: 'Thunder extra';
-    color: var(--Gris);
+    color: var(--blanco);
     font-size: var(--font-size-XL);
     font-weight: 900;
     text-align: center;
@@ -73,9 +75,9 @@
   .tab:active,
   .tab.active {
     height: 96px;
-    color: var(--Verde-oscuro);
+    color: var(--blanco);
     padding-top: 24px;
-    background-color: var(--blanco);
+    background-color: var(--Verde);
     box-shadow: 2.64px 5.29px 0px 0px #044338;
   }
 </style>

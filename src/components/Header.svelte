@@ -7,7 +7,7 @@
 
   let palabraFrente;
 
-  $: isHome = $page.url.pathname === "/";
+  $: isHome = $page.url.pathname === "/Works";
 
 
   const palabras = [
@@ -53,7 +53,7 @@
 
 <header id="header" class="header-section start" class:home-background={isHome}>
   <div class="profile-info">
-    <div class="personal-photo">
+    <div class="personal-photo" on:click={() => goto('/')}>
       <img src="/Recursos/header/personal-photo.svg" alt="Personal photo" />
     </div>
     <h2 class="Header-subtitle">I'm <sp><span bind:this={palabraFrente}></span></h2>
@@ -65,7 +65,7 @@
         <div
           class="icon-button menu work"
           class:active-work={isHome}
-          on:click={() => goto('/')}
+          on:click={() => goto('/Works')}
         >
 
           <span>Works</span>
