@@ -42,8 +42,8 @@
       const distanceToCenter = Math.sqrt(dx * dx + dy * dy);
       const delay = distanceToCenter * 0.02;
 
-      const pulse = 1 + Math.sin((time - delay) * frequency) * 0.2;
-      const radius = this.size * 2 * pulse;
+      const pulse = 1 + Math.sin((time - delay) * frequency) * 0.5;
+      const radius = this.size * 1.25 * pulse;
 
       ctx.beginPath();
       ctx.fillStyle = this.color;
@@ -119,7 +119,7 @@
     for (let row = 0; row < rows; row++) {
       for (let col = 0; col < cols; col++) {
         let x = col * gridWidth + gridWidth / 0.018425;
-        let y = row * gridHeight + gridHeight / .27;
+        let y = row * gridHeight + gridHeight / 1.4;
         let moveHorizontal = Math.random() > 0.5;
         let directionX = moveHorizontal ? (Math.random() * 0.2) - 0.1 : 0;
         let directionY = moveHorizontal ? 0 : (Math.random() * 0.2) - 0.1;
@@ -197,7 +197,6 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: var(--blanco);
     filter: blur(0.1px);
     mix-blend-mode: multiply;
   }

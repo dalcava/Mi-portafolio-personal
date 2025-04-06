@@ -17,6 +17,18 @@
     const AUTOPLAY_DELAY = 4800;
     let isInitialLoad = true;
 
+    import { createEventDispatcher } from 'svelte';
+	const dispatch = createEventDispatcher();
+
+	function handleClick(event) {
+		const slide = event.currentTarget.closest('.swiper-slide');
+		const nextPage = slide?.dataset?.url;
+		if (nextPage) {
+			dispatch('slideClick', { nextPage, image: slide.querySelector('.imagen-contenida') });
+		}
+	}
+
+    /* ----------------------------------------- Acá irán los textos de las descripciones ---------------------------------------- */
     const descriptions = [
         {
             title: "Onyo App",
@@ -174,10 +186,10 @@
             centeredSlides: true,
             initialSlide: 1,
             loop: false,
-            spaceBetween: 16,
+            spaceBetween: 4,
             pagination: {
                 el: '.swiper-pagination_2',
-                clickable: true
+                clickable: false
             },
             navigation: {
                 nextEl: '.swiper-button-next_2',
@@ -344,7 +356,7 @@
     <!-- Swiper -->
     <div class="swiper_2">
         <div class="swiper-wrapper">
-            <div class="swiper-slide">
+            <div class="swiper-slide" data-url="/Control" on:click={handleClick}>
                 <div class="image-container static-img">
                     <img src="/Recursos/Slider/UX/Onyo-Static.png" alt="Static Image 1" class="imagen-contenida">
                     <div class="grid">
@@ -362,7 +374,7 @@
                     <div class="blur"></div>
                 </div>
             </div>
-            <div class="swiper-slide" data-url="./Control.html">
+            <div class="swiper-slide" data-url="/Control" on:click={handleClick}>
                 <div class="image-container static-img">
                     <img src="/Recursos/Slider/UX/Colmena-Static.jpg" alt="Static Image 2" class="imagen-contenida">
                     <div class="grid">
@@ -380,7 +392,7 @@
                     <div class="blur"></div>
                 </div>
             </div>
-            <div class="swiper-slide" data-url="./Aval_pay_center.html">
+            <div class="swiper-slide" data-url="/Control" on:click={handleClick}>
                 <div class="image-container static-img">
                     <img src="/Recursos/Slider/UX/AvalPay-Static.webp" alt="Static Image 3" class="imagen-contenida">
                     <div class="grid">
@@ -398,7 +410,7 @@
                     <div class="blur"></div>
                 </div>
             </div>
-            <div class="swiper-slide">
+            <div class="swiper-slide" data-url="/Control" on:click={handleClick}>
                 <div class="image-container static-img">
                     <img src="/Recursos/Slider/UX/CR.webp" alt="Static Image 4" class="imagen-contenida">
                     <div class="grid">
@@ -425,11 +437,11 @@
 
         <div class="project-description">
             <div class="project-description-head">
-                <div class="project-category">
-                  <a href="#" bind:this={categoryElement}></a>
-                </div>
                 <div class="project-title">
                   <h2 bind:this={titleElement}></h2>
+                </div>
+                <div class="project-category">
+                  <a href="#" bind:this={categoryElement}></a>
                 </div>
             </div>
             <div class="project-text">
@@ -443,11 +455,12 @@
 
 .swiper_2 {
 position: relative;
-width: 95.5%;
-height: 480px;
-border-radius: 16px;
+width: 97.5%;
+height: 400px;
 overflow: hidden;
 transition: all 0.1s ease-out;
+transform: translateX(3%) !important;
+border-radius: 8px 0 0 8px ;
 }
 .swiper_2-3d {
     perspective: 2600px;
@@ -457,7 +470,6 @@ transition: all 0.1s ease-out;
     position: relative;
     width: 320px;
     transition: all 0.5s ease-out;
-    border-radius: 16px;
 }
 :global(.swiper-slide-active) {
     width: 58.35% !important;
@@ -473,11 +485,9 @@ transition: all 0.1s ease-out;
     width: 100%;
     height: 100%;
     object-fit: cover;
-    border-radius: 1px;
     user-select: none;
     transition: mask-image 0.5s ease-out, -webkit-mask-image 0.5s ease-out, transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
     will-change: mask-image, -webkit-mask-image, filter, transform;
-    border-radius: 8px;
 }
 
 .swiper-slide-prev {
@@ -504,7 +514,6 @@ transition: all 0.1s ease-out;
     width: 100%;
     height: 100%;
     overflow: hidden;
-    border-radius: 16px;
 }
 
 .image-container::after {
@@ -572,11 +581,12 @@ transition: all 0.1s ease-out;
     width: 100%;
     height: 100%;
     overflow: hidden;
-    padding-top: 136px;
-    gap: 16px;
+    overflow: hidden;
+    padding-top: 144px;
+    gap: 32px;
     display: flex;
     flex-direction: column;
-    transform: translateY(-28px);
+    transform: translateY(-38px);
 }
 .custom-box-left,
 .custom-box-right {
@@ -617,6 +627,7 @@ transition: all 0.1s ease-out;
 :global(.swiper-pagination_2) {
     display: flex;
     justify-content: center;
+    pointer-events: none;
 }
 :global(.swiper-horizontal>.swiper-pagination-bullets, .swiper-pagination-bullets.swiper-pagination-horizontal, .swiper-pagination-custom, .swiper-pagination-fraction) {
     bottom: var(--swiper-pagination-bottom, 8px);
@@ -631,7 +642,7 @@ transition: all 0.1s ease-out;
 :global(.swiper-pagination_2 .swiper-pagination-bullet) {
   width: 12px;
   height: 12px;
-  border: 1px solid var(--Verde-claro);
+  border: 1px solid var(--Verde);
   background-color: var(--Transparente);
   border-radius: 50%;
   opacity: 1;
@@ -655,7 +666,7 @@ transition: all 0.1s ease-out;
     top: 50%;
     transform: translateY(-50%) translateX(10px);
     height: 14px;
-    background-color: var(--Verde-claro); 
+    background-color: var(--Verde); 
     border-radius: 8px;
     transition: all 0.3s ease-in-out;
 }
@@ -700,7 +711,6 @@ transition: all 0.1s ease-out;
     opacity: 0;
     z-index: 2;
     transition: opacity 0.5s ease-out, mask-image 0.5s ease-out;
-    border-radius: 8px;
 }
 
 .blur-container {
@@ -708,7 +718,7 @@ transition: all 0.1s ease-out;
     height: 120px;
     border-top: 1px solid #f6f6f625;
     background: linear-gradient(180deg, rgba(144, 144, 144, 0.00) 0%, rgba(246, 246, 246, 0.01) 37.15%);
-    transform: translateY(16px);    
+    transform: translateY(0px);    
     backdrop-filter: blur(2px);
     z-index: 2;
     position: relative;
@@ -730,6 +740,7 @@ transition: all 0.1s ease-out;
     width: 40%;
     height: auto;
     z-index: 10;
+    transform: translateY(13px);
 }
 .Lightbulb {
     min-width: 80px;
@@ -753,30 +764,37 @@ transition: all 0.1s ease-out;
 }
 
 .project-category a {
-  font-family: 'Publica Sans', sans-serif;
+  font-family: 'Thunder', sans-serif;
   font-weight: 100;
-  font-size: var(--font-size-XXS);
-  color: var(--Gris);
+  font-size: var(--font-size-XS);
+  color: var(--Verde);
   text-decoration: none;
   display: inline-block;
   margin-bottom: 8px;
   line-height: 0;
 }
 .project-title h2 {
-    font-family: 'Publica Sans bold', sans-serif;
-  font-weight: bold;
-  font-size: var(--font-size-L);
-  color: var(--Verde-claro);
+    font-family: 'Thunder', sans-serif;
+  font-weight: Bold;
+  font-size: var(--font-size-XL);
+  color: var(--Gris);
   line-height: 1.2;
 }
+
+
+
 .project-text p {
   font-family: 'Publica Sans', sans-serif;
   font-weight: 100;
-  font-size: 14px;
+  font-size: var(--font-size-XXS);
   color: var(--Gris-oscuro);
   line-height: 120%;
   max-width: 540px;
 }
+
+/*--------------------------------------------------------------------------------------------------------------------
+------------------------------------------- Aquí empiezan los breackpoints -------------------------------------------
+--------------------------------------------------------------------------------------------------------------------*/
 
 @media (max-width: 1360px) {
     .Description-container{

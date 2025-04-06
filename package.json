@@ -5,16 +5,19 @@
 	"type": "module",
 	"scripts": {
 		"dev": "vite dev",
-  		"build": "vite build",
-  		"preview": "vite preview",
-  		"deploy": "npm run build && npx gh-pages -d build",
-  		"prepare": "svelte-kit sync || echo ''",
-  		"format": "prettier --write .",
-  		"lint": "prettier --check . && eslint ."
+		"build": "vite build",
+		"preview": "vite preview",
+		"deploy": "npm run build && npx gh-pages -d build",
+		"prepare": "svelte-kit sync || echo ''",
+		"format": "prettier --write .",
+		"lint": "prettier --check . && eslint ."
 	},
 	"devDependencies": {
 		"@eslint/compat": "^1.2.5",
 		"@eslint/js": "^9.18.0",
+		"@smui-extra/accordion": "^8.0.0-beta.3",
+		"@smui/button": "^8.0.0-beta.3",
+		"@smui/card": "^8.0.0-beta.3",
 		"@sveltejs/adapter-auto": "^4.0.0",
 		"@sveltejs/adapter-static": "^3.0.8",
 		"@sveltejs/kit": "^2.16.0",
@@ -34,7 +37,11 @@
 		"vite": "^6.0.0"
 	},
 	"dependencies": {
+		"@threlte/core": "^8.0.1",
+		"@threlte/extras": "^9.1.0",
 		"gsap": "^3.12.7",
-		"swiper": "^11.2.6"
+		"swiper": "^11.2.6",
+		"three": "^0.175.0",
+		"troika-three-text": "^0.52.4"
 	}
 }

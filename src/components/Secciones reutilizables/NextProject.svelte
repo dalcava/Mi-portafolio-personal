@@ -100,7 +100,6 @@
     flex: 1;
     max-width: 1081px;
     min-height: 560px;
-    border-radius: 12px;
     overflow: hidden;
     height: 100%;
   }
@@ -110,7 +109,6 @@
     min-height: 560px;
     object-fit: cover;
     display: block;
-    border-radius: 16px;
   }
 
   @media (max-width: 768px) {

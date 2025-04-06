@@ -54,15 +54,20 @@
     --Azul-claro: #95DEFF;
     --Azul-oscuro: #004B6B;
     --Azul-muy-oscuro: #052240;
-    --blanco: #F6F6F6;
-    --Verde-claro: #09A186;
-    --Verde: #077E69;
-    --Verde-oscuro: #044338;
+    --blanco: #FFFFFF;
+    --Verde-claro: #A2D4BB;
+    --Verde: #64997F;
+    --Verde-oscuro: #061E1E;
+    --Gris-muy-claro: #d1d1d648;
     --Gris-claro: #D1D1D6;
     --Gris: #8E8E93;
     --Gris-oscuro: #6D6D6D;
-    --Gris-muy-oscuro: #48484A;
+    --Gris-muy-oscuro: #2B2B2F;
     --Transparente: #00000000;
+    --Naranja-claro: #FFAD7B;
+    --Naranja: #FF7F50;
+    --Naranja-oscuro: #CC5500;
+    --Naranja-muy-oscuro: #8B2500;
 
     --font-size-XXS: 12px;
     --font-size-XS: 14px;
@@ -96,3 +101,10 @@ html, body {
 html::-webkit-scrollbar, body::-webkit-scrollbar {
     display: none; /* Chrome, Safari y otros */
 }
+
+body {
+    overflow-x: hidden;
+  }
+
+
+  

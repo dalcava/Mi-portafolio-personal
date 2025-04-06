@@ -2,15 +2,16 @@
   import { onMount } from "svelte";
   import { goto } from "$app/navigation";
   import { gsap } from "gsap";
-  import Header from '../components/Header.svelte';
   import Slider from '../components/Slider.svelte';
   import Slider_2 from '../components/Slider_2.svelte';
   import CanvasParticles from '../components/CanvasParticles.svelte';
   import Contador from '../components/Contador.svelte';
   import Tabs from '../components/Tabs.svelte';
-  import CustomCursor from '../components/CustomCursor.svelte';
+
 
   let activeTab = '3D';
+
+  
 
   function handleTabChange(event) {
     activeTab = event.detail;
@@ -63,28 +64,28 @@
     const tl = gsap.timeline({
       onComplete: () => {
         loadingScreen.style.display = 'none';
-      }
-    });
+          }
+        });
 
-    tl.to(loadingScreen, {
-      y: '100%',
-      rotation: 0,
-      ease: "power4.in",
-      duration: 1.2,
-    })
-    .to(loadingScreen, {
-      scaleX: 1,
-      scaleY: 1.15,
-      ease: "power2.out",
-      duration: 0.2
-    }, "-=0.3")
-    .to(loadingScreen, {
-      scaleX: 1,
-      scaleY: 1,
-      rotation: 0,
-      ease: "elastic.out(1, 0.35)",
-      duration: 0.5
-    });
+        tl.to(loadingScreen, {
+          y: '100%',
+          rotation: 0,
+          ease: "power4.in",
+          duration: 1.2,
+        })
+        .to(loadingScreen, {
+          scaleX: 1,
+          scaleY: 1.15,
+          ease: "power2.out",
+          duration: 0.2
+        }, "-=0.3")
+        .to(loadingScreen, {
+          scaleX: 1,
+          scaleY: 1,
+          rotation: 0,
+          ease: "elastic.out(1, 0.35)",
+          duration: 0.5
+        });
 
     document.querySelectorAll(".image-container, .imagen-contenida, .active-gif").forEach((element) => {
       element.addEventListener("click", function () {
@@ -97,29 +98,20 @@
 
         const rect = image.getBoundingClientRect();
         const clone = image.cloneNode(true);
-        document.body.appendChild(clone);
-
-        const whiteOverlay = document.createElement("div");
-        whiteOverlay.classList.add("white-overlay");
-        document.body.appendChild(whiteOverlay);
-
-        gsap.set(clone, {
-          position: "fixed",
-          top: `${rect.top}px`,
-          left: `${rect.left}px`,
-          width: `${rect.width}px`,
-          height: `${rect.height}px`,
-          zIndex: 1000,
-          objectFit: "cover",
-          borderRadius: "16px",
-          clipPath: "inset(0% 0% 0% 0%)",
-        });
 
         const tlClick = gsap.timeline({
           onComplete: () => {
             goto(nextPage);
-          },
+          }
         });
+
+        tlClick
+          .to("#page-transition", {
+            transform: "translateY(0%)",
+            duration: 1,
+            ease: "power4.inOut"
+          });
+
 
         tlClick.to(clone, {
           top: "0px",
@@ -140,12 +132,11 @@
           duration: 0.5,
           ease: "power2.inOut",
         }, "-=0.8");
+
       });
     });
 
     updateDescription();
-
-    // Se ha eliminado la funcionalidad de la elipse del fondo
   });
 </script>
 
@@ -159,23 +150,18 @@
 
 <!-- Fondo principal -->
 <div class="background">
-  <!-- Fondo animado con canvas -->
-  <div class="hero">
-    <Tabs on:tabChange={handleTabChange} />
-    <div class="white-overlay"></div>
-    <CanvasParticles />
-    <!-- La imagen de la elipse se ha eliminado -->
-    <!-- Dynamic Slider -->
+<div id="page-transition" class="transition-overlay"></div>
+<div class="hero">
+  <Tabs on:tabChange={handleTabChange} />
+  <CanvasParticles />
+
     {#if activeTab === '3D'}
       <Slider />
     {:else}
       <Slider_2 />
     {/if}
 
-    <Header />
-    <CustomCursor />
 
-    <!-- Scrollbar opcional -->
     <div class="swiper-scrollbar"></div>
   </div>
 
@@ -211,7 +197,7 @@
   .dot2 { animation-delay: 0.1s; }
   .dot3 { animation-delay: 0.2s; }
   .dot4 { animation-delay: 0.3s; }
-  
+
   @keyframes rubberJump {
     0%   { transform: translateY(0) scaleY(1); }
     25%  { transform: translateY(-20px) scaleY(1.2); }
@@ -219,7 +205,6 @@
     75%  { transform: translateY(-10px) scaleY(1.1); }
     100% { transform: translateY(0) scaleY(1); }
   }
-
   .background {
     position: fixed;
     top: 0;
@@ -229,53 +214,40 @@
     background-color: var(--blanco);
     z-index: 0;
     opacity: 1;
-    padding: 0px 32px;
   }
-  
+
   .hero {
     position: relative;
     display: flex;
     flex-direction: column;
     gap: 0px;
     justify-content: flex-start;
-    border-radius: 4px 32px 4px 32px;
     overflow: hidden;
     clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
     z-index: 1;    
     padding-bottom: 240px;
+    background-color: var(--transparent);
   }
 
-  .white-overlay {
+  .transition-overlay {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: var(--Verde-claro);
-    z-index: 999;
-    opacity: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--blanco);
+    z-index: 9999;
     pointer-events: none;
+    transform: translateY(100%);
   }
+
+
 
   .contador-container {
     position: fixed;
     bottom: 20px;
     left: 20px;
     z-index: 1;
-  }
-
-  .noisy-gradient {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    background:
-      linear-gradient(135deg, #f6f6f6, #d1d1d6),
-      url('https://www.transparenttextures.com/patterns/asfalt-dark.png');
-    background-blend-mode: multiply;
-    background-size: cover;
-    opacity: 0.35;
-    pointer-events: none;
-    mix-blend-mode: multiply;
   }
 
   .hero-content {
@@ -288,11 +260,6 @@
     text-align: center;
   }
 
-  .hero-text {
-    font-size: 2rem;
-    color: var(--blanco);
-  }
-
   .swiper-scrollbar {
     position: absolute;
     bottom: 10px;
@@ -300,10 +267,12 @@
     transform: translateX(-50%);
     z-index: 1;
   }
+
   .swiper-scrollbar-drag {
     background-color: var(--Verde-claro);
     border-radius: 10px;
   }
+
   .swiper-scrollbar-drag::before {
     background-color: var(--Verde-claro);
     border-radius: 10px;

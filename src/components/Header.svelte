@@ -1,9 +1,14 @@
 <script>
+  import { page } from '$app/stores';
+  import { goto } from '$app/navigation';
   import { onMount } from 'svelte';
   import gsap from 'gsap';
   import Tabs from '../components/Tabs.svelte';
 
   let palabraFrente;
+
+  $: isHome = $page.url.pathname === "/";
+
 
   const palabras = [
     "a UI/UX Designer", "an Experience Architect", "a 3D Artist", "an Animator", 
@@ -42,9 +47,11 @@
     const interval = setInterval(crearPalabra, 2400);
     return () => clearInterval(interval);
   });
+  
 </script>
 
-<header id="header" class="header-section start">
+
+<header id="header" class="header-section start" class:home-background={isHome}>
   <div class="profile-info">
     <div class="personal-photo">
       <img src="/Recursos/header/personal-photo.svg" alt="Personal photo" />
@@ -55,7 +62,12 @@
   <div class="header-content">
     <div class="icon-buttons">
       <div class="navigation-buttons">
-        <div class="icon-button menu work" data-url="/">
+        <div
+          class="icon-button menu work"
+          class:active-work={isHome}
+          on:click={() => goto('/')}
+        >
+
           <span>Works</span>
           <img src="/Recursos/header/Proyects.svg" alt="Projects" />
         </div>
@@ -78,17 +90,16 @@
   width: 100%;
   height: 88px;
   position: fixed;
-  z-index: 3;
+  z-index: 10000;
   gap: 25%;
   transition: transform 0.3s ease-out;
   padding: 0px 80px;
   bottom: 0;
   left: 0;
-  background: #f6f6f620;
+  background: #f6f6f600;
   backdrop-filter: blur(8px);
-  border-top: 1px solid var(--Gris-claro);
+  border-top: 1px solid var(--Gris-muy-claro);
 }
-
   .personal-photo {
     min-width: 64px;
     min-height: 64px;
@@ -118,19 +129,14 @@
     font-family: "Publica Sans", sans-serif;
     font-size: var(--font-size-XS);
     font-weight: 300;
-    color: var(--Gris-oscuro);
+    color: var(--Gris);
   }
   .Header-subtitle span {
   font-family: "Publica Sans", sans-serif;
   font-size: var(--font-size-XS);
   font-weight: 300;
 
-  background: linear-gradient(
-    76deg,
-    rgba(9, 161, 134, 1) 10%,
-    rgb(68, 196, 172) 40%,
-    rgba(9, 161, 134, 1) 70%
-  );
+  background: var(--Verde);
   background-size: 200%;
   background-position: 0% 50%;
   -webkit-background-clip: text;
@@ -235,14 +241,23 @@
     transition: all 0.2s ease-out;
   }
 
-  .work {
-    color: var(--Verde-claro);
+  .icon-button.work {
+    color: var(--Gris);
+    transition: all 0.5s ease-out;
   }
+
+  .icon-button.work.active-work {
+    color: var(--Verde);
+  }
+
 
   .contact {
     color: var(--Gris);
   }
 
-  
+  .header-section.home-background {
+    background: var(--blanco);
+  }
+
 
 </style>

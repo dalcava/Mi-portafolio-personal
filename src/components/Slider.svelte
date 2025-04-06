@@ -58,7 +58,7 @@
     // Función para animar el cambio de texto con efecto "matrix" (letras aleatorias)
     function scrambleText(element, finalText, duration = 1) {
         const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-        const frameRate = 620; // cuadros por segundo
+        const frameRate = 32; // cuadros por segundo
         const totalFrames = Math.round(duration * frameRate);
         let frame = 0;
         const interval = setInterval(() => {
@@ -191,10 +191,10 @@
             centeredSlides: true,
             initialSlide: 1,
             loop: false,
-            spaceBetween: 16,
+            spaceBetween: 4,
             pagination: {
                 el: '.swiper-pagination',
-                clickable: true
+                clickable: false
             },
             navigation: {
                 nextEl: '.swiper-button-next',
@@ -368,7 +368,7 @@
     <div class="swiper">
         <!-- Swiper content -->
         <div class="swiper-wrapper">
-            <div class="swiper-slide">
+            <div class="swiper-slide" data-url="/Control" on:click={handleClick}>
                 <div class="image-container static-img">
                     <img src="/Recursos/Slider/3D/Kinetic rush-static.webp" alt="Static Image 1" class="imagen-contenida">
                     <div class="grid">
@@ -404,7 +404,7 @@
                     <div class="blur"></div>
                 </div>
             </div>
-            <div class="swiper-slide">
+            <div class="swiper-slide" data-url="/Control" on:click={handleClick}>
                 <div class="image-container static-img">
                     <img src="/Recursos/Slider/3D/Duraznos intro.gif" alt="Static Image 3" class="imagen-contenida">
                     <div class="grid">
@@ -422,7 +422,7 @@
                     <div class="blur"></div>
                 </div>
             </div>
-            <div class="swiper-slide">
+            <div class="swiper-slide" data-url="/Control" on:click={handleClick}>
                 <div class="image-container static-img">
                     <img src="/Recursos/Slider/3D/Chasms call.webp" alt="Static Image 5" class="imagen-contenida">
                     <div class="grid">
@@ -449,11 +449,11 @@
 
         <div class="project-description">
             <div class="project-description-head">
-                <div class="project-category">
-                  <a href="#" bind:this={categoryElement}>  </a>
-                </div>
                 <div class="project-title">
                   <h2 bind:this={titleElement}>  </h2>
+                </div>
+                <div class="project-category">
+                  <a href="#" bind:this={categoryElement}>  </a>
                 </div>
             </div>
             <div class="project-text">
@@ -467,11 +467,12 @@
 
 .swiper {
 position: relative;
-width: 95.5%;
-height: 480px;
-border-radius: 16px;
+width: 97.5%;
+height: 400px;
 overflow: hidden;
 transition: all 0.1s ease-out;
+transform: translateX(1.75%) !important;
+border-radius: 8px 0 0 8px ;
 }
 
 .swiper-3d {
@@ -482,7 +483,6 @@ transition: all 0.1s ease-out;
     position: relative;
     width: 320px;
     transition: all 0.5s ease-out;
-    border-radius: 16px;
 }
 :global(.swiper-slide-active) {
     width: 58.35% !important;
@@ -498,11 +498,9 @@ transition: all 0.1s ease-out;
     width: 100%;
     height: 100%;
     object-fit: cover;
-    border-radius: 1px;
     user-select: none;
     transition: mask-image 0.5s ease-out, -webkit-mask-image 0.5s ease-out, transform 0.6s cubic-bezier(0.25, 1, 0.5, 1); /* Smooth transition */
-    will-change: mask-image, -webkit-mask-image, filter, transform; /* Optimize for frequent changes */
-    border-radius: 8px;
+    will-change: mask-image, -webkit-mask-image, filter, transform;
 }
 
 .swiper-slide-prev {
@@ -529,8 +527,7 @@ transition: all 0.1s ease-out;
     position: relative;
     width: 100%; /* Asegura que ocupe todo el espacio asignado */
     height: 100%;
-    overflow: hidden; /* Evita que el zoom de la imagen salga del contenedor */
-    border-radius: 16px;
+    overflow: hidden;
 }
 
 .image-container::after {
@@ -601,8 +598,8 @@ transition: all 0.1s ease-out;
     height: 100%;
     overflow: hidden;
     overflow: hidden;
-    padding-top: 136px;
-    gap: 16px;
+    padding-top: 144px;
+    gap: 32px;
     display: flex;
     flex-direction: column;
     transform: translateY(-28px);
@@ -647,6 +644,7 @@ transition: all 0.1s ease-out;
 :global(.swiper-pagination) {
     display: flex;
     justify-content: center;
+    pointer-events: none;
 }
 :global(.swiper-horizontal>.swiper-pagination-bullets, .swiper-pagination-bullets.swiper-pagination-horizontal, .swiper-pagination-custom, .swiper-pagination-fraction) {
     bottom: var(--swiper-pagination-bottom, 8px);
@@ -661,7 +659,7 @@ transition: all 0.1s ease-out;
 :global(.swiper-pagination-bullet) {
   width: 12px;
   height: 12px;
-  border: 1px solid var(--Verde-claro);
+  border: 1px solid var(--Verde);
   background-color: var(--Transparente);
   border-radius: 50%;
   opacity: 1;
@@ -681,15 +679,14 @@ transition: all 0.1s ease-out;
 }
 
 :global(.pagination-shape) {
-  position: absolute;
-  left: -18px;
-  top: 50%;
-  transform: translateY(-50%) translateX(10px);
-  height: 14px;
-  border-radius: 8px;
-  transition: all 0.3s ease-in-out;
-
-  background: linear-gradient(76deg, rgba(9,161,134,1) 0%, rgb(25, 163, 138) 40%, rgba(9,161,134,1) 70%);
+    position: absolute;
+    left: -18px;
+    top: 50%;
+    transform: translateY(-50%) translateX(10px);
+    height: 14px;
+    background-color: var(--Verde); 
+    border-radius: 8px;
+    transition: all 0.3s ease-in-out;
 }
 
 :global(.swiper-button-container) {
@@ -732,8 +729,7 @@ transition: all 0.1s ease-out;
     height: 100%;
     opacity: 0; /* Hidden by default */
     z-index: 2; /* Above the static image */
-    transition: opacity 0.5s ease-out, mask-image 0.5s ease-out; /* Smooth transition */
-    border-radius: 8px; /* Rounded corners */
+    transition: opacity 0.5s ease-out, mask-image 0.5s ease-out;
 }
 
 .blur-container {
@@ -741,7 +737,7 @@ transition: all 0.1s ease-out;
     height: 120px;
     border-top: 1px solid #f6f6f625;
     background: linear-gradient(180deg, rgba(144, 144, 144, 0.00) 0%, rgba(246, 246, 246, 0.01) 37.15%);
-    transform: translateY(16px);    
+    transform: translateY(0px);    
     backdrop-filter: blur(2px);
     z-index: 2;
     position: relative;
@@ -764,8 +760,8 @@ transition: all 0.1s ease-out;
     align-items: flex-start;
     width: 40%;
     height: auto;
-    /* gap: 72px; */
     z-index: 10;
+    transform: translateY(13px);
 }
 .Lightbulb {
     min-width: 80px;
@@ -789,39 +785,28 @@ transition: all 0.1s ease-out;
 }
 
 .project-category a {
-  font-family: 'Publica Sans', sans-serif;
+  font-family: 'Thunder', sans-serif;
   font-weight: 100;
-  font-size: var(--font-size-XXS);
-  color: var(--Gris);
+  font-size: var(--font-size-XS);
+  color: var(--Verde);
   text-decoration: none;
   display: inline-block;
   margin-bottom: 8px;
   line-height: 0;
 }
 .project-title h2 {
-  font-family: 'Publica Sans bold', sans-serif;
-  font-weight: bold;
-  font-size: var(--font-size-L);
+    font-family: 'Thunder', sans-serif;
+  font-weight: Bold;
+  font-size: var(--font-size-XL);
+  color: var(--Gris);
   line-height: 1.2;
-
-  background: linear-gradient(76deg, rgba(9,161,134,1) 10%, rgb(55, 211, 182) 40%, rgba(9,161,134,1) 70%);
-  background-size: 200%;
-  background-position: 0% 50%;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: shine 6s ease-in-out infinite;
-}
-@keyframes shine {
-  0%   { background-position: 0% 50%; }
-  50%  { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
 }
 
 
 .project-text p {
   font-family: 'Publica Sans', sans-serif;
   font-weight: 100;
-  font-size: 14px;
+  font-size: var(--font-size-XXS);
   color: var(--Gris-oscuro);
   line-height: 120%;
   max-width: 540px;

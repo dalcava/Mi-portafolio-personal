@@ -54,6 +54,9 @@
     flex: 1;
     max-width: 44%;
   }
+  .title span{
+    color: var(--Verde-claro);
+  }
   h2 {
     font-family: 'Publica Sans Bold';
     font-size: var(--font-size-XXL);

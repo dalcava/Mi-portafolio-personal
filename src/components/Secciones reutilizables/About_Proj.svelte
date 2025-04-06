@@ -75,7 +75,7 @@
     .description-title {
       color: var(--Verde-claro);
       padding-bottom: 32px;
-      font-family: "Publica Sans";
+      font-family: "Publica Sans bold";
       font-size: var(--font-size-XXL);
       font-style: normal;
       font-weight: 300;

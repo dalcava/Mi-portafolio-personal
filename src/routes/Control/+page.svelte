@@ -4,10 +4,8 @@
   import { onMount } from "svelte";
   import { goto } from "$app/navigation";
   import { gsap } from "gsap";
-  import Header from '../../components/Header.svelte';
   import AboutProject from '../../components//Secciones reutilizables/About_Proj.svelte';
   import CanvasParticles from '../../components/CanvasParticles 2.svelte';
-  import CustomCursor from '../../components/CustomCursor.svelte';
   import Section1 from '../../components/Secciones reutilizables/seccion_contenido_1.svelte';
   import Section2 from '../../components/Secciones reutilizables/seccion_contenido_2.svelte';
   import Section3 from '../../components/Secciones reutilizables/seccion_contenido_3.svelte';
@@ -15,6 +13,8 @@
   import Section5 from '../../components/Secciones reutilizables/seccion_contenido_5.svelte';
   import Section6 from '../../components/Secciones reutilizables/seccion_contenido_6.svelte';
   import NextProject from '../../components/Secciones reutilizables/NextProject.svelte';
+  import Accordion from '../../components/Secciones reutilizables/Accordion.svelte';
+  import Scene from '../../components/Scene.svelte';
 
   const challengeTitle = `03. <strong>Challenges</strong> & Learnings`;
 
@@ -35,67 +35,59 @@
   ];
 
   
-    onMount(() => {
-      // ANIMACIONES DE ENTRADA CON GSAP
-      const loadingScreen = document.getElementById("loading-screen");
-  
-      if (loadingScreen) {
-        gsap.to(loadingScreen, {
-          x: "-100%",
-          duration: 0.5,
-          ease: "ease-out",
-          onComplete: () => {
-            loadingScreen.style.display = "none";
-          },
-        });
-      }
-  
-      window.scrollTo(0, 0);
-      document.documentElement.scrollTop = 0;
-  
-      const timeline = gsap.timeline();
-      timeline
-        .to(".control-content", {
-          opacity: 1,
-          duration: 0,
-          ease: "power4.out",
-        })
-        .fromTo(
-          ".tag-btn",
-          { opacity: 0, x: -20 },
-          { opacity: 1, x: 0, duration: 0.75, ease: "power4.out", stagger: 0.1 },
-          "-=.35"
-        )
-        .fromTo(
-          ".hero-image",
-          { clipPath: "inset(100% 0 0 0)", y: -250 },
-          { clipPath: "inset(0% 0 0 0)", y: 0, duration: 1.2, ease: "power4.out" },
-          "-=.5"
-        )
-        .fromTo(
-          ".main-title",
-          { clipPath: "inset(0 100% 0 0)" },
-          { clipPath: "inset(0 0% 0 0)", duration: 1.25, ease: "power4.out" },
-          "-=.75"
-        )
-        .fromTo(
-          ".main-subtitle",
-          { clipPath: "inset(100% 0 0 0)" },
-          { clipPath: "inset(0% 0 0 0)", duration: 1.5, ease: "power4.out" },
-          "-=1.25"
-        );
+  onMount(() => {
+  const loadingScreen = document.getElementById("loading-screen");
+
+  if (loadingScreen) {
+    gsap.to(loadingScreen, {
+      x: "-100%",
+      duration: 0.5,
+      ease: "ease-out",
+      onComplete: () => {
+        loadingScreen.style.display = "none";
+      },
     });
+  }
+
+  window.scrollTo(0, 0);
+  document.documentElement.scrollTop = 0;
+
+  // Hero Intro Animation
+
+  const tl = gsap.timeline();
+
+      tl.fromTo(
+        ".hero-image",
+        { clipPath: "inset(100% 0 0 0)", opacity: 0 },
+        { clipPath: "inset(0% 0 0 0)", opacity: 1, duration: 1.2, ease: "power4.out" }
+      )
+      .fromTo(
+        ".main-title",
+        { clipPath: "inset(0 100% 0 0)", opacity: 0 },
+        { clipPath: "inset(0 0% 0 0)", opacity: 1, duration: 1, ease: "power4.out" },
+        "=1.5" // Se solapa un poco con el final del anterior
+      )
+      .fromTo(
+        ".main-subtitle",
+        { clipPath: "inset(100% 0 0 0)", opacity: 0 },
+        { clipPath: "inset(0% 0 0 0)", opacity: 1, duration: 1, ease: "power4.out" },
+        "-=0.5"
+      );
+
+});
+
+
+
   </script>
   
   <style>
     @import "./Control.css";
   </style>
   
+<div id="page-transition" class="transition-overlay"></div>
   <div class="white-overlay"></div>
   <div id="loading-screen"></div>
 
-  <Header />
-  <CustomCursor />
 
   <section class="hero control-content">
     <div class="hero-content">
@@ -203,7 +195,7 @@
         Alt="Process image"
       />
       <Section6
-        title="06. <strong>Challenges</strong> & Learnings"
+        title="06. <strong>Challenges</strong> <span?& Learnings</span>"
         subtitle="What we learned"
         paragraphs={[
           "We explored advanced rigging for animation. Lighting setups were crucial for product realism. We optimized render times without losing quality. Experimented with camera motion and timing Learned effective storytelling in 10 seconds. Polished composition and color grading.  <br><br>  We explored advanced rigging for animation. Lighting setups were crucial for product realism. We optimized render times without losing quality. Experimented with camera motion and timing Learned effective storytelling in 10 seconds. Polished composition and color grading."
@@ -213,7 +205,13 @@
         Alt="Process image"
         Alt2="Process image"
       />
+
+      <Accordion/>
+      <div class="scene-container">
+        <Scene/>
+      </div>
     
+      
       <NextProject
         title="Kinetic rush"
         description="This project was my submission for the Kinetic Rush challenge organized by Clint Jones. The challenge consisted of creating an animation featuring a character running towards or away from an objective. I decided to tell the story of an angel fleeing a chaotic heaven."
@@ -224,9 +222,7 @@
       />
     
     
-    
-
-
+      
     </div>
-  </section>A
+  </section>
   

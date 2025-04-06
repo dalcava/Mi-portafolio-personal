@@ -10,7 +10,7 @@
         gsap.to(cursorEl, {
           x,
           y,
-          duration: 0.3,
+          duration: 0.5,
           ease: "power3.out"
         });
       };
@@ -28,11 +28,10 @@
         if (target.classList.contains("swiper-pagination-bullet")) {
           updateStyle({
             transform: "translate(-50%, -50%) scale(1.5)",
-            backgroundColor: "var(--Verde-claro)",
             borderRadius: "24px",
             width: "24px",
             height: "24px",
-            mixBlendMode: "difference",
+            mixBlendMode: "color-dodge",
             backgroundImage: "none"
           });
         }
@@ -48,10 +47,11 @@
             backgroundImage: "url('/Recursos/Cursor/Eye.svg')",
             backgroundRepeat: "no-repeat",
             backgroundPosition: "center",            
-            backgroundColor: "#f6f6f620",
+            backgroundColor: "#f6f6f600",
             WebkitBackdropFilter: "blur(8px)",
             borderRadius: "32px",
-            mixBlendMode: "difference"
+            mixBlendMode: "color-dodge",
+            border: "1px solid var(--Naranja)"
           });
         }
   
@@ -66,7 +66,8 @@
             backgroundColor: "#f6f6f620",
             WebkitBackdropFilter: "blur(8px)",
             borderRadius: "8px",
-            mixBlendMode: "difference"
+            mixBlendMode: "color-dodge",
+            border: "1px solid var(--Naranja)"
           });
         }
   
@@ -74,12 +75,13 @@
         else if (getComputedStyle(target).cursor === "pointer") {
           updateStyle({
             transform: "translate(-50%, -50%) scale(3.5)",
-            backgroundColor: "#ED5570",
             borderRadius: "24px",
             width: "48px",
             height: "48px",
-            mixBlendMode: "difference",
-            backgroundImage: "none"
+            backgroundColor: "#FF7F50",
+            mixBlendMode: "multiply",
+            backgroundImage: "none",
+            border: "1px solid var(--transparent)"
           });
   
           cursorEl.classList.add("ripple");
@@ -93,10 +95,11 @@
         ) {
           updateStyle({
             width: "4px",
-            height: "58px",
-            backgroundColor: "rgba(7, 126, 105, 0.15)",
+            height: "48px",
+            backgroundColor: "#FF7F50",
+            mixBlendMode: "multiply",
             borderRadius: "8px",
-            border: "1px solid var(--Verde-claro)",
+            border: "1px solid var(--Naranja)",
             backgroundImage: "none",
             mixBlendMode: "normal"
           });
@@ -106,14 +109,14 @@
         else {
           updateStyle({
             transform: "translate(-50%, -50%) scale(1)",
-            backgroundColor: "#ED5570",
+            backgroundColor: "var(--Verde)",
             borderRadius: "50%",
             width: "16px",
             height: "16px",
-            zIndex: "1000",
-            border: "1px solid #ED5570",
+            zIndex: "15000",
+            border: "1px solid var(--transparent)",
             backgroundImage: "none",
-            mixBlendMode: "difference",
+            mixBlendMode: "multiply",
             scale: "1"
           });
         }
@@ -133,7 +136,7 @@
       border-radius: 50%;
       transform: translate(-50%, -50%) scale(1);
       pointer-events: none;
-      z-index: 1000;
+      z-index: 12000;
       transition: width 0.25s ease, height 0.25s ease, border-radius 0.25s ease, background-color 0.3s ease, mix-blend-mode 0.3s ease;
       mix-blend-mode: difference;
     }
