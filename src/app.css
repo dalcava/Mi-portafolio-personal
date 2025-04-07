@@ -107,4 +107,10 @@ body {
   }
 
 
-  
+.contador-container {
+position: fixed;
+bottom: 20px;
+left: 20px;
+z-index: 1;
+mix-blend-mode: difference;
+}

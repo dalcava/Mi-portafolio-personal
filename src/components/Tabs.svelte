@@ -1,18 +1,33 @@
 <script>
   import { createEventDispatcher, onMount } from 'svelte';
+  import { page } from '$app/stores';
   import gsap from 'gsap';
+  import { goto } from '$app/navigation';
 
   export let tabs = ['3D', 'UX'];
-  let activeTab = null; 
-;
+  let activeTab = null;
 
   const dispatch = createEventDispatcher();
 
   const setActiveTab = (tab) => {
     activeTab = tab;
-    dispatch('tabChange', tab); // ← Dispara el evento al padre
+    dispatch('tabChange', tab);
+
+    if (tab === '3D') {
+      goto('/Works');
+    } else if (tab === 'UX') {
+      goto('/Works?tab=UX');
+    }
   };
+
+  onMount(() => {
+    const currentPath = $page.url.pathname;
+    if (currentPath === '/Works') {
+      setActiveTab('3D');
+    }
+  });
 </script>
+
 
 
 <div class="tabs-carrusel-fixed">

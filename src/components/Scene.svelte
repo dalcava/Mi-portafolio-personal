@@ -94,7 +94,7 @@ onMount(() => {
 // Texto
   const fontLoader = new FontLoader();
   fontLoader.load('/Fuentes/Thunder/Thunder ExtBd_Regular.json', (font) => {
-    const textGeometry = new TextGeometry('Im          avid', {
+    const textGeometry = new TextGeometry("I'm         avid", {
       font: font,
       size: 1.15,
       depth: 0,

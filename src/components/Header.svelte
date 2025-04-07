@@ -75,6 +75,10 @@
           <span>Contact</span>
           <img src="/Recursos/header/contact.svg" alt="Contact" />
         </div>
+        <div class="icon-button menu About">
+          <span>About</span>
+          <img src="/Recursos/header/About.svg" alt="Contact" />
+        </div>
       </div>
     </div>
   </div>
@@ -252,6 +256,9 @@
 
 
   .contact {
+    color: var(--Gris);
+  }
+  .About {
     color: var(--Gris);
   }
 
