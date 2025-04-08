@@ -84,9 +84,9 @@
         const desc = descriptions[index];
 
         if (desc) {
-            scrambleText(titleElement, desc.title, 0.05);
+            scrambleText(titleElement, desc.title, 0.2);
             scrambleText(categoryElement, desc.category, 0.05);
-            scrambleText(textElement, desc.text, 0.1);
+            scrambleText(textElement, desc.text, 0.2);
         }
     }
 
@@ -659,7 +659,7 @@ border-radius: 8px 0 0 8px ;
 :global(.swiper-pagination-bullet) {
   width: 12px;
   height: 12px;
-  border: 1px solid var(--Verde);
+  border: 1px solid var(--Verde-oscuro);
   background-color: var(--Transparente);
   border-radius: 50%;
   opacity: 1;
@@ -684,7 +684,7 @@ border-radius: 8px 0 0 8px ;
     top: 50%;
     transform: translateY(-50%) translateX(10px);
     height: 14px;
-    background-color: var(--Verde); 
+    background-color: var(--Verde-oscuro); 
     border-radius: 8px;
     transition: all 0.3s ease-in-out;
 }
@@ -762,6 +762,7 @@ border-radius: 8px 0 0 8px ;
     height: auto;
     z-index: 10;
     transform: translateY(13px);
+    min-height: 200px;
 }
 .Lightbulb {
     min-width: 80px;
@@ -770,6 +771,7 @@ border-radius: 8px 0 0 8px ;
     margin: 56px;
     filter: saturate(0);
     max-width: 80px;
+    display: none;
 }
 .Lightbulb:hover {
     filter: saturate(1);
@@ -781,11 +783,11 @@ border-radius: 8px 0 0 8px ;
     flex-direction: column;
     gap: 16px;
     align-items: flex-start;
-    padding: 0 4.5%;
+    padding: 0 7.5%;
 }
 
 .project-category a {
-  font-family: 'Thunder', sans-serif;
+  font-family: 'Publica Sans', sans-serif;
   font-weight: 100;
   font-size: var(--font-size-XS);
   color: var(--Verde);
@@ -795,10 +797,10 @@ border-radius: 8px 0 0 8px ;
   line-height: 0;
 }
 .project-title h2 {
-    font-family: 'Thunder', sans-serif;
+    font-family: 'Publica Sans', sans-serif;
   font-weight: Bold;
   font-size: var(--font-size-XL);
-  color: var(--Gris);
+  color: var(--Gris-muy-oscuro);
   line-height: 1.2;
 }
 
@@ -806,8 +808,8 @@ border-radius: 8px 0 0 8px ;
 .project-text p {
   font-family: 'Publica Sans', sans-serif;
   font-weight: 100;
-  font-size: var(--font-size-XXS);
-  color: var(--Gris-oscuro);
+  font-size: var(--font-size-XS);
+  color: var(--Gris-muy-oscuro);
   line-height: 120%;
   max-width: 540px;
 }

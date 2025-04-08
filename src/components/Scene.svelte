@@ -109,7 +109,7 @@ onMount(() => {
   textGeometry.center();
 
   const textMaterial = new THREE.MeshPhysicalMaterial({
-    color: 0x64997F, // var(--Verde-claro)
+    color: 0x24C887, // var(--Verde-claro)
   });
 
   textMesh = new THREE.Mesh(textGeometry, textMaterial);

@@ -132,13 +132,12 @@
   .Header-subtitle {
     font-family: "Publica Sans", sans-serif;
     font-size: var(--font-size-XS);
-    font-weight: 300;
-    color: var(--Gris);
+    font-weight: 500;
+    color: var(--Gris-muy-oscuro);
   }
   .Header-subtitle span {
   font-family: "Publica Sans", sans-serif;
   font-size: var(--font-size-XS);
-  font-weight: 300;
 
   background: var(--Verde);
   background-size: 200%;
@@ -173,7 +172,7 @@
   .icon-button span {
     font-family: "Publica Sans", sans-serif;
     font-size: var(--font-size-XS) !important;
-    font-weight: 300 !important;
+    font-weight: 600 !important;
   }
   .icon-button {
     display: flex;
@@ -246,7 +245,7 @@
   }
 
   .icon-button.work {
-    color: var(--Gris);
+    color: var(--Gris-muy-oscuro);
     transition: all 0.5s ease-out;
   }
 
@@ -256,10 +255,10 @@
 
 
   .contact {
-    color: var(--Gris);
+    color: var(--Gris-muy-oscuro);
   }
   .About {
-    color: var(--Gris);
+    color: var(--Gris-muy-oscuro);
   }
 
   .header-section.home-background {

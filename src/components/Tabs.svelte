@@ -92,7 +92,7 @@
     height: 96px;
     color: var(--blanco);
     padding-top: 24px;
-    background-color: var(--Verde);
+    background-color: var(--Verde-oscuro);
     box-shadow: 2.64px 5.29px 0px 0px #044338;
   }
 </style>

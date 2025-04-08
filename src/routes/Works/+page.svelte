@@ -19,7 +19,20 @@
     activeTab = event.detail;
     runIntroAnimation();
     updateDescription();
+    animateBackgroundImage();
   }
+
+  function animateBackgroundImage() {
+  gsap.fromTo(".background-img",
+    { clipPath: "polygon(0 0, 0 0, 0 100%, 0 100%)" },
+    {
+      clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
+      duration: 1.2,
+      ease: "power2.out",
+      delay: 0.5 // 👈 esta es la clave
+    }
+  );
+}
 
   function runIntroAnimation() {
     console.log("Animación de introducción activada");
@@ -62,32 +75,36 @@
   }
 
   onMount(() => {
-    const loadingScreen = document.getElementById('loading-screen');
-    const tl = gsap.timeline({
-      onComplete: () => {
-        loadingScreen.style.display = 'none';
-          }
-        });
+      const loadingScreen = document.getElementById('loading-screen');
+      const tl = gsap.timeline({
+        onComplete: () => {
+          loadingScreen.style.display = 'none';
+          animateBackgroundImage(); // Aquí también
+        }
+      });
 
-        tl.to(loadingScreen, {
-          y: '100%',
-          rotation: 0,
-          ease: "power4.in",
-          duration: 1.2,
-        })
-        .to(loadingScreen, {
-          scaleX: 1,
-          scaleY: 1.15,
-          ease: "power2.out",
-          duration: 0.2
-        }, "-=0.3")
-        .to(loadingScreen, {
-          scaleX: 1,
-          scaleY: 1,
-          rotation: 0,
-          ease: "elastic.out(1, 0.35)",
-          duration: 0.5
-        });
+      tl.to(loadingScreen, {
+        y: '100%',
+        rotation: 0,
+        ease: "power4.in",
+        duration: 1.2,
+      })
+      .to(loadingScreen, {
+        scaleX: 1,
+        scaleY: 1.15,
+        ease: "power2.out",
+        duration: 0.2
+      }, "-=0.3")
+      .to(loadingScreen, {
+        scaleX: 1,
+        scaleY: 1,
+        rotation: 0,
+        ease: "elastic.out(1, 0.35)",
+        duration: 0.5
+      }, "-=0.3");
+
+      updateDescription();
+
 
     document.querySelectorAll(".image-container, .imagen-contenida, .active-gif").forEach((element) => {
       element.addEventListener("click", function () {
@@ -146,6 +163,7 @@
 
 <!-- Fondo principal -->
 <div class="background">
+  <div class="background-img"></div>
 <div id="page-transition" class="transition-overlay"></div>
 <div class="hero">
   <Tabs on:tabChange={handleTabChange} />
@@ -211,6 +229,23 @@
     z-index: 0;
     opacity: 1;
   }
+
+.background-img {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--blanco);
+  background-image: url('/Recursos/Fondos/fondo-works.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 0;
+  opacity: 1;
+  clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
+}
+
 
   .hero {
     position: relative;

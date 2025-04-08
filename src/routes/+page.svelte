@@ -27,47 +27,50 @@
   }
 
   onMount(() => {
-    const loadingScreen = document.getElementById('loading-screen');
-    const tl = gsap.timeline({
-      onComplete: () => {
-        loadingScreen.style.display = 'none';
-          }
-        });
+  const loadingScreen = document.getElementById('loading-screen');
+  const tl = gsap.timeline({
+    onComplete: () => {
+      loadingScreen.style.display = 'none';
+      }
+    });
 
-        tl.to(loadingScreen, {
-          y: '100%',
-          rotation: 0,
-          ease: "power4.in",
-          duration: 1.2,
-        })
-        .to(loadingScreen, {
-          scaleX: 1,
-          scaleY: 1.15,
-          ease: "power2.out",
-          duration: 0.2
-        }, "-=0.3")
-        .to(loadingScreen, {
-          scaleX: 1,
-          scaleY: 1,
-          rotation: 0,
-          ease: "elastic.out(1, 0.35)",
-          duration: 0.5
-        });
+    tl.to(loadingScreen, {
+      y: '100%',
+      rotation: 0,
+      ease: "power4.in",
+      duration: 1.2,
+    })
+    .to(loadingScreen, {
+      scaleX: 1,
+      scaleY: 1.15,
+      ease: "power2.out",
+      duration: 0.2
+    }, "-=0.3")
+    .to(loadingScreen, {
+      scaleX: 1,
+      scaleY: 1,
+      rotation: 0,
+      ease: "elastic.out(1, 0.35)",
+      duration: 0.5
+    })
+    .to(".background-img", {
+      clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
+      duration: 1.75,
+      ease: "power2.out"
+    }, "-=1.25");
 
-
-        gsap.to('.Complementary-text', {
-          opacity: 1,
-          y: 0,
-          duration: 1.2,
-          delay: 1.2,
-          ease: 'power3.out',
-          onStart: () => {
-            document.querySelector('.Complementary-text')?.classList.remove('hidden');
-          }
-        });
-
-
+    gsap.to('.Complementary-text', {
+      opacity: 1,
+      y: 0,
+      duration: 1.2,
+      delay: 1.2,
+      ease: 'power3.out',
+      onStart: () => {
+        document.querySelector('.Complementary-text')?.classList.remove('hidden');
+      }
+    });
   });
+
 </script>
 
 <div use:glassTransition style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 9999;"></div>
@@ -81,10 +84,11 @@
 
 <!-- Fondo principal -->
 <div class="background">
-<div id="page-transition" class="transition-overlay"></div>
-<div class="hero">
-  <Tabs on:tabChange={handleTabChange} />
-  <CanvasParticles />
+  <div id="page-transition" class="transition-overlay"></div>
+  <div class="hero">
+    <div class="background-img"></div>
+    <Tabs on:tabChange={handleTabChange} />
+    <CanvasParticles />
 
   <div class="scene-wrap">
     <Scene/>
@@ -149,15 +153,31 @@
     100% { transform: translateY(0) scaleY(1); }
   }
   .background {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: var(--blanco);
-    z-index: 0;
-    opacity: 1;
-  }
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--blanco);
+  z-index: 0;
+  opacity: 1;
+}
+  .background-img {
+  position: fixed;
+  top: 40px;
+  left: 0;
+  width: 115%;
+  height: 96%;
+  background-color: var(--blanco);
+  background-image: url('/Recursos/Fondos/fondo-home.png');
+  background-size: cover; 
+  background-position: center; 
+  background-repeat: no-repeat;
+  z-index: 0;
+  opacity: 1;
+  clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
+  transition: clip-path 1.5s ease; 
+}
 
   .hero {
     position: relative;
@@ -232,10 +252,10 @@
 }
 
   .Complementary-text h1 {
-    font-size: 100px;
+    font-size: var(--font-size-XXL);
     color: var(--Verde-claro);
-    font-family: "Thunder";
-    font-weight: 100;
+    font-family: "Publica Sans";
+    font-weight: 700;
     line-height: 1.2;
     margin: 0;
     padding: 0;
@@ -246,7 +266,7 @@
   }
   .Complementary-text h2 {
     font-size: var(--font-size-S);
-    color: var(--Gris);
+    color: var(--Gris-muy-oscuro);
     font-family: "Publica Sans thin";
     line-height: 1.1;
     margin: 0;
@@ -268,4 +288,14 @@
     width: 91%;
     text-align: end;
   }
+  .scene-wrap {
+    width: 100%;
+  }
+
+@media (max-width: 1360px) {
+  .scene-wrap {
+    width: 126%;
+  }
+}
+
 </style>

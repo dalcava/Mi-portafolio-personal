@@ -55,14 +55,16 @@
     --Azul-oscuro: #004B6B;
     --Azul-muy-oscuro: #052240;
     --blanco: #FFFFFF;
-    --Verde-claro: #A2D4BB;
-    --Verde: #64997F;
-    --Verde-oscuro: #061E1E;
-    --Gris-muy-claro: #d1d1d648;
-    --Gris-claro: #D1D1D6;
-    --Gris: #8E8E93;
-    --Gris-oscuro: #6D6D6D;
-    --Gris-muy-oscuro: #2B2B2F;
+    --Verde-muy-claro: #B2EED4;
+    --Verde-claro: #64DDA8;
+    --Verde: #24C887;
+    --Verde-oscuro: #1A9972;
+    --Verde--muy-oscuro: #054F3D;
+    --Gris-muy-claro: #eaeaf450;
+    --Gris-claro: #D2D2DB;
+    --Gris: #92929C;
+    --Gris-oscuro: #70707B;
+    --Gris-muy-oscuro: #2B2B35;
     --Transparente: #00000000;
     --Naranja-claro: #FFAD7B;
     --Naranja: #FF7F50;
@@ -75,7 +77,7 @@
     --font-size-M: 24px;
     --font-size-L: 32px;
     --font-size-XL: 40px;
-    --font-size-XXL: 64px;
+    --font-size-XXL: 56px;
     --font-size-XXXL: 96px;
 
     --mobile: 768px;
