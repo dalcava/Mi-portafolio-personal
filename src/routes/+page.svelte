@@ -83,11 +83,10 @@
 </div>
 
 <!-- Fondo principal -->
-<div class="background">
+<div class="background" use:glassTransition>
   <div id="page-transition" class="transition-overlay"></div>
   <div class="hero">
     <div class="background-img"></div>
-    <Tabs on:tabChange={handleTabChange} />
     <CanvasParticles />
 
   <div class="scene-wrap">
@@ -95,11 +94,10 @@
   </div>
   <div class="Complementary-text hidden">
 
-    <h1>Hi!</h1>
+    <h1>Hi! <span>I'm David</span></h1>
     <div class="Compliment">
       <h2>UX/UI designer and 3d artist</h2>
-      <h2>Welcome to my portfolio</h2>
-      <span>Scroll, click or touch</span>
+      <h3>Welcome to my portfolio</h3>
     </div>
   </div>
 
@@ -112,6 +110,12 @@
 </div>
 
 <style>
+html, body {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
 
 .fade-out {
   opacity: 0;
@@ -153,15 +157,25 @@
     100% { transform: translateY(0) scaleY(1); }
   }
   .background {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: var(--blanco);
-  z-index: 0;
-  opacity: 1;
-}
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .background {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE 10+ */
+  }
+
+  .background::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+  }
+
+
   .background-img {
   position: fixed;
   top: 40px;
@@ -185,12 +199,13 @@
     flex-direction: column;
     gap: 0px;
     justify-content: flex-start;
-    overflow: hidden;
+    overflow: visible;
     clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
     z-index: 1;    
     padding: 24px 120px;
     background-color: var(--transparent);
     transition: opacity 0.3s ease;
+    min-height: 200vh
   }
 
 
@@ -229,6 +244,7 @@
     height: 100%;
     position: absolute;
     padding: 10% 16%;
+    top: 15%;
   }
 
   .Complementary-text.hidden {
@@ -238,22 +254,37 @@
 
 
 .Compliment{
-    display: flex;
+  display: flex;
     flex-direction: column;
     gap: 16px;
-    justify-content: center;
+    justify-content: start;
     align-items: center;
-    text-align: center;
     position: absolute;
-    top: 50%;
+    top: 30%;
     right: 17.4%;
-    transform: translate(0 , 156px);
-    width: 100%;
+    transform: translate(0, 156px);
+    width: 24%;
+    height: fit-content;
+    height: fit-content;
+    min-width: 120px;
 }
 
   .Complementary-text h1 {
     font-size: var(--font-size-XXL);
-    color: var(--Verde-claro);
+    color: var(--Gris-claro);
+    font-family: "Publica Sans";
+    font-weight: 700;
+    line-height: 1.2;
+    margin: 0;
+    padding: 0;
+    transform: translateY(0);
+    opacity: 1;
+    transition: transform 0.5s ease, opacity 0.5s ease;
+    width: 6%;
+  }
+  .Complementary-text h1 span {
+    font-size: var(--font-size-XXL);
+    color: var(--Gris-muy-oscuro);
     font-family: "Publica Sans";
     font-weight: 700;
     line-height: 1.2;
@@ -265,20 +296,35 @@
     width: 6%;
   }
   .Complementary-text h2 {
-    font-size: var(--font-size-S);
-    color: var(--Gris-muy-oscuro);
+    font-size: var(--font-size-XXXL);
+    background: linear-gradient(90deg, #2B2B35 27%, #7E7E9B 59%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
     font-family: "Publica Sans thin";
+    font-weight: 700;
     line-height: 1.1;
     margin: 0;
     padding: 0;
     opacity: 1;
     transition: transform 0.5s ease, opacity 0.5s ease;
-    width: 91%;
-    text-align: end;
+    text-align: start;
+  }
+  .Complementary-text h3 {
+    font-size: var(--font-size-XXL);
+    color: var(--Gris-claro);
+    font-family: "Publica Sans thin";
+    line-height: 1.1;
+    font-weight: 700;
+    margin: 0;
+    padding: 0;
+    opacity: 1;
+    transition: transform 0.5s ease, opacity 0.5s ease;
+    width: 100%;
+    text-align: start;
   }
   .Complementary-text span {
-    font-size: var(--font-size-S);
-    color: var(--Verde);
+    font-size: var(--font-size-XS);
+    color: var(--Gris);
     font-family: "Publica Sans thin";
     line-height: 1.1;
     margin: 0;
@@ -289,13 +335,80 @@
     text-align: end;
   }
   .scene-wrap {
+    position: sticky;
+    top: 0;
     width: 100%;
+    z-index: 10; /* antes: 1 */
+    pointer-events: none;
   }
+
+
 
 @media (max-width: 1360px) {
   .scene-wrap {
-    width: 126%;
+    width: 200vw;
+    position: sticky;
+    height: 100vh;
   }
 }
+@media (max-width: 860px) {
+    .scene-wrap {
+        width: 250%;
+        position: sticky;
+        transform: translateX(-20px);
+    }
+    .Complementary-text {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        padding: 0% 0%;
+        top: 15%;
+        left: 10%;
+    }
+
+    
+  .Complementary-text h1 {
+    font-size: var(--font-size-XL);
+    transform: translateY(0);
+    width: 6%;
+  }
+  .Complementary-text h1 span {
+    font-size: var(--font-size-XL);
+    transform: translateY(0);
+    width: 6%;
+  }
+  .Complementary-text h2 {
+    font-size: var(--font-size-XL);
+    opacity: 1;
+    text-align: start;
+  }
+  .Complementary-text h3 {
+    font-size: var(--font-size-M);
+    width: 100%;
+    text-align: start;
+  }
+}
+@media (max-width: 425px) {
+    .scene-wrap {
+        width: 280vw;
+        position: sticky;
+        transform: translateX(-15.2vh) translateY(0%);
+        height: 100vh;
+    }
+    .Complementary-text {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        padding: 0% 0%;
+        top: 4%;
+    }
+    .Complementary-text h2 {
+      font-size: var(--font-size-L);
+    }
+    .Complementary-text h3 {
+      font-size: var(--font-size-M);
+    }
+}
+
 
 </style>

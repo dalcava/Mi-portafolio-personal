@@ -87,6 +87,8 @@
 
 <!-- Estilos -->
 <style>
+
+  
 .header-section {
   display: flex;
   justify-content: flex-start;

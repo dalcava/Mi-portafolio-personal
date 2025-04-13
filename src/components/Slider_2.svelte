@@ -292,7 +292,7 @@
                     lastY = ((e.clientY - rect.top) / rect.height) * 100;
 
                     activeGif.style.maskImage = `radial-gradient(circle at ${lastX}% ${lastY}%, black 24%, transparent 48%)`;
-                    activeGif.style.webkitMaskImage = `radial-gradient(circle at ${lastX}% ${lastY}%, black 47%, transparent 48%)`;
+                    activeGif.style.webkitMaskImage = `radial-gradient(circle at ${lastX}% ${lastY}%, black 47.7%, transparent 48%)`;
                     activeGif.style.opacity = "1";
                     staticImg.style.opacity = "1";
                     staticImg.style.filter = "brightness(0.85) saturate(0.5)";

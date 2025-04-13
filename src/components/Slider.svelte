@@ -164,12 +164,12 @@
             { opacity: 1, y: 0, duration: 0.35, ease: "power4.out", stagger: 0.5 },
             "-=0.75"
         )
-        .fromTo(
+/*         .fromTo(
             ".project-text",
             { clipPath: "inset(0 100% 0 0)" },
             { clipPath: "inset(0 0% 0 0)", duration: 1, ease: "power4.out" },
             "-=0.25"
-        )
+        ) */
         .fromTo(
             ".project-description",
             { clipPath: "inset(0 100% 0 0)" },
@@ -189,7 +189,7 @@
             effect: "slide",
             slidesPerView: '5.7',
             centeredSlides: true,
-            initialSlide: 1,
+            initialSlide: 0,
             loop: false,
             spaceBetween: 4,
             pagination: {
@@ -303,7 +303,7 @@
                     lastY = ((e.clientY - rect.top) / rect.height) * 100;
 
                     activeGif.style.maskImage = `radial-gradient(circle at ${lastX}% ${lastY}%, black 24%, transparent 48%)`;
-                    activeGif.style.webkitMaskImage = `radial-gradient(circle at ${lastX}% ${lastY}%, black 47%, transparent 48%)`;
+                    activeGif.style.webkitMaskImage = `radial-gradient(circle at ${lastX}% ${lastY}%, black 47.7%, transparent 48%)`;
                     activeGif.style.opacity = "1";
                     staticImg.style.opacity = "1";
                     staticImg.style.filter = "brightness(0.85) saturate(0.5)";
@@ -456,23 +456,36 @@
                   <a href="#" bind:this={categoryElement}>  </a>
                 </div>
             </div>
-            <div class="project-text">
+<!--             <div class="project-text">
               <p bind:this={textElement}>  </p>
-            </div>
+            </div> -->
         </div>
     </div>
   </div>
   
   <style>
 
+.boolean-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    overflow: hidden;
+    padding-top: 144px;
+    gap: 32px;
+    display: flex;
+    flex-direction: column;
+    transform: translateY(-72px);
+    z-index: 2;
+}
 .swiper {
 position: relative;
 width: 97.5%;
-height: 400px;
+height: 72vh;
 overflow: hidden;
 transition: all 0.1s ease-out;
 transform: translateX(1.75%) !important;
-border-radius: 8px 0 0 8px ;
+border-radius: 0px 0 0 0px ;
 }
 
 .swiper-3d {
@@ -591,19 +604,6 @@ border-radius: 8px 0 0 8px ;
     width: calc(100% - 2* var(--swiper-scrollbar-sides-offset, 1%));
     display: none;
 }
-
-.boolean-container {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    overflow: hidden;
-    padding-top: 144px;
-    gap: 32px;
-    display: flex;
-    flex-direction: column;
-    transform: translateY(-28px);
-}
 .custom-box-left,
 .custom-box-right {
     position: absolute;
@@ -626,6 +626,8 @@ border-radius: 8px 0 0 8px ;
     z-index: 10;
     justify-content: space-between;
     flex-direction: column;
+    position: absolute;
+    transform: translateY(600px);
 }
 
 .pagination-container {
@@ -659,7 +661,7 @@ border-radius: 8px 0 0 8px ;
 :global(.swiper-pagination-bullet) {
   width: 12px;
   height: 12px;
-  border: 1px solid var(--Verde-oscuro);
+  border: 1px solid var(--blanco);
   background-color: var(--Transparente);
   border-radius: 50%;
   opacity: 1;
@@ -684,7 +686,7 @@ border-radius: 8px 0 0 8px ;
     top: 50%;
     transform: translateY(-50%) translateX(10px);
     height: 14px;
-    background-color: var(--Verde-oscuro); 
+    background-color: var(--blanco); 
     border-radius: 8px;
     transition: all 0.3s ease-in-out;
 }
@@ -756,12 +758,12 @@ border-radius: 8px 0 0 8px ;
 .Description-container {
     display: flex;
     flex-direction: row;
-    justify-content: flex-start;
+    justify-content: flex-end;
     align-items: flex-start;
-    width: 40%;
+    width: 100%;
     height: auto;
     z-index: 10;
-    transform: translateY(13px);
+    transform: translateY(-8px);
     min-height: 200px;
 }
 .Lightbulb {
@@ -805,14 +807,14 @@ border-radius: 8px 0 0 8px ;
 }
 
 
-.project-text p {
+/* .project-text p {
   font-family: 'Publica Sans', sans-serif;
   font-weight: 100;
   font-size: var(--font-size-XS);
   color: var(--Gris-muy-oscuro);
   line-height: 120%;
   max-width: 540px;
-}
+} */
 
 
 
@@ -860,9 +862,9 @@ border-radius: 8px 0 0 8px ;
     .Lightbulb {
         display: none;
     }
-    .project-text p {
+/*     .project-text p {
         display: none;
-    }
+    } */
 }
 
 

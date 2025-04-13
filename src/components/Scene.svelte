@@ -10,6 +10,7 @@
     import { FontLoader } from 'three/examples/jsm/loaders/FontLoader';
     import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry';
     import { Text } from 'troika-three-text';
+    import gsap from 'gsap';
     
     
 
@@ -92,7 +93,7 @@ onMount(() => {
 
 
 // Texto
-  const fontLoader = new FontLoader();
+/*   const fontLoader = new FontLoader();
   fontLoader.load('/Fuentes/Thunder/Thunder ExtBd_Regular.json', (font) => {
     const textGeometry = new TextGeometry("I'm         avid", {
       font: font,
@@ -105,18 +106,18 @@ onMount(() => {
       bevelSegments: 1
     });
 
-  textGeometry.computeBoundingBox();
-  textGeometry.center();
+    textGeometry.computeBoundingBox();
+    textGeometry.center();
 
-  const textMaterial = new THREE.MeshPhysicalMaterial({
-    color: 0x24C887, // var(--Verde-claro)
-  });
+    const textMaterial = new THREE.MeshPhysicalMaterial({
+      color: 0xBBBAE0, // var(--Verde-claro)
+    });
 
-  textMesh = new THREE.Mesh(textGeometry, textMaterial);
-  textMesh.position.set(-0.25, 1, -0.25); // ajusta según tu escena
-  scene.add(textMesh);
-  updateScale();
-});
+    textMesh = new THREE.Mesh(textGeometry, textMaterial);
+    textMesh.position.set(-0.25, 1, -0.25); // ajusta según tu escena
+    scene.add(textMesh);
+    updateScale();
+  }); */
 
 
   // Modelo
@@ -169,13 +170,37 @@ loader.load(
     });
 
     // Animación embebida (si existe)
-    if (gltf.animations.length) {
+    if (gltf.animations && gltf.animations.length) {
       mixer = new AnimationMixer(model);
-      const action = mixer.clipAction(gltf.animations[0]);
-      action.play();
+      // Itera sobre todas las animaciones y ejecútalas
+      gltf.animations.forEach((clip) => {
+        const action = mixer.clipAction(clip);
+        action.play();
+      });
     }
 
     scene.add(model);
+
+
+    
+    const backgroundEl = document.querySelector('.background');
+
+    if (backgroundEl) {
+      backgroundEl.addEventListener('scroll', () => {
+        const scrollY = backgroundEl.scrollTop;
+        const targetRotation = 3 + scrollY * 0.0025;
+
+        if (model) {
+          gsap.to(model.rotation, {
+            y: targetRotation,
+            duration: 0.5,
+            ease: 'power2.out'
+          });
+        }
+      });
+    }
+
+
   },
   undefined,
   (error) => {

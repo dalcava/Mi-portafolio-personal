@@ -50,7 +50,7 @@
     top: -5px;
     right: 0;
     padding: 16px;
-    z-index: 1; /* más alto que el overlay y loading */
+    z-index: 3; /* más alto que el overlay y loading */
     pointer-events: auto;
   }
   
@@ -65,14 +65,14 @@
   }
 
   .tab {
-    background-color: var(--Verde-claro);
+    background-color: var(--Gris-muy-claro);
     font-family: 'Thunder extra';
-    color: var(--blanco);
+    color: var(--Gris-muy-oscuro);
     font-size: var(--font-size-XL);
     font-weight: 900;
     text-align: center;
     padding: 16px;
-    border-radius: 0px 0px 12px 12px;
+    border-radius: 0px 0px 0px 0px;
     box-shadow: 2.64px 5.29px 0px 0px #8E8E93;
     user-select: none;
     transform: translateY(-20px);
@@ -84,7 +84,7 @@
   .tab:hover {
     height: 84px;
     padding-top: 16px;
-    box-shadow: 2.64px 7.29px 0px 0px #8E8E93;
+    box-shadow: 2.64px 7.29px 0px 0px #BBBAE0;
   }
   
   .tab:active,
@@ -92,7 +92,7 @@
     height: 96px;
     color: var(--blanco);
     padding-top: 24px;
-    background-color: var(--Verde-oscuro);
-    box-shadow: 2.64px 5.29px 0px 0px #044338;
+    background-color: var(--Gris-muy-oscuro);
+    box-shadow: 2.64px 5.29px 0px 0px #BBBAE0;
   }
 </style>

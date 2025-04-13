@@ -168,7 +168,9 @@
 <div class="hero">
   <Tabs on:tabChange={handleTabChange} />
   <CanvasParticles />
-
+  <div class="Quote">
+    <h1>Good design is seen. Great design is remembered</h1>
+  </div>
     {#if activeTab === '3D'}
       <Slider />
     {:else}
@@ -272,7 +274,26 @@
     transform: translateY(100%);
   }
 
-
+  .Quote {
+    position: absolute;
+    top: 72px;
+    left: 56px;
+    text-align: center;
+    z-index: 1;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 39%;
+  }
+  .Quote h1 {
+    font-size: var(--font-size-XXXL);
+    background: linear-gradient(45deg, #686880 12%, #2B2B35 39%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-align: start;
+    margin: 0;
+    line-height: 96px;
+  }
 
   .contador-container {
     position: fixed;

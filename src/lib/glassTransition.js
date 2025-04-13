@@ -1,4 +1,3 @@
-// src/lib/glassTransition.js
 import { goto } from '$app/navigation';
 import * as THREE from 'three';
 import gsap from 'gsap';
@@ -6,7 +5,6 @@ import gsap from 'gsap';
 export function glassTransition(node) {
 	let scene, camera, renderer, mesh, displacement;
 	let triggered = false;
-	let scrollProgress = 0;
 
 	function init() {
 		const width = window.innerWidth;
@@ -43,8 +41,7 @@ export function glassTransition(node) {
 
 				void main() {
 					vec2 distortedUv = vUv + (texture2D(uDisp, vUv).rg - 0.5) * uStrength;
-
-					vec4 color = vec4(1.0, 1.0, 1.0, 0.0); // transparente
+					vec4 color = vec4(1.0, 1.0, 1.0, 0.0);
 					gl_FragColor = mix(color, vec4(1.0, 1.0, 1.0, 1.0), length(distortedUv - vUv));
 				}
 			`,
@@ -68,58 +65,46 @@ export function glassTransition(node) {
 		renderer.render(scene, camera);
 	}
 
-    function onWheel(e) {
-        if (triggered) return;
-    
-        const scrollThreshold = 800;
-    
-        // 👇 Verificamos dirección
-        if (e.deltaY > 0) {
-            scrollProgress += Math.abs(e.deltaY);
-        } else {
-            scrollProgress -= Math.abs(e.deltaY);
-        }
-    
-        // 🔒 Limita scrollProgress entre 0 y scrollThreshold
-        scrollProgress = Math.max(0, Math.min(scrollProgress, scrollThreshold));
-    
-        // 🎚️ Mapea progresivamente el strength
-        const strength = (scrollProgress / scrollThreshold) * 10;
-        mesh.material.uniforms.uStrength.value = strength;
-    
-        // 🎭 Opacidad visual del contenido
-        const fadeElement = document.querySelector('.hero');
-        if (fadeElement) {
-            fadeElement.style.opacity = `${1 - strength / 8}`; // ← Normalizado
-        }
-    
-        // ✅ Dispara transición solo si llegamos al tope y no antes
-        if (scrollProgress >= scrollThreshold && !triggered) {
-            triggered = true;
-    
-            gsap.to(mesh.material.uniforms.uStrength, {
-                value: 1,
-                duration: 1.2,
-                onUpdate: () => {
-                    fadeElement?.classList.add('fade-out');
-                },
-                onComplete: () => {
-                    goto('/Works');
-                }
-            });
-        }
-    }
-    
-    
+	function onScroll() {
+		if (triggered) return;
+	
+		const scrollY = node.scrollTop; // ← scroll de .background
+		const start = 600;
+		const end = 900;
+	
+		const progress = Math.min(Math.max((scrollY - start) / (end - start), 0), 1);
+	
+		mesh.material.uniforms.uStrength.value = progress;
+	
+		const fadeElement = document.querySelector('.hero');
+		if (fadeElement) {
+			fadeElement.style.opacity = `${1 - progress}`;
+		}
+	
+		if (scrollY >= end) {
+			triggered = true;
+	
+			gsap.to(mesh.material.uniforms.uStrength, {
+				value: 1,
+				duration: 1.2,
+				onUpdate: () => fadeElement?.classList.add('fade-out'),
+				onComplete: () => goto('/Works')
+			});
+		}
+		scene.rotation.z = progress * 0.3;
+
+	}
+	
+	
 
 	init();
-	window.addEventListener('wheel', onWheel);
+	node.addEventListener('scroll', onScroll);
 
 	return {
 		destroy() {
-			window.removeEventListener('wheel', onWheel);
+			node.removeEventListener('scroll', onScroll);
 			node.removeChild(renderer.domElement);
 			renderer.dispose();
 		}
 	};
-}
+}	
