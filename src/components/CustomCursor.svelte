@@ -1,5 +1,6 @@
 <script>
     import { onMount } from 'svelte';
+    import { base } from '$app/paths';
     import gsap from 'gsap';
 	import { scale } from 'svelte/transition';
   

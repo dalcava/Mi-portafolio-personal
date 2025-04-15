@@ -2,6 +2,7 @@
 
 <script>
   import { onMount } from "svelte";
+  import { base } from '$app/paths';
   import { goto } from "$app/navigation";
   import { gsap } from "gsap";
   import Slider from '../../components/Slider.svelte';
@@ -164,26 +165,29 @@
 <!-- Fondo principal -->
 <div class="background">
   <div class="background-img"></div>
-<div id="page-transition" class="transition-overlay"></div>
-<div class="hero">
-  <Tabs on:tabChange={handleTabChange} />
-  <CanvasParticles />
-  <div class="Quote">
-    <h1>Good design is seen. Great design is remembered</h1>
-  </div>
-    {#if activeTab === '3D'}
-      <Slider />
-    {:else}
-      <Slider_2 />
-    {/if}
+  <div id="page-transition" class="transition-overlay"></div>
+  <div class="hero">
+  <!--   <Tabs on:tabChange={handleTabChange} /> -->
+    <CanvasParticles />
+    <div class="Quote">
+      <h1>Good design is seen. Great design is remembered</h1>
+    </div>
+      {#if activeTab === '3D'}
+        <Slider />
+      {:else}
+        <Slider_2 />
+      {/if}
 
 
-    <div class="swiper-scrollbar"></div>
-  </div>
+      <div class="swiper-scrollbar"></div>
+    </div>
+    <div class="About">
+      
+    </div>
 
-  <div class="contador-container">
-    <Contador />
-  </div>
+    <div class="contador-container">
+      <Contador />
+    </div>
 </div>
 
 <style>
@@ -226,10 +230,15 @@
     top: 0;
     left: 0;
     width: 100%;
+    min-height: 200vh;
     height: 100%;
     background-color: var(--blanco);
     z-index: 0;
     opacity: 1;
+  }
+
+  .background.overflow-enabled {
+    overflow: visible;
   }
 
 .background-img {
@@ -255,7 +264,6 @@
     flex-direction: column;
     gap: 0px;
     justify-content: flex-start;
-    overflow: hidden;
     clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
     z-index: 1;    
     padding-bottom: 240px;

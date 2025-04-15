@@ -1,5 +1,6 @@
 <script>
     import { onMount } from 'svelte';
+    import { base } from '$app/paths';
     import Swiper from 'swiper/bundle';
     import 'swiper/css/bundle';
     import gsap from 'gsap';
@@ -34,6 +35,26 @@
     /* ----------------------------------------- Acá irán los textos de las descripciones ---------------------------------------- */
     const descriptions = [
         {
+            title: "Onyo App",
+            category: "App case study",
+            text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
+        },
+        {
+            title: "Colmena",
+            category: "UX + UI Design",
+            text: "This project is a tribute to The Legend of Zelda series, featuring a personalized custom skin for the Nintendo Switch Pro Controller. It showcases a fully 3D animated product presentation, created as a practice piece and an homage to the iconic game franchise. The animation highlights a unique Zelda-themed design, crafted to celebrate the artistic and legendary world of Hyrule."
+        },
+        {
+            title: "Aval Pay Center",
+            category: "UX + UI Design",
+            text: "Solución integral para pagos digitales con identidad visual sólida y accesibilidad multiplataforma.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore."
+        },
+        {
+            title: "Craftie Racoon",
+            category: "Brand design",
+            text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
+        },    
+        {
             title: "Kinetic Rush",
             category: "3D Motion",
             text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
@@ -57,10 +78,13 @@
 
     // Función para animar el cambio de texto con efecto "matrix" (letras aleatorias)
     function scrambleText(element, finalText, duration = 1) {
+        if (!element || !finalText) return; // <-- Esta línea evita que se ejecute con valores inválidos
+
         const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-        const frameRate = 32; // cuadros por segundo
+        const frameRate = 32;
         const totalFrames = Math.round(duration * frameRate);
         let frame = 0;
+
         const interval = setInterval(() => {
             frame++;
             let output = '';
@@ -78,6 +102,7 @@
             }
         }, 1000 / frameRate);
     }
+
 
     function updateDescription() {
         const index = swiper.realIndex;
@@ -191,7 +216,7 @@
             centeredSlides: true,
             initialSlide: 0,
             loop: false,
-            spaceBetween: 4,
+            spaceBetween: 80,
             pagination: {
                 el: '.swiper-pagination',
                 clickable: false
@@ -246,8 +271,30 @@
         swiper.on('slideChange', () => {
             updateDescription();
             animateBullet();
-            swiper.autoplay.start();
+
+            const isLastSlide = swiper.realIndex === swiper.slides.length - 1;
+            const background = document.querySelector('.background');
+
+            if (isLastSlide) {
+                swiper.autoplay.stop();
+
+                // Activar overflow en .background
+                if (background) background.classList.add('overflow-enabled');
+
+                // Desactiva scroll para cambiar slide
+                window.removeEventListener("wheel", handleWheel);
+            } else {
+                swiper.autoplay.start();
+
+                // Quitar overflow
+                if (background) background.classList.remove('overflow-enabled');
+
+                // Reactivar scroll
+                window.addEventListener("wheel", handleWheel, { passive: true });
+            }
         });
+
+
 
         swiper.on('slideChangeTransitionStart', () => updateSlidePositions(true));
         swiper.on('slideChangeTransitionEnd', () => updateSlidePositions(true));
@@ -333,7 +380,8 @@
 
         runIntroAnimation();  
         
-        scrambleText(); setTimeout(() => {
+        scrambleText(); 
+        setTimeout(() => {
             updateDescription();
         }, 1000);
 
@@ -349,25 +397,86 @@
   <!-- HTML de tu slider adaptado -->
   <div class="boolean-container">
   
-    <!-- Controles -->
-    <div class="control-container">
-<!--       <div class="swiper-button-container">
-        <div class="swiper-button-prev">
-          <img src="/Recursos/slider/arrow-left.svg" alt="Previous" class="new-icon" />
-        </div>
-        <div class="swiper-button-next">
-          <img src="/Recursos/slider/arrow-right.svg" alt="Next" class="new-icon" />
-        </div>
-      </div> -->
-      <div class="pagination-container">
-        <div class="swiper-pagination"></div>
-      </div>
-    </div>
-  
     <!-- Swiper -->
     <div class="swiper">
         <!-- Swiper content -->
+
+        
         <div class="swiper-wrapper">
+            <div class="swiper-slide" data-url="/Control" on:click={handleClick}>
+                <div class="image-container static-img">
+                    <img src="/Recursos/Slider/UX/Onyo-Static.png" alt="Static Image 1" class="imagen-contenida">
+                    <div class="grid">
+                        <div class="grid-collumn"></div>
+                        <div class="grid-collumn"></div>
+                        <div class="grid-collumn"></div>
+                        <div class="grid-collumn"></div>
+                        <div class="grid-collumn"></div>
+                        <div class="grid-collumn"></div>
+                        <div class="grid-collumn"></div>
+                    </div>
+                </div>
+                <img src="/Recursos/Slider/UX/Onyo-Active.png" alt="Active GIF 1" class="active-gif">
+                <div class="blur-container">
+                    <div class="blur"></div>
+                </div>
+            </div>
+            <div class="swiper-slide" data-url="/Control" on:click={handleClick}>
+                <div class="image-container static-img">
+                    <img src="/Recursos/Slider/UX/Colmena-Static.jpg" alt="Static Image 2" class="imagen-contenida">
+                    <div class="grid">
+                        <div class="grid-collumn"></div>
+                        <div class="grid-collumn"></div>
+                        <div class="grid-collumn"></div>
+                        <div class="grid-collumn"></div>
+                        <div class="grid-collumn"></div>
+                        <div class="grid-collumn"></div>
+                        <div class="grid-collumn"></div>
+                    </div>
+                </div>
+                <img src="/Recursos/Slider/UX/Colmena-Active.png" alt="Active GIF 2" class="active-gif">
+                <div class="blur-container">
+                    <div class="blur"></div>
+                </div>
+            </div>
+            <div class="swiper-slide" data-url="/Control" on:click={handleClick}>
+                <div class="image-container static-img">
+                    <img src="/Recursos/Slider/UX/AvalPay-Static.webp" alt="Static Image 3" class="imagen-contenida">
+                    <div class="grid">
+                        <div class="grid-collumn"></div>
+                        <div class="grid-collumn"></div>
+                        <div class="grid-collumn"></div>
+                        <div class="grid-collumn"></div>
+                        <div class="grid-collumn"></div>
+                        <div class="grid-collumn"></div>
+                        <div class="grid-collumn"></div>
+                    </div>
+                </div>
+                <img src="/Recursos/Slider/UX/AvalPay-Active.gif" alt="Active GIF 3" class="active-gif">
+                <div class="blur-container">
+                    <div class="blur"></div>
+                </div>
+            </div>
+            <div class="swiper-slide" data-url="/Control" on:click={handleClick}>
+                <div class="image-container static-img">
+                    <img src="/Recursos/Slider/UX/CR.webp" alt="Static Image 4" class="imagen-contenida">
+                    <div class="grid">
+                        <div class="grid-collumn"></div>
+                        <div class="grid-collumn"></div>
+                        <div class="grid-collumn"></div>
+                        <div class="grid-collumn"></div>
+                        <div class="grid-collumn"></div>
+                        <div class="grid-collumn"></div>
+                        <div class="grid-collumn"></div>
+                    </div>
+                </div>
+                <img src="/Recursos/Slider/UX/AvalPay-Active.gif" alt="Active GIF 4" class="active-gif">
+                <div class="blur-container">
+                    <div class="blur"></div>
+                </div>
+            </div>
+
+
             <div class="swiper-slide" data-url="/Control" on:click={handleClick}>
                 <div class="image-container static-img">
                     <img src="/Recursos/Slider/3D/Kinetic rush-static.webp" alt="Static Image 1" class="imagen-contenida">
@@ -440,6 +549,21 @@
                     <div class="blur"></div>
                 </div>
             </div>
+        </div>
+    </div>
+
+        <!-- Controles -->
+    <div class="control-container">
+<!--       <div class="swiper-button-container">
+        <div class="swiper-button-prev">
+            <img src="/Recursos/slider/arrow-left.svg" alt="Previous" class="new-icon" />
+        </div>
+        <div class="swiper-button-next">
+            <img src="/Recursos/slider/arrow-right.svg" alt="Next" class="new-icon" />
+        </div>
+        </div> -->
+        <div class="pagination-container">
+        <div class="swiper-pagination"></div>
         </div>
     </div>
     <div class="Description-container">
@@ -620,14 +744,13 @@ border-radius: 0px 0 0 0px ;
 .control-container {
     display: flex;
     width: 100%;
-    align-items: center;
+    align-items: end;
     justify-content: center;
     height: 100%;
     z-index: 10;
     justify-content: space-between;
     flex-direction: column;
-    position: absolute;
-    transform: translateY(600px);
+    position: relative;
 }
 
 .pagination-container {
@@ -659,11 +782,11 @@ border-radius: 0px 0 0 0px ;
 }
 
 :global(.swiper-pagination-bullet) {
-  width: 12px;
-  height: 12px;
-  border: 1px solid var(--blanco);
-  background-color: var(--Transparente);
-  border-radius: 50%;
+  width: 8px;
+  height: 8px;
+  border: 1px solid var(--transparent);
+  background-color: var(--Gris-muy-oscuro);
+  border-radius: 30%;
   opacity: 1;
   position: relative;
   overflow: hidden;
@@ -672,12 +795,14 @@ border-radius: 0px 0 0 0px ;
 
 /* Bullet activo */
 :global(.swiper-pagination-bullet-active) {
-    background-color: var(--Transparente);
+    background-color: var(--transparent);
+    border: 1px solid var(--Gris-muy-oscuro);
     transform: scale(1);
     opacity: 1;
-    border-radius: 8px;
+    border-radius: 2px;
     transition: all 0.4s ease-out;
     width: 64px;
+    height: 8px;
 }
 
 :global(.pagination-shape) {
@@ -686,9 +811,9 @@ border-radius: 0px 0 0 0px ;
     top: 50%;
     transform: translateY(-50%) translateX(10px);
     height: 14px;
-    background-color: var(--blanco); 
+    background-color: var(--Gris-muy-oscuro); 
     border-radius: 8px;
-    transition: all 0.3s ease-in-out;
+    transition: all 0.2s ease-in-out;
 }
 
 :global(.swiper-button-container) {
@@ -717,6 +842,7 @@ border-radius: 0px 0 0 0px ;
     opacity: 1; /* Always visible unless covered by GIF */
     z-index: 1; /* Behind the GIF */
     transition: all 0.5s ease-in-out;
+    border-radius: 8px;
 }
 
 .swiper-slide:hover .static-img {
@@ -732,6 +858,7 @@ border-radius: 0px 0 0 0px ;
     opacity: 0; /* Hidden by default */
     z-index: 2; /* Above the static image */
     transition: opacity 0.5s ease-out, mask-image 0.5s ease-out;
+    border-radius: 8px;
 }
 
 .blur-container {
@@ -758,12 +885,12 @@ border-radius: 0px 0 0 0px ;
 .Description-container {
     display: flex;
     flex-direction: row;
-    justify-content: flex-end;
+    justify-content: flex-start;
     align-items: flex-start;
     width: 100%;
     height: auto;
     z-index: 10;
-    transform: translateY(-8px);
+    transform: translateY(-48px);
     min-height: 200px;
 }
 .Lightbulb {
@@ -785,7 +912,7 @@ border-radius: 0px 0 0 0px ;
     flex-direction: column;
     gap: 16px;
     align-items: flex-start;
-    padding: 0 7.5%;
+    padding: 0 3%;
 }
 
 .project-category a {

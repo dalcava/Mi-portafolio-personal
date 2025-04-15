@@ -1,9 +1,11 @@
 <script>
     import { onMount } from 'svelte';
+    import { base } from '$app/paths';
     import Swiper from 'swiper/bundle';
     import 'swiper/css/bundle';
     import gsap from 'gsap';
     import { ScrollTrigger } from 'gsap/ScrollTrigger';
+    import { goto } from '$app/navigation';
 
     let swiper_2;
 
@@ -55,7 +57,7 @@
     // Función para animar el cambio de texto con efecto "matrix" (letras aleatorias)
     function scrambleText(element, finalText, duration = 1) {
         const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-        const frameRate = 30; // cuadros por segundo
+        const frameRate = 32; // cuadros por segundo
         const totalFrames = Math.round(duration * frameRate);
         let frame = 0;
         const interval = setInterval(() => {

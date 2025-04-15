@@ -2,6 +2,7 @@
 
 <script>
   import { onMount } from "svelte";
+  import { base } from '$app/paths';
   import { goto } from "$app/navigation";
   import { gsap } from "gsap";
   import CanvasParticles from '../components/CanvasParticles.svelte';

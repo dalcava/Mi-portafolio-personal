@@ -1,5 +1,6 @@
 <script>
     import { onMount } from 'svelte';
+    import { base } from '$app/paths';
     import * as THREE from 'three';
     import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
     import { Canvas } from '@threlte/core';
@@ -142,7 +143,7 @@ loader.load(
 
     // Material de vidrio tipo prisma ✨
     const glassMaterial = new THREE.MeshPhysicalMaterial({
-        transmission: 1.5,
+        transmission: 1.55,
         transparent: true,
         opacity: 1, // NO < 1 si estás usando transmission
         roughness: 0,
