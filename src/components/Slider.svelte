@@ -7,7 +7,7 @@
     import { ScrollTrigger } from 'gsap/ScrollTrigger';
     import { goto } from '$app/navigation';
 
-
+    let isFirstSlide = true;
     let swiper;
 
     let isAnimating = false;
@@ -19,6 +19,8 @@
     let textElement;
     const AUTOPLAY_DELAY = 4800;
     let isInitialLoad = true;
+    let allowScrollNavigation = false;
+
 
 
     import { createEventDispatcher } from 'svelte';
@@ -131,6 +133,8 @@
         });
     };
 
+
+
     function animateBullet() {
         gsap.fromTo(
             '.swiper-pagination-bullet-active',
@@ -158,52 +162,65 @@
         }
     }
 
+    function toggleQuoteVisibility() {
+        const quote = document.querySelector('.quote');
+        if (!quote) return;
+
+        const isFirstSlide = swiper?.realIndex === 0;
+
+        quote.classList.toggle('visible', isFirstSlide);
+        quote.classList.toggle('hidden', !isFirstSlide);
+    }
+
     function handleWheel(e) {
+        if (!allowScrollNavigation) return; // 🛑 Bloquea scroll hasta que esté permitido
+
         const now = Date.now();
         if (now - scrollThrottle < 200) return;
         scrollThrottle = now;
 
         const direction = Math.sign(e.deltaY);
         navigateSwiper(direction);
+        
     }
+
 
     function runIntroAnimation() {
         const sliderIntro = gsap.timeline({ delay: isInitialLoad ? 3 : 0 });
 
         sliderIntro
-        .fromTo(
-            ".swiper-slide",
-            { clipPath: "inset(0 100% 0 0)", y: 250 },
-            { clipPath: "inset(0 0% 0 0)", y: 0, duration: 1.5, ease: "elastic.out(1, 0.9)" },
-            "-=2.5"
-        )
-        .fromTo(
-            ".swiper",
-            { opacity: 0, y: 0 },
-            { opacity: 1, y: 0, duration: 0.05, ease: "power4.out", stagger: 0.5 },
-            "-=1.5"
-        )
-        .fromTo(
-            ".pagination-container",
-            { opacity: 0, y: 0 },
-            { opacity: 1, y: 0, duration: 0.35, ease: "power4.out", stagger: 0.5 },
-            "-=0.75"
-        )
-/*         .fromTo(
-            ".project-text",
-            { clipPath: "inset(0 100% 0 0)" },
-            { clipPath: "inset(0 0% 0 0)", duration: 1, ease: "power4.out" },
-            "-=0.25"
-        ) */
-        .fromTo(
-            ".project-description",
-            { clipPath: "inset(0 100% 0 0)" },
-            { clipPath: "inset(0 0% 0 0)", duration: 1, ease: "power4.out" },
-            "-=1.25"
-        );
+            .fromTo(
+                ".swiper-slide",
+                { clipPath: "inset(0 100% 0 0)", y: 250 },
+                { clipPath: "inset(0 0% 0 0)", y: 0, duration: 1.5, ease: "elastic.out(1, 0.9)" },
+                "-=2.5"
+            )
+            .fromTo(
+                ".swiper",
+                { opacity: 0, y: 0 },
+                { opacity: 1, y: 0, duration: 0.05, ease: "power4.out", stagger: 0.5 },
+                "-=1.5"
+            )
+            .fromTo(
+                ".pagination-container",
+                { opacity: 0, y: 0 },
+                { opacity: 1, y: 0, duration: 0.35, ease: "power4.out", stagger: 0.5 },
+                "-=0.75"
+            )
+            .fromTo(
+                ".project-description",
+                { clipPath: "inset(0 100% 0 0)" },
+                { clipPath: "inset(0 0% 0 0)", duration: 1, ease: "power4.out" },
+                "-=1.25"
+            )
+            .add(() => {
+                // ✅ Activamos el scroll de navegación cuando todo haya terminado
+                allowScrollNavigation = true;
+            });
 
         isInitialLoad = false;
     }
+
 
     /* ----------------------------------------------------------------------------------------------------------
     -------------------------------------------Aquí empieza swiper ----------------------------------------------
@@ -261,7 +278,7 @@
 
             },
         });
-
+        window.swiper = swiper;
         updateDescription();
         animateBullet();
         swiper.autoplay.start();
@@ -271,6 +288,8 @@
         swiper.on('slideChange', () => {
             updateDescription();
             animateBullet();
+            toggleQuoteVisibility();
+            isFirstSlide = swiper.realIndex === 0;
 
             const isLastSlide = swiper.realIndex === swiper.slides.length - 1;
             const background = document.querySelector('.background');
@@ -282,7 +301,7 @@
                 if (background) background.classList.add('overflow-enabled');
 
                 // Desactiva scroll para cambiar slide
-                window.removeEventListener("wheel", handleWheel);
+/*                 window.removeEventListener("wheel", handleWheel); */
             } else {
                 swiper.autoplay.start();
 
@@ -403,7 +422,7 @@
 
         
         <div class="swiper-wrapper">
-            <div class="swiper-slide" data-url="/Control" on:click={handleClick}>
+            <div class="swiper-slide slide-1" data-url="/Control" on:click={handleClick}>
                 <div class="image-container static-img">
                     <img src="/Recursos/Slider/UX/Onyo-Static.png" alt="Static Image 1" class="imagen-contenida">
                     <div class="grid">
@@ -479,7 +498,7 @@
 
             <div class="swiper-slide" data-url="/Control" on:click={handleClick}>
                 <div class="image-container static-img">
-                    <img src="/Recursos/Slider/3D/Kinetic rush-static.webp" alt="Static Image 1" class="imagen-contenida">
+                    <img src="/Recursos/Slider/3D/Kinetic rush-static.webp" alt="Static Image 5" class="imagen-contenida">
                     <div class="grid">
                         <div class="grid-collumn"></div>
                         <div class="grid-collumn"></div>
@@ -490,14 +509,14 @@
                         <div class="grid-collumn"></div>
                     </div>
                 </div>
-                <img src="/Recursos/Slider/3D/Kinetic rush-active.gif" alt="Active GIF 1" class="active-gif">
+                <img src="/Recursos/Slider/3D/Kinetic rush-active.gif" alt="Active GIF 5" class="active-gif">
                 <div class="blur-container">
                     <div class="blur"></div>
                 </div>
             </div>
             <div class="swiper-slide" data-url="/Control" on:click={handleClick}>
                 <div class="image-container static-img">
-                    <img src="/Recursos/Slider/3D/Control-static.webp" alt="Static Image 2" class="imagen-contenida">
+                    <img src="/Recursos/Slider/3D/Control-static.webp" alt="Static Image 6" class="imagen-contenida">
                     <div class="grid">
                         <div class="grid-collumn"></div>
                         <div class="grid-collumn"></div>
@@ -508,14 +527,14 @@
                         <div class="grid-collumn"></div>
                     </div>
                 </div>
-                <img src="/Recursos/Slider/3D/Control-active.gif" alt="Active GIF 2" class="active-gif">
+                <img src="/Recursos/Slider/3D/Control-active.gif" alt="Active GIF 6" class="active-gif">
                 <div class="blur-container">
                     <div class="blur"></div>
                 </div>
             </div>
             <div class="swiper-slide" data-url="/Control" on:click={handleClick}>
                 <div class="image-container static-img">
-                    <img src="/Recursos/Slider/3D/Duraznos intro.gif" alt="Static Image 3" class="imagen-contenida">
+                    <img src="/Recursos/Slider/3D/Duraznos intro.gif" alt="Static Image 7" class="imagen-contenida">
                     <div class="grid">
                         <div class="grid-collumn"></div>
                         <div class="grid-collumn"></div>
@@ -526,14 +545,14 @@
                         <div class="grid-collumn"></div>
                     </div>
                 </div>
-                <img src="/Recursos/Slider/3D/Duraznos active.gif" alt="Active GIF 3" class="active-gif">
+                <img src="/Recursos/Slider/3D/Duraznos active.gif" alt="Active GIF 7" class="active-gif">
                 <div class="blur-container">
                     <div class="blur"></div>
                 </div>
             </div>
             <div class="swiper-slide" data-url="/Control" on:click={handleClick}>
                 <div class="image-container static-img">
-                    <img src="/Recursos/Slider/3D/Chasms call.webp" alt="Static Image 5" class="imagen-contenida">
+                    <img src="/Recursos/Slider/3D/Chasms call.webp" alt="Static Image 8" class="imagen-contenida">
                     <div class="grid">
                         <div class="grid-collumn"></div>
                         <div class="grid-collumn"></div>
@@ -544,7 +563,7 @@
                         <div class="grid-collumn"></div>
                     </div>
                 </div>
-                <img src="/Recursos/Slider/3D/Chasms call.webp" alt="Active GIF 5" class="active-gif">
+                <img src="/Recursos/Slider/3D/Chasms call.webp" alt="Active GIF 8" class="active-gif">
                 <div class="blur-container">
                     <div class="blur"></div>
                 </div>

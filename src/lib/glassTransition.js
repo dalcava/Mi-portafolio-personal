@@ -1,10 +1,9 @@
-import { goto } from '$app/navigation';
 import * as THREE from 'three';
-import gsap from 'gsap';
 
-export function glassTransition(node) {
+export function glassTransition(node, params = {}) {
 	let scene, camera, renderer, mesh, displacement;
 	let triggered = false;
+	const { onComplete, onReverse } = params; // función que se pasará desde el componente
 
 	function init() {
 		const width = window.innerWidth;
@@ -66,36 +65,51 @@ export function glassTransition(node) {
 	}
 
 	function onScroll() {
-		if (triggered) return;
-	
-		const scrollY = node.scrollTop; // ← scroll de .background
+		const scrollY = node.scrollTop;
 		const start = 600;
 		const end = 900;
 	
-		const progress = Math.min(Math.max((scrollY - start) / (end - start), 0), 1);
+		// ✅ Condición de reversa si scrollY vuelve arriba y estamos en el primer slide
+		if (triggered && scrollY < 10) {
+			const isFirstSlide = isInFirstSwiperSlide();
+			if (isFirstSlide && typeof onReverse === 'function') {
+				onReverse();
+				triggered = false;
+			}
+		}
 	
+		// ⚠️ Este return DEBE estar después del bloque anterior
+		if (triggered) return;
+	
+		const progress = Math.min(Math.max((scrollY - start) / (end - start), 0), 1);
+		if (!mesh || !mesh.material || !mesh.material.uniforms) return;
 		mesh.material.uniforms.uStrength.value = progress;
 	
 		const fadeElement = document.querySelector('.hero');
 		if (fadeElement) {
 			fadeElement.style.opacity = `${1 - progress}`;
+			fadeElement.classList.toggle('fade-out', progress >= 1);
 		}
 	
-		if (scrollY >= end) {
-			triggered = true;
-	
-			gsap.to(mesh.material.uniforms.uStrength, {
-				value: 1,
-				duration: 1.2,
-				onUpdate: () => fadeElement?.classList.add('fade-out'),
-				onComplete: () => goto('/Works')
-			});
-		}
 		scene.rotation.z = progress * 0.3;
-
+	
+		if (progress >= 1) {
+			triggered = true;
+			setTimeout(() => {
+				if (typeof onComplete === 'function') {
+					onComplete();
+				}
+			}, 300);
+		}
 	}
 	
 	
+	
+
+	function isInFirstSwiperSlide() {
+		const firstSlide = document.querySelector('.swiper-slide:first-child');
+		return firstSlide?.classList.contains('swiper-slide-active');
+	}
 
 	init();
 	node.addEventListener('scroll', onScroll);
@@ -107,4 +121,4 @@ export function glassTransition(node) {
 			renderer.dispose();
 		}
 	};
-}	
+}

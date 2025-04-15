@@ -15,6 +15,7 @@
   import Section6 from '../../components/Secciones reutilizables/seccion_contenido_6.svelte';
   import NextProject from '../../components/Secciones reutilizables/NextProject.svelte';
   import Accordion from '../../components/Secciones reutilizables/Accordion.svelte';
+  import Works from '../../components/Secciones home/Works.svelte';
   import Scene from '../../components/Scene.svelte';
 
   const challengeTitle = `03. <strong>Challenges</strong> & Learnings`;

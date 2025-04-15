@@ -10,9 +10,44 @@
   import Tabs from '../components/Tabs.svelte';
   import Scene from '../components/Scene.svelte';
   import { glassTransition } from '../lib/glassTransition';
+  import Works from '../components/Secciones home/Works.svelte';
 
-
+  let showWorks = false;
   let activeTab = null;
+
+  function enableWorks() {
+    showWorks = true;
+  }
+  function disableWorks() {
+  showWorks = false;
+
+  const hero = document.querySelector('.hero');
+  const complementary = document.querySelector('.Complementary-text');
+
+  if (hero) {
+    gsap.to(hero, {
+      opacity: 1,
+      duration: 0.8,
+      ease: 'power2.out'
+    });
+    hero.classList.remove('fade-out');
+  }
+
+  if (complementary) {
+    complementary.classList.add('hidden'); // Esconder primero
+    gsap.to(complementary, {
+      opacity: 1,
+      y: 0,
+      duration: 1,
+      ease: 'power3.out',
+      onStart: () => {
+        complementary.classList.remove('hidden');
+      }
+    });
+  }
+}
+
+
 
   function onWheel(e) {
   if (triggered) return;
@@ -70,7 +105,43 @@
         document.querySelector('.Complementary-text')?.classList.remove('hidden');
       }
     });
+
+    const backgroundWorks = document.querySelector('.background-works');
+
+    function handleScroll() {
+      const scrollY = document.querySelector('.background')?.scrollTop || 0;
+
+      if (backgroundWorks) {
+        if (scrollY >= 1700 && scrollY <= 2700) {
+          backgroundWorks.classList.add('fixed-mode');
+        } else {
+          backgroundWorks.classList.remove('fixed-mode');
+        }
+      }
+    }
+
+    const backgroundEl = document.querySelector('.background');
+    backgroundEl?.addEventListener('scroll', handleScroll);
+
+    return () => {
+      backgroundEl?.removeEventListener('scroll', handleScroll);
+    };
   });
+  function restoreHomeAnimation() {
+    const hero = document.querySelector('.hero');
+    const pageTransition = document.getElementById('page-transition');
+
+    if (hero) {
+      hero.style.opacity = '1';
+      hero.classList.remove('fade-out');
+    }
+
+    if (pageTransition) {
+      pageTransition.style.transform = 'translateY(100%)';
+    }
+  }
+
+  
 
 </script>
 
@@ -84,7 +155,7 @@
 </div>
 
 <!-- Fondo principal -->
-<div class="background" use:glassTransition>
+<div class="background" use:glassTransition={{ onComplete: enableWorks, onReverse: disableWorks }}>
   <div id="page-transition" class="transition-overlay"></div>
   <div class="hero">
     <div class="background-img"></div>
@@ -104,6 +175,12 @@
 
     <div class="swiper-scrollbar"></div>
   </div>
+
+
+  {#if showWorks}
+    <Works onReverse={restoreHomeAnimation} />
+  {/if}
+  
 
   <div class="contador-container">
     <Contador />
@@ -194,6 +271,7 @@ html, body {
   transition: clip-path 1.5s ease; 
 }
 
+
   .hero {
     position: relative;
     display: flex;
@@ -206,7 +284,7 @@ html, body {
     padding: 24px 120px;
     background-color: var(--transparent);
     transition: opacity 0.3s ease;
-    min-height: 200vh
+    min-height: 180vh
   }
 
 
