@@ -1,15 +1,15 @@
 import adapter from '@sveltejs/adapter-static';
 
-/** @type {import('@sveltejs/kit').Config} */
-const dev = process.env.NODE_ENV === 'development';
-
 const config = {
   kit: {
     adapter: adapter({
-      fallback: '200.html'
+      pages: 'build',
+      assets: 'build',
+      fallback: '200.html', // Para GitHub Pages
+      precompress: false
     }),
     paths: {
-      base: dev ? '' : '/Mi-portafolio-personal'
+      base: '', // o tu ruta si estás desplegando en un subdirectorio
     }
   }
 };
