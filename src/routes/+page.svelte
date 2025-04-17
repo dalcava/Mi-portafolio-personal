@@ -7,7 +7,6 @@
   import { gsap } from "gsap";
   import CanvasParticles from '../components/CanvasParticles.svelte';
   import Contador from '../components/Contador.svelte';
-  import Tabs from '../components/Tabs.svelte';
   import Scene from '../components/Scene.svelte';
   import { glassTransition } from '../lib/glassTransition';
   import Works from '../components/Secciones home/Works.svelte';
@@ -15,7 +14,7 @@
   let showWorks = false;
   let activeTab = null;
 
-
+  export let scrollContainer;
 
   function onWheel(e) {
   if (triggered) return;
@@ -153,7 +152,7 @@
 </div>
 
 <!-- Fondo principal -->
-<div class="background">
+<div class="background" bind:this={scrollContainer}>
   <div id="page-transition" class="transition-overlay"></div>
   <div class="hero">
     <div class="background-elements">
@@ -176,7 +175,7 @@
     <h1>Hi! <span>I'm David</span></h1>
     <div class="Compliment">
       <h2>UX/UI designer and 3d artist</h2>
-      <h3>Welcome to my portfolio</h3>
+<!--       <h3>Welcome to my portfolio</h3> -->
     </div>
   </div>
 
@@ -186,7 +185,7 @@
 <section class="works-wrap">
     <div class="works-container">
       {#if showWorks}
-          <Works onReverse={restoreHomeAnimation} />
+        <Works {scrollContainer} on:slideProgress={(e) => handleSliderProgress(e.detail)} />
       {/if}
     </div>
 </section>
@@ -234,6 +233,8 @@ html, body {
   transform: translate(-50%, -50%);
   object-fit: cover;
   transition: width 0.3s ease, height 0.3s ease, border-radius 0.3s ease;
+  width: 100%;
+  height: 100%;
 }
 
 
@@ -280,7 +281,8 @@ html, body {
     scroll-behavior: smooth;
     display: flex;
     flex-direction: column;
-    gap: 100px;
+    gap: 0px;
+    background-color: var(--blanco);
 }
 
 
@@ -362,7 +364,7 @@ html, body {
 
   .Complementary-text h1 {
     font-size: var(--font-size-XXL);
-    color: var(--Gris-claro);
+    color: var(--Gris);
     font-family: "Publica Sans";
     font-weight: 700;
     line-height: 1.2;
@@ -389,7 +391,7 @@ html, body {
   }
   .Complementary-text h2 {
     font-size: var(--font-size-XXXL);
-    background: linear-gradient(90deg, #2B2B35 27%, #7E7E9B 59%);
+    background: linear-gradient(45deg, #2B2B35 27%, #7E7E9B 79%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     font-family: "Publica Sans thin";
@@ -403,8 +405,8 @@ html, body {
   }
   .Complementary-text h3 {
     font-size: var(--font-size-XXL);
-    color: var(--Gris-claro);
-    font-family: "Publica Sans thin";
+    color: var(--Gris-oscuro);
+    font-family: "Publica Sans";
     line-height: 1.1;
     font-weight: 700;
     margin: 0;
@@ -429,7 +431,7 @@ html, body {
 
   .works-wrap {
     position: relative;
-    height: 200vh;
+    height: 440vh;
     width: 100%;
     z-index: 1;
     overflow: visible;

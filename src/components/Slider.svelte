@@ -6,6 +6,8 @@
     import gsap from 'gsap';
     import { ScrollTrigger } from 'gsap/ScrollTrigger';
     import { goto } from '$app/navigation';
+    
+    export let scrollContainer;
 
     let isFirstSlide = true;
     let swiper;
@@ -13,6 +15,7 @@
     let isAnimating = false;
     let scrollThrottle = 0;
 
+    let lastSyncedIndex = -1;
     /* Referencias a los elementos del DOM para la descripción */
     let titleElement;
     let categoryElement;
@@ -20,11 +23,41 @@
     const AUTOPLAY_DELAY = 4800;
     let isInitialLoad = true;
     let allowScrollNavigation = false;
+    let isProgrammaticScroll = false;
+
+
+    function generateScrollRanges(start = 2000, step = 400, count = 8) {
+        return Array.from({ length: count }, (_, i) => {
+            const min = start + i * step;
+            const max = min + step;
+            return [min, max];
+        });
+    }
+
+    function handleScrollPositionSync() {
+        if (isProgrammaticScroll) return; // <- Evita loop
+
+        let scrollY = scrollContainer?.scrollTop ?? window.scrollY;
+        const ranges = generateScrollRanges();
+        const index = ranges.findIndex(([min, max]) => scrollY >= min && scrollY < max);
+
+        if (index !== -1 && swiper && swiper.realIndex !== index) {
+            if (!isAnimating) {
+                isAnimating = true;
+                swiper.slideTo(index);
+                lastSyncedIndex = index;
+
+                gsap.delayedCall(0.8, () => {
+                    isAnimating = false;
+                });
+            }
+        }
+        console.log('ScrollY actual:', scrollY);
+    }
 
 
 
-    import { createEventDispatcher } from 'svelte';
-	const dispatch = createEventDispatcher();
+
 
 	function handleClick(event) {
 		const slide = event.currentTarget.closest('.swiper-slide');
@@ -172,18 +205,6 @@
         quote.classList.toggle('hidden', !isFirstSlide);
     }
 
-    function handleWheel(e) {
-        if (!allowScrollNavigation) return; // 🛑 Bloquea scroll hasta que esté permitido
-
-        const now = Date.now();
-        if (now - scrollThrottle < 200) return;
-        scrollThrottle = now;
-
-        const direction = Math.sign(e.deltaY);
-        navigateSwiper(direction);
-        
-    }
-
 
     function runIntroAnimation() {
         const sliderIntro = gsap.timeline({ delay: isInitialLoad ? 3 : 0 });
@@ -227,6 +248,7 @@
     -------------------------------------------------------------------------------------------------------------*/
 
     onMount(() => {
+        
         swiper = new Swiper('.swiper', {
             effect: "slide",
             slidesPerView: '5.7',
@@ -278,21 +300,62 @@
 
             },
         });
+
+        
         window.swiper = swiper;
         updateDescription();
         animateBullet();
-        swiper.autoplay.start();
 
-        window.addEventListener("wheel", handleWheel, { passive: true });
+        if (scrollContainer) {
+            scrollContainer.addEventListener('scroll', handleScrollPositionSync);
+        }
+
+
+        // También elimina el listener al desmontar
+        const cleanup = () => {
+            if (scrollContainer) {
+                scrollContainer.removeEventListener('scroll', handleScrollPositionSync);
+            }
+        };
+        
+
+
+
 
         swiper.on('slideChange', () => {
+            const ranges = generateScrollRanges();
+            const y = ranges[swiper.realIndex]?.[0]; 
+
+
+            if (y) {
+                isProgrammaticScroll = true;
+
+                const scrollTarget = scrollContainer === window || scrollContainer === document.body || scrollContainer === document.documentElement
+                    ? window
+                    : scrollContainer;
+
+                scrollTarget.scrollTo({ top: y, behavior: 'smooth' });
+
+                setTimeout(() => {
+                    isProgrammaticScroll = false;
+                }, 800); // ⏱️ igual o mayor que tu `behavior: smooth`
+            }
+
             updateDescription();
             animateBullet();
             toggleQuoteVisibility();
-            isFirstSlide = swiper.realIndex === 0;
 
+            if (swiper.isEnd) {
+            swiper.autoplay.stop();
+        }
         });
 
+
+
+        function updateSlidePositions(forceUpdate = false) {
+            // Si querés animar, escalar o modificar clases manualmente, lo harías acá.
+            // Por ahora, esto lo dejamos vacío para evitar errores.
+        }
 
 
         swiper.on('slideChangeTransitionStart', () => updateSlidePositions(true));
@@ -384,11 +447,10 @@
             updateDescription();
         }, 1000);
 
-        return () => {
-            window.removeEventListener("wheel", handleWheel);
-        };
-
+        return cleanup;
+        
     });
+
 </script>
 
 
@@ -551,39 +613,41 @@
         </div>
     </div>
 
-        <!-- Controles -->
-    <div class="control-container">
-<!--       <div class="swiper-button-container">
-        <div class="swiper-button-prev">
-            <img src="/Recursos/slider/arrow-left.svg" alt="Previous" class="new-icon" />
-        </div>
-        <div class="swiper-button-next">
-            <img src="/Recursos/slider/arrow-right.svg" alt="Next" class="new-icon" />
-        </div>
-        </div> -->
-        <div class="pagination-container">
-        <div class="swiper-pagination"></div>
-        </div>
-    </div>
-    <div class="Description-container">
-        <div class="Lightbulb">
-            <img src="/Recursos/header/Scroll.gif" alt="Lightbulb" />
-        </div>
+    <div class="Swiper-Extras">
 
-        <div class="project-description">
-            <div class="project-description-head">
-                <div class="project-title">
-                  <h2 bind:this={titleElement}>  </h2>
-                </div>
-                <div class="project-category">
-                  <a href="#" bind:this={categoryElement}>  </a>
-                </div>
+        <div class="control-container">
+    <!--       <div class="swiper-button-container">
+            <div class="swiper-button-prev">
+                <img src="/Recursos/slider/arrow-left.svg" alt="Previous" class="new-icon" />
             </div>
-<!--             <div class="project-text">
-              <p bind:this={textElement}>  </p>
+            <div class="swiper-button-next">
+                <img src="/Recursos/slider/arrow-right.svg" alt="Next" class="new-icon" />
+            </div>
             </div> -->
+            <div class="pagination-container">
+            <div class="swiper-pagination"></div>
+            </div>
         </div>
-    </div>
+        <div class="Description-container">
+            <div class="Lightbulb">
+                <img src="/Recursos/header/Scroll.gif" alt="Lightbulb" />
+            </div>
+    
+            <div class="project-description">
+                <div class="project-description-head">
+                    <div class="project-title">
+                      <h2 bind:this={titleElement}>  </h2>
+                    </div>
+                    <div class="project-category">
+                      <a href="#" bind:this={categoryElement}>  </a>
+                    </div>
+                </div>
+    <!--             <div class="project-text">
+                  <p bind:this={textElement}>  </p>
+                </div> -->
+            </div>
+        </div>
+    </div>    <!-- Controles -->
   </div>
   
   <style>
@@ -592,8 +656,7 @@
     position: relative;
     width: 100%;
     height: 100%;
-    overflow: hidden;
-    overflow: hidden;
+    overflow: visible;
     padding-top: 144px;
     gap: 32px;
     display: flex;
@@ -604,7 +667,7 @@
 .swiper {
 position: relative;
 width: 97.5%;
-height: 72vh;
+height: 68vh;
 overflow: hidden;
 transition: all 0.1s ease-out;
 transform: translateX(1.75%) !important;
@@ -743,18 +806,17 @@ border-radius: 0px 0 0 0px ;
 .control-container {
     display: flex;
     width: 100%;
-    align-items: end;
-    justify-content: center;
+    align-items: center;
     height: 100%;
     z-index: 10;
-    justify-content: space-between;
-    flex-direction: column;
+    justify-content: flex-start;
+    flex-direction: row;
     position: relative;
 }
 
 .pagination-container {
     display: flex;
-    align-items: center;
+    align-items: start;
     justify-content: flex-start;
     position: relative;
     gap: 20px;
@@ -775,7 +837,7 @@ border-radius: 0px 0 0 0px ;
     top: var(--swiper-pagination-top, auto);
     left: 0;
     width: 100%;
-    justify-content: center;
+    justify-content: start !important;
     height: 100%;
     gap: 8px;
 }
@@ -785,7 +847,7 @@ border-radius: 0px 0 0 0px ;
   height: 8px;
   border: 1px solid var(--transparent);
   background-color: var(--Gris-muy-oscuro);
-  border-radius: 30%;
+  border-radius: 50%;
   opacity: 1;
   position: relative;
   overflow: hidden;
@@ -798,7 +860,7 @@ border-radius: 0px 0 0 0px ;
     border: 1px solid var(--Gris-muy-oscuro);
     transform: scale(1);
     opacity: 1;
-    border-radius: 2px;
+    border-radius: 8px;
     transition: all 0.4s ease-out;
     width: 64px;
     height: 8px;
@@ -841,7 +903,7 @@ border-radius: 0px 0 0 0px ;
     opacity: 1; /* Always visible unless covered by GIF */
     z-index: 1; /* Behind the GIF */
     transition: all 0.5s ease-in-out;
-    border-radius: 8px;
+    border-radius: 16px;
 }
 
 .swiper-slide:hover .static-img {
@@ -857,7 +919,7 @@ border-radius: 0px 0 0 0px ;
     opacity: 0; /* Hidden by default */
     z-index: 2; /* Above the static image */
     transition: opacity 0.5s ease-out, mask-image 0.5s ease-out;
-    border-radius: 8px;
+    border-radius: 16px;
 }
 
 .blur-container {
@@ -879,12 +941,20 @@ border-radius: 0px 0 0 0px ;
     position: relative;
 }
 
-/*Proyects description*/
+.Swiper-Extras {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    flex-direction: row;
+    padding: 40px 56px;
+}
+
+/*---------------------------------------- Proyects description -----------------------------------------------*/
 
 .Description-container {
     display: flex;
     flex-direction: row;
-    justify-content: flex-start;
+    justify-content: flex-end;
     align-items: flex-start;
     width: 100%;
     height: auto;
@@ -918,7 +988,7 @@ border-radius: 0px 0 0 0px ;
   font-family: 'Publica Sans', sans-serif;
   font-weight: 100;
   font-size: var(--font-size-XS);
-  color: var(--Verde);
+  color: var(--Gris-oscuro);
   text-decoration: none;
   display: inline-block;
   margin-bottom: 8px;
@@ -973,14 +1043,21 @@ border-radius: 0px 0 0 0px ;
     .Description-container{
         width: 100%;
     }
+    .swiper {
+        height: 64vh;
+    }
 }
 
 @media (max-width: 600px) {
+    .control-container {
+        display: none;
+    }
+    .Description-container{
+        width: 100%;
+        justify-content: start;
+    }
     .boolean-container {
         padding-top: 160px;
-    }
-    .swiper {
-        height: 440px;
     }
     .active-gif{
         display: none;

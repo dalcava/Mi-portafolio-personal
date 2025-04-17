@@ -12,7 +12,7 @@
   let isFirstSlide = true;
   let activeTab = '3D';
   export let onReverse = () => {};
-  
+  export let scrollContainer;
 
   function handleTabChange(event) {
     activeTab = event.detail;
@@ -106,7 +106,8 @@
       }, "-=0.3");
 
       updateDescription();
-      const parentScrollable = document.querySelector('.background');
+      const parentScrollable = scrollContainer;
+
 
       function handleScroll() {
         const scrollY = parentScrollable?.scrollTop || 0;
@@ -183,10 +184,14 @@
       <h2>Good design is seen. Great design is remembered</h2>
     </div>
 
-    {#if activeTab === '3D'}
-      <Slider on:isFirstSlideChange={(e) => isFirstSlide = e.detail} />
+    <div class="tabs-container-fixed">
+      <Tabs on:tabChange={handleTabChange} />
+    </div>
+
+    {#if activeTab === 'UX'}
+      <Slider {scrollContainer} on:isFirstSlideChange={(e) => isFirstSlide = e.detail} />
     {:else}
-      <Slider_2 />
+<!--       <Slider_2 /> -->
     {/if}
 
     <div class="swiper-scrollbar"></div>
@@ -239,7 +244,7 @@
   }
 
 
-  .background-img {
+/*   .background-img {
     position: sticky;
     top: 0;
     left: 0;
@@ -253,7 +258,7 @@
     z-index: 0;
     opacity: 1;
     clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
-  }
+  } */
 
 
   .Works {
@@ -297,12 +302,17 @@
   }
   .quote h2 {
     font-size: var(--font-size-XXXL);
-    background: linear-gradient(45deg, #686880 12%, #2B2B35 39%);
+    color: var(--Gris-muy-oscuro);
+    /*     background: linear-gradient(45deg, #2B2B35 27%, #7E7E9B 79%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent; */
+    font-family: "Publica Sans thin";
     text-align: start;
     margin: 0;
-    line-height: 96px;
+    font-weight: 700;
+    line-height: 1.1;
   }
   .quote.fade-out {
     opacity: 0;
@@ -353,4 +363,16 @@
     background-color: var(--Verde-claro);
     border-radius: 10px;
   }
+
+  .tabs-container-fixed {
+    position: fixed;
+    top: 0px; /* ajustá según tu layout */
+    right: 64px;
+    z-index: 100;
+    border-radius: 8px;
+    backdrop-filter: blur(6px); /* efecto glass */
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    transition: opacity 0.3s ease;
+  }
+
 </style>

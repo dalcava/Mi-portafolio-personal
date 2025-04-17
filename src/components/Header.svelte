@@ -141,7 +141,7 @@
   font-family: "Publica Sans", sans-serif;
   font-size: var(--font-size-XS);
 
-  background: var(--Verde);
+  background: var(--Verde-oscuro);
   background-size: 200%;
   background-position: 0% 50%;
   -webkit-background-clip: text;
