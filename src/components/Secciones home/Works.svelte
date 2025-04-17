@@ -7,10 +7,7 @@
   import { gsap } from "gsap";
   import Slider from '../../components/Slider.svelte';
   import Slider_2 from '../../components/Slider_2.svelte';
-  import CanvasParticles from '../../components/CanvasParticles.svelte';
-  import Contador from '../../components/Contador.svelte';
   import Tabs from '../../components/Tabs.svelte';
-  import { glassTransition } from '../../lib/glassTransition';
 
   let isFirstSlide = true;
   let activeTab = '3D';
@@ -114,10 +111,6 @@
       function handleScroll() {
         const scrollY = parentScrollable?.scrollTop || 0;
         const worksBackground = document.querySelector('.background-works');
-
-        if (worksBackground) {
-          worksBackground.classList.toggle('fixed-mode', scrollY >= 1900 && scrollY <= 2700);
-        }
       }
 
       parentScrollable?.addEventListener('scroll', handleScroll);
@@ -184,12 +177,8 @@
 
 
 <!-- Fondo principal -->
-<div class="background-works" use:glassTransition={{ onComplete: () => console.log('Transition done'), onReverse }}>
-  <div class="background-img"></div>
-  <div id="page-transition" class="transition-overlay"></div>
-
+<div class="background-works">
   <div class="Works">
-    <CanvasParticles />
     <div class="quote visible">
       <h2>Good design is seen. Great design is remembered</h2>
     </div>
@@ -202,13 +191,11 @@
 
     <div class="swiper-scrollbar"></div>
   </div>
+  <div class="background-img"></div>
+  <div id="page-transition" class="transition-overlay"></div>
 
-  <div class="About"></div>
-
-  <div class="contador-container">
-    <Contador />
-  </div>
 </div>
+
 
 <style>
   #loading-screen {
@@ -246,43 +233,33 @@
     100% { transform: translateY(0) scaleY(1); }
   }
   .background-works {
-    position: relative;
+    width: 100%;
+    padding-top: 120px;
+    height: 500vh;
+  }
+
+
+  .background-img {
+    position: sticky;
     top: 0;
     left: 0;
-    width: 100%;
-    min-height: 200vh;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
     background-color: var(--blanco);
+    background-image: url('/Recursos/Fondos/fondo-works.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     z-index: 0;
     opacity: 1;
+    clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
   }
-  :global(.background-works.fixed-mode) {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  z-index: 10;
-}
-
-.background-img {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: var(--blanco);
-  background-image: url('/Recursos/Fondos/fondo-works.png');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  z-index: 0;
-  opacity: 1;
-  clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
-}
 
 
   .Works {
-    position: relative;
+    position: sticky;
+    top: 0;
+    left: 0;
     display: flex;
     flex-direction: column;
     gap: 0px;

@@ -291,26 +291,6 @@
             toggleQuoteVisibility();
             isFirstSlide = swiper.realIndex === 0;
 
-            const isLastSlide = swiper.realIndex === swiper.slides.length - 1;
-            const background = document.querySelector('.background');
-
-            if (isLastSlide) {
-                swiper.autoplay.stop();
-
-                // Activar overflow en .background
-                if (background) background.classList.add('overflow-enabled');
-
-                // Desactiva scroll para cambiar slide
-/*                 window.removeEventListener("wheel", handleWheel); */
-            } else {
-                swiper.autoplay.start();
-
-                // Quitar overflow
-                if (background) background.classList.remove('overflow-enabled');
-
-                // Reactivar scroll
-                window.addEventListener("wheel", handleWheel, { passive: true });
-            }
         });
 
 

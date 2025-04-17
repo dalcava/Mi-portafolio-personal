@@ -15,38 +15,6 @@
   let showWorks = false;
   let activeTab = null;
 
-  function enableWorks() {
-    showWorks = true;
-  }
-  function disableWorks() {
-  showWorks = false;
-
-  const hero = document.querySelector('.hero');
-  const complementary = document.querySelector('.Complementary-text');
-
-  if (hero) {
-    gsap.to(hero, {
-      opacity: 1,
-      duration: 0.8,
-      ease: 'power2.out'
-    });
-    hero.classList.remove('fade-out');
-  }
-
-  if (complementary) {
-    complementary.classList.add('hidden'); // Esconder primero
-    gsap.to(complementary, {
-      opacity: 1,
-      y: 0,
-      duration: 1,
-      ease: 'power3.out',
-      onStart: () => {
-        complementary.classList.remove('hidden');
-      }
-    });
-  }
-}
-
 
 
   function onWheel(e) {
@@ -63,8 +31,11 @@
   }
 
   onMount(() => {
-  const loadingScreen = document.getElementById('loading-screen');
-  const tl = gsap.timeline({
+    const backgroundEl = document.querySelector('.background');
+    const video = document.getElementById('home-video');
+    const loadingScreen = document.getElementById('loading-screen');
+  
+    const tl = gsap.timeline({
     onComplete: () => {
       loadingScreen.style.display = 'none';
       }
@@ -107,25 +78,52 @@
     });
 
     const backgroundWorks = document.querySelector('.background-works');
+    const worksContainer = document.querySelector('.works-container');
 
-    function handleScroll() {
-      const scrollY = document.querySelector('.background')?.scrollTop || 0;
 
-      if (backgroundWorks) {
-        if (scrollY >= 1700 && scrollY <= 2700) {
-          backgroundWorks.classList.add('fixed-mode');
-        } else {
-          backgroundWorks.classList.remove('fixed-mode');
+
+
+      backgroundEl?.addEventListener('scroll', handleScroll);
+
+      return () => {
+        backgroundEl?.removeEventListener('scroll', handleScroll);
+      };
+
+      function handleScroll() {
+        const scrollY = backgroundEl?.scrollTop || 0;
+
+          // 👉 Mostrar Works cuando el scroll sea 1400 o más
+        if (scrollY >= 1500 && !showWorks) {
+          showWorks = true;
+        } else if (scrollY < 1500 && showWorks) {
+          showWorks = false;
+        }
+
+        // ——— 2. Lógica para animar el video ———
+        const minScroll = 100;
+        const maxScroll = 1000;
+
+        if (scrollY >= minScroll && scrollY <= maxScroll) {
+          const progress = (scrollY - minScroll) / (maxScroll - minScroll);
+          const scale = 1 - progress * 0.5; // reduce hasta 91%
+          const radius = progress * 16; // aumenta hasta 18px
+
+          video.style.width = `${scale * 100}%`;
+          video.style.height = `${scale * 100}%`;
+          video.style.borderRadius = `${radius}px`;
+        } else if (scrollY < minScroll) {
+          video.style.width = `100%`;
+          video.style.height = `100%`;
+          video.style.borderRadius = `0px`;
+        } else if (scrollY > maxScroll) {
+          video.style.width = `50%`;
+          video.style.height = `50%`;
+          video.style.borderRadius = `16px`;
         }
       }
-    }
 
-    const backgroundEl = document.querySelector('.background');
+
     backgroundEl?.addEventListener('scroll', handleScroll);
-
-    return () => {
-      backgroundEl?.removeEventListener('scroll', handleScroll);
-    };
   });
   function restoreHomeAnimation() {
     const hero = document.querySelector('.hero');
@@ -155,15 +153,24 @@
 </div>
 
 <!-- Fondo principal -->
-<div class="background" use:glassTransition={{ onComplete: enableWorks, onReverse: disableWorks }}>
+<div class="background">
   <div id="page-transition" class="transition-overlay"></div>
   <div class="hero">
-    <div class="background-img"></div>
-    <CanvasParticles />
+    <div class="background-elements">
 
-  <div class="scene-wrap">
-    <Scene/>
-  </div>
+      <video
+        id="home-video"
+        class="video-background"
+        autoplay
+        loop
+        muted
+        playsinline
+      >
+        <source src="/Recursos/Fondos/Orbes.mp4" type="video/mp4" />
+      </video>
+    <CanvasParticles />
+    </div>
+
   <div class="Complementary-text hidden">
 
     <h1>Hi! <span>I'm David</span></h1>
@@ -176,10 +183,20 @@
     <div class="swiper-scrollbar"></div>
   </div>
 
+<section class="works-wrap">
+    <div class="works-container">
+      {#if showWorks}
+          <Works onReverse={restoreHomeAnimation} />
+      {/if}
+    </div>
+</section>
+<section class="about-wrap">
+  <div class="about-container">
 
-  {#if showWorks}
-    <Works onReverse={restoreHomeAnimation} />
-  {/if}
+  </div>
+
+</section>
+
   
 
   <div class="contador-container">
@@ -199,6 +216,26 @@ html, body {
   opacity: 0;
   transition: opacity 1s ease;
 }
+
+.background-elements {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  z-index: -1;
+}
+
+.video-background {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  object-fit: cover;
+  transition: width 0.3s ease, height 0.3s ease, border-radius 0.3s ease;
+}
+
 
   #loading-screen {
     position: fixed;
@@ -241,34 +278,9 @@ html, body {
     overflow-y: auto;
     overflow-x: hidden;
     scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch;
-  }
-  
-  .background {
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* IE 10+ */
-  }
-
-  .background::-webkit-scrollbar {
-    display: none; /* Chrome, Safari, Opera */
-  }
-
-
-  .background-img {
-  position: fixed;
-  top: 40px;
-  left: 0;
-  width: 115%;
-  height: 96%;
-  background-color: var(--blanco);
-  background-image: url('/Recursos/Fondos/fondo-home.png');
-  background-size: cover; 
-  background-position: center; 
-  background-repeat: no-repeat;
-  z-index: 0;
-  opacity: 1;
-  clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
-  transition: clip-path 1.5s ease; 
+    display: flex;
+    flex-direction: column;
+    gap: 100px;
 }
 
 
@@ -322,7 +334,7 @@ html, body {
     width: 100%;
     height: 100%;
     position: absolute;
-    padding: 10% 16%;
+    padding: 16% 0%;
     top: 15%;
   }
 
@@ -360,6 +372,7 @@ html, body {
     opacity: 1;
     transition: transform 0.5s ease, opacity 0.5s ease;
     width: 6%;
+    mix-blend-mode: difference;
   }
   .Complementary-text h1 span {
     font-size: var(--font-size-XXL);
@@ -413,29 +426,43 @@ html, body {
     width: 91%;
     text-align: end;
   }
-  .scene-wrap {
-    position: sticky;
-    top: 0;
+
+  .works-wrap {
+    position: relative;
+    height: 200vh;
     width: 100%;
-    z-index: 10; /* antes: 1 */
-    pointer-events: none;
+    z-index: 1;
+    overflow: visible;
+  }
+  .works-container {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  z-index: 10;
+}
+
+
+  .about-wrap {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    min-height: 100vh;
+    overflow: hidden;
+    z-index: 1;
   }
 
 
 
 @media (max-width: 1360px) {
-  .scene-wrap {
-    width: 200vw;
-    position: sticky;
-    height: 100vh;
-  }
+
+  
+
 }
 @media (max-width: 860px) {
-    .scene-wrap {
-        width: 250%;
-        position: sticky;
-        transform: translateX(-20px);
-    }
+
+  
     .Complementary-text {
         width: 100%;
         height: 100%;

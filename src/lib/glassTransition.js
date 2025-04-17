@@ -64,44 +64,46 @@ export function glassTransition(node, params = {}) {
 		renderer.render(scene, camera);
 	}
 
-	function onScroll() {
-		const scrollY = node.scrollTop;
-		const start = 600;
-		const end = 900;
-	
-		// ✅ Condición de reversa si scrollY vuelve arriba y estamos en el primer slide
-		if (triggered && scrollY < 10) {
-			const isFirstSlide = isInFirstSwiperSlide();
-			if (isFirstSlide && typeof onReverse === 'function') {
-				onReverse();
-				triggered = false;
-			}
-		}
-	
-		// ⚠️ Este return DEBE estar después del bloque anterior
-		if (triggered) return;
-	
-		const progress = Math.min(Math.max((scrollY - start) / (end - start), 0), 1);
-		if (!mesh || !mesh.material || !mesh.material.uniforms) return;
-		mesh.material.uniforms.uStrength.value = progress;
-	
-		const fadeElement = document.querySelector('.hero');
-		if (fadeElement) {
-			fadeElement.style.opacity = `${1 - progress}`;
-			fadeElement.classList.toggle('fade-out', progress >= 1);
-		}
-	
-		scene.rotation.z = progress * 0.3;
-	
-		if (progress >= 1) {
-			triggered = true;
-			setTimeout(() => {
-				if (typeof onComplete === 'function') {
-					onComplete();
-				}
-			}, 300);
+function onScroll() {
+	const scrollY = node.scrollTop;
+	const start = 800;
+	const end = 1200;
+
+	const fadeElement = document.querySelector('.hero');
+
+	// Si scroll vuelve arriba del todo y estamos en el primer slide, dispara reversa
+	if (triggered && scrollY < 10) {
+		const isFirstSlide = isInFirstSwiperSlide();
+		if (isFirstSlide && typeof onReverse === 'function') {
+			onReverse();
+			triggered = false;
 		}
 	}
+
+	const progress = Math.min(Math.max((scrollY - start) / (end - start), 0), 1);
+
+	if (!mesh?.material?.uniforms) return;
+
+	// Aplica siempre el progreso, incluso si ya se disparó (permite visual reverse)
+	mesh.material.uniforms.uStrength.value = progress;
+	scene.rotation.z = progress * 0.3;
+
+	if (fadeElement) {
+		fadeElement.style.opacity = `${1 - progress}`;
+		fadeElement.classList.toggle('fade-out', progress >= 1);
+	}
+
+	// Solo dispara la animación si aún no fue activada
+	if (!triggered && progress >= 1) {
+		triggered = true;
+		setTimeout(() => {
+			if (typeof onComplete === 'function') {
+				onComplete();
+			}
+		}, 300);
+	}
+}
+
 	
 	
 	
