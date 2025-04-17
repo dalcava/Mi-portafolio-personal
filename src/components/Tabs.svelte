@@ -3,9 +3,10 @@
   import { page } from '$app/stores';
   import gsap from 'gsap';
   import { goto } from '$app/navigation';
+  import { base } from '$app/paths';
 
   export let tabs = ['UX', '3D'];
-  let activeTab = null;
+  let activeTab = 'UX';
 
   const dispatch = createEventDispatcher();
 
@@ -15,10 +16,9 @@
   };
 
   onMount(() => {
-    const currentPath = $page.url.pathname;
-    if (currentPath === '/') {
+
       setActiveTab('UX');
-    }
+
   });
 </script>
 
