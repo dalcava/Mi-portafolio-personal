@@ -45,7 +45,7 @@
           updateStyle({
             width: "64px",
             height: "64px",
-            backgroundImage: "url('/Recursos/Cursor/Eye.svg')",
+            backgroundImage: "url('{base}/Recursos/Cursor/Eye.svg')",
             backgroundRepeat: "no-repeat",
             backgroundPosition: "center",            
             backgroundColor: "#f6f6f600",
@@ -61,7 +61,7 @@
           updateStyle({
             width: "64px",
             height: "32px",
-            backgroundImage: "url('/Recursos/Cursor/scroll.svg')",
+            backgroundImage: "url('{base}/Recursos/Cursor/scroll.svg')",
             backgroundRepeat: "no-repeat",
             backgroundPosition: "center",
             backgroundColor: "#f6f6f620",

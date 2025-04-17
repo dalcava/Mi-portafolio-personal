@@ -4,6 +4,7 @@
   import { onMount } from 'svelte';
   import gsap from 'gsap';
   import Tabs from '../components/Tabs.svelte';
+  import { base } from '$app/paths';
 
   let palabraFrente;
 
@@ -54,7 +55,7 @@
 <header id="header" class="header-section start" class:home-background={isHome}>
   <div class="profile-info">
     <div class="personal-photo" on:click={() => goto('/')}>
-      <img src="/Recursos/header/personal-photo.svg" alt="Personal photo" />
+      <img src="{base}/Recursos/header/personal-photo.svg" alt="Personal photo" />
     </div>
     <h2 class="Header-subtitle">I'm <sp><span bind:this={palabraFrente}></span></h2>
   </div>
@@ -69,15 +70,15 @@
         >
 
           <span>Works</span>
-          <img src="/Recursos/header/Proyects.svg" alt="Projects" />
+          <img src="{base}/Recursos/header/Proyects.svg" alt="Projects" />
         </div>
         <div class="icon-button menu contact">
           <span>Contact</span>
-          <img src="/Recursos/header/contact.svg" alt="Contact" />
+          <img src="{base}/Recursos/header/contact.svg" alt="Contact" />
         </div>
         <div class="icon-button menu About">
           <span>About</span>
-          <img src="/Recursos/header/About.svg" alt="Contact" />
+          <img src="{base}/Recursos/header/About.svg" alt="Contact" />
         </div>
       </div>
     </div>

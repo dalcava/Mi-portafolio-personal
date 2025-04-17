@@ -466,7 +466,7 @@
         <div class="swiper-wrapper">
             <div class="swiper-slide slide-1" data-url="/Control" on:click={handleClick}>
                 <div class="image-container static-img">
-                    <img src="/Recursos/Slider/UX/Onyo-Static.png" alt="Static Image 1" class="imagen-contenida">
+                    <img src="{base}/Recursos/Slider/UX/Onyo-Static.png" alt="Static Image 1" class="imagen-contenida">
                     <div class="grid">
                         <div class="grid-collumn"></div>
                         <div class="grid-collumn"></div>
@@ -477,14 +477,14 @@
                         <div class="grid-collumn"></div>
                     </div>
                 </div>
-                <img src="/Recursos/Slider/UX/Onyo-Active.png" alt="Active GIF 1" class="active-gif">
+                <img src="{base}/Recursos/Slider/UX/Onyo-Active.png" alt="Active GIF 1" class="active-gif">
                 <div class="blur-container">
                     <div class="blur"></div>
                 </div>
             </div>
             <div class="swiper-slide" data-url="/Control" on:click={handleClick}>
                 <div class="image-container static-img">
-                    <img src="/Recursos/Slider/UX/Colmena-Static.jpg" alt="Static Image 2" class="imagen-contenida">
+                    <img src="{base}/Recursos/Slider/UX/Colmena-Static.jpg" alt="Static Image 2" class="imagen-contenida">
                     <div class="grid">
                         <div class="grid-collumn"></div>
                         <div class="grid-collumn"></div>
@@ -495,14 +495,14 @@
                         <div class="grid-collumn"></div>
                     </div>
                 </div>
-                <img src="/Recursos/Slider/UX/Colmena-Active.png" alt="Active GIF 2" class="active-gif">
+                <img src="{base}/Recursos/Slider/UX/Colmena-Active.png" alt="Active GIF 2" class="active-gif">
                 <div class="blur-container">
                     <div class="blur"></div>
                 </div>
             </div>
             <div class="swiper-slide" data-url="/Control" on:click={handleClick}>
                 <div class="image-container static-img">
-                    <img src="/Recursos/Slider/UX/AvalPay-Static.webp" alt="Static Image 3" class="imagen-contenida">
+                    <img src="{base}/Recursos/Slider/UX/AvalPay-Static.webp" alt="Static Image 3" class="imagen-contenida">
                     <div class="grid">
                         <div class="grid-collumn"></div>
                         <div class="grid-collumn"></div>
@@ -513,14 +513,14 @@
                         <div class="grid-collumn"></div>
                     </div>
                 </div>
-                <img src="/Recursos/Slider/UX/AvalPay-Active.gif" alt="Active GIF 3" class="active-gif">
+                <img src="{base}/Recursos/Slider/UX/AvalPay-Active.gif" alt="Active GIF 3" class="active-gif">
                 <div class="blur-container">
                     <div class="blur"></div>
                 </div>
             </div>
             <div class="swiper-slide" data-url="/Control" on:click={handleClick}>
                 <div class="image-container static-img">
-                    <img src="/Recursos/Slider/UX/CR.webp" alt="Static Image 4" class="imagen-contenida">
+                    <img src="{base}/Recursos/Slider/UX/CR.webp" alt="Static Image 4" class="imagen-contenida">
                     <div class="grid">
                         <div class="grid-collumn"></div>
                         <div class="grid-collumn"></div>
@@ -531,7 +531,7 @@
                         <div class="grid-collumn"></div>
                     </div>
                 </div>
-                <img src="/Recursos/Slider/UX/AvalPay-Active.gif" alt="Active GIF 4" class="active-gif">
+                <img src="{base}/Recursos/Slider/UX/AvalPay-Active.gif" alt="Active GIF 4" class="active-gif">
                 <div class="blur-container">
                     <div class="blur"></div>
                 </div>
@@ -540,7 +540,7 @@
 
             <div class="swiper-slide" data-url="/Control" on:click={handleClick}>
                 <div class="image-container static-img">
-                    <img src="/Recursos/Slider/3D/Kinetic rush-static.webp" alt="Static Image 5" class="imagen-contenida">
+                    <img src="{base}/Recursos/Slider/3D/Kinetic rush-static.webp" alt="Static Image 5" class="imagen-contenida">
                     <div class="grid">
                         <div class="grid-collumn"></div>
                         <div class="grid-collumn"></div>
@@ -551,14 +551,14 @@
                         <div class="grid-collumn"></div>
                     </div>
                 </div>
-                <img src="/Recursos/Slider/3D/Kinetic rush-active.gif" alt="Active GIF 5" class="active-gif">
+                <img src="{base}/Recursos/Slider/3D/Kinetic rush-active.gif" alt="Active GIF 5" class="active-gif">
                 <div class="blur-container">
                     <div class="blur"></div>
                 </div>
             </div>
             <div class="swiper-slide" data-url="/Control" on:click={handleClick}>
                 <div class="image-container static-img">
-                    <img src="/Recursos/Slider/3D/Control-static.webp" alt="Static Image 6" class="imagen-contenida">
+                    <img src="{base}/Recursos/Slider/3D/Control-static.webp" alt="Static Image 6" class="imagen-contenida">
                     <div class="grid">
                         <div class="grid-collumn"></div>
                         <div class="grid-collumn"></div>
@@ -569,14 +569,14 @@
                         <div class="grid-collumn"></div>
                     </div>
                 </div>
-                <img src="/Recursos/Slider/3D/Control-active.gif" alt="Active GIF 6" class="active-gif">
+                <img src="{base}/Recursos/Slider/3D/Control-active.gif" alt="Active GIF 6" class="active-gif">
                 <div class="blur-container">
                     <div class="blur"></div>
                 </div>
             </div>
             <div class="swiper-slide" data-url="/Control" on:click={handleClick}>
                 <div class="image-container static-img">
-                    <img src="/Recursos/Slider/3D/Duraznos intro.gif" alt="Static Image 7" class="imagen-contenida">
+                    <img src="{base}/Recursos/Slider/3D/Duraznos intro.gif" alt="Static Image 7" class="imagen-contenida">
                     <div class="grid">
                         <div class="grid-collumn"></div>
                         <div class="grid-collumn"></div>
@@ -587,14 +587,14 @@
                         <div class="grid-collumn"></div>
                     </div>
                 </div>
-                <img src="/Recursos/Slider/3D/Duraznos active.gif" alt="Active GIF 7" class="active-gif">
+                <img src="{base}/Recursos/Slider/3D/Duraznos active.gif" alt="Active GIF 7" class="active-gif">
                 <div class="blur-container">
                     <div class="blur"></div>
                 </div>
             </div>
             <div class="swiper-slide" data-url="/Control" on:click={handleClick}>
                 <div class="image-container static-img">
-                    <img src="/Recursos/Slider/3D/Chasms call.webp" alt="Static Image 8" class="imagen-contenida">
+                    <img src="{base}/Recursos/Slider/3D/Chasms call.webp" alt="Static Image 8" class="imagen-contenida">
                     <div class="grid">
                         <div class="grid-collumn"></div>
                         <div class="grid-collumn"></div>
@@ -605,7 +605,7 @@
                         <div class="grid-collumn"></div>
                     </div>
                 </div>
-                <img src="/Recursos/Slider/3D/Chasms call.webp" alt="Active GIF 8" class="active-gif">
+                <img src="{base}/Recursos/Slider/3D/Chasms call.webp" alt="Active GIF 8" class="active-gif">
                 <div class="blur-container">
                     <div class="blur"></div>
                 </div>
@@ -618,10 +618,10 @@
         <div class="control-container">
     <!--       <div class="swiper-button-container">
             <div class="swiper-button-prev">
-                <img src="/Recursos/slider/arrow-left.svg" alt="Previous" class="new-icon" />
+                <img src="{base}/Recursos/slider/arrow-left.svg" alt="Previous" class="new-icon" />
             </div>
             <div class="swiper-button-next">
-                <img src="/Recursos/slider/arrow-right.svg" alt="Next" class="new-icon" />
+                <img src="{base}/Recursos/slider/arrow-right.svg" alt="Next" class="new-icon" />
             </div>
             </div> -->
             <div class="pagination-container">
@@ -630,7 +630,7 @@
         </div>
         <div class="Description-container">
             <div class="Lightbulb">
-                <img src="/Recursos/header/Scroll.gif" alt="Lightbulb" />
+                <img src="{base}/Recursos/header/Scroll.gif" alt="Lightbulb" />
             </div>
     
             <div class="project-description">

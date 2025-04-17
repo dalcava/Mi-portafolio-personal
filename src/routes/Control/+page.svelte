@@ -30,10 +30,10 @@
   `;
 
   const tools = [
-    { src: "/Recursos/Projects/Control/Blender-Icon.svg", alt: "Blender" },
-    { src: "/Recursos/Projects/Control/Illustrator-Icon.svg", alt: "Illustrator" },
-    { src: "/Recursos/Projects/Control/AE-Icon.svg", alt: "After Effects" },
-    { src: "/Recursos/Projects/Control/PR-Icon.svg", alt: "Premiere Pro" },
+    { src: `${base}/Recursos/Projects/Control/Blender-Icon.svg`, alt: "Blender" },
+    { src: `${base}/Recursos/Projects/Control/Illustrator-Icon.svg`, alt: "Illustrator" },
+    { src: `${base}/Recursos/Projects/Control/AE-Icon.svg`, alt: "After Effects" },
+    { src: `${base}/Recursos/Projects/Control/PR-Icon.svg`, alt: "Premiere Pro" },
   ];
 
   
@@ -117,7 +117,7 @@
   
   <section class="content">
     <AboutProject
-      imageSrc="/Recursos/Projects/Control/Tribal zelda.png"
+      imageSrc="{base}/Recursos/Projects/Control/Tribal zelda.png"
       imageAlt="Tribal Zelda Controller"
       title="About the project"
       {description}
@@ -156,7 +156,7 @@
         paragraphs={[
           "We explored advanced rigging for animation. Lighting setups were crucial for product realism. We optimized render times without losing quality. Experimented with camera motion and timing Learned effective storytelling in 10 seconds. Polished composition and color grading.  <br><br>  We explored advanced rigging for animation. Lighting setups were crucial for product realism. We optimized render times without losing quality. Experimented with camera motion and timing Learned effective storytelling in 10 seconds. Polished composition and color grading."
         ]}
-        image="/Recursos/Projects/Control/Tribal zelda.png"
+        image="{base}/Recursos/Projects/Control/Tribal zelda.png"
         Alt="Process image"
       />
       <Section2
@@ -165,7 +165,7 @@
         paragraphs={[
           "We explored advanced rigging for animation. Lighting setups were crucial for product realism. We optimized render times without losing quality. Experimented with camera motion and timing Learned effective storytelling in 10 seconds. Polished composition and color grading."
         ]}
-        image="/Recursos/Projects/Control/Tribal zelda.png"
+        image="{base}/Recursos/Projects/Control/Tribal zelda.png"
         Alt="Process image"
       />
     
@@ -184,7 +184,7 @@
           "We explored advanced rigging for animation. Lighting setups were crucial for product realism. We optimized render times without losing quality. Experimented with camera motion and timing Learned effective storytelling in 10 seconds. Polished composition and color grading.",
           "We explored advanced rigging for animation. Lighting setups were crucial for product realism. We optimized render times without losing quality. Experimented with camera motion and timing Learned effective storytelling in 10 seconds. Polished composition and color grading."
         ]}
-        image="/Recursos/Projects/Control/Tribal zelda.png"
+        image="{base}/Recursos/Projects/Control/Tribal zelda.png"
         Alt="Process image"
       />
       <Section5
@@ -193,7 +193,7 @@
         paragraphs={[
           "We explored advanced rigging for animation. Lighting setups were crucial for product realism. We optimized render times without losing quality. Experimented with camera motion and timing Learned effective storytelling in 10 seconds. Polished composition and color grading.  <br><br>  We explored advanced rigging for animation. Lighting setups were crucial for product realism. We optimized render times without losing quality. Experimented with camera motion and timing Learned effective storytelling in 10 seconds. Polished composition and color grading.   <br><br>  We explored advanced rigging for animation. Lighting setups were crucial for product realism. We optimized render times without losing quality. Experimented with camera motion and timing Learned effective storytelling in 10 seconds. Polished composition and color grading."
         ]}
-        image="/Recursos/Projects/Control/Tribal zelda.png"
+        image="{base}/Recursos/Projects/Control/Tribal zelda.png"
         Alt="Process image"
       />
       <Section6
@@ -202,8 +202,8 @@
         paragraphs={[
           "We explored advanced rigging for animation. Lighting setups were crucial for product realism. We optimized render times without losing quality. Experimented with camera motion and timing Learned effective storytelling in 10 seconds. Polished composition and color grading.  <br><br>  We explored advanced rigging for animation. Lighting setups were crucial for product realism. We optimized render times without losing quality. Experimented with camera motion and timing Learned effective storytelling in 10 seconds. Polished composition and color grading."
         ]}        
-        image="/Recursos/Projects/Control/Tribal zelda.png"
-        image2="/Recursos/Projects/Control/Tribal zelda.png"
+        image="{base}/Recursos/Projects/Control/Tribal zelda.png"
+        image2="{base}/Recursos/Projects/Control/Tribal zelda.png"
         Alt="Process image"
         Alt2="Process image"
       />
@@ -220,7 +220,7 @@
         description="This project was my submission for the Kinetic Rush challenge organized by Clint Jones. The challenge consisted of creating an animation featuring a character running towards or away from an objective. I decided to tell the story of an angel fleeing a chaotic heaven."
         extraInfo="The scene depicts a crumbling celestial realm, ravaged by conflict. In the background, an explosion marks the demise of a cherub, while our protagonist struggles to escape, only to be ultimately captured by its fate."
         tag="Passion project"
-        imageSrc="/Recursos/Slider/3D/Kinetic rush-static.webp"
+        imageSrc="{base}/Recursos/Slider/3D/Kinetic rush-static.webp"
         imageAlt="Kinetic rush project preview"
       />
     

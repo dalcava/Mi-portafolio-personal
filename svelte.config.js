@@ -9,7 +9,7 @@ const config = {
       precompress: false
     }),
     paths: {
-      base: '', // o tu ruta si estás desplegando en un subdirectorio
+      base: '/Mi-portafolio-personal',
     }
   }
 };

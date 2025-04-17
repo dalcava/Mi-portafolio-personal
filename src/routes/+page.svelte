@@ -165,7 +165,7 @@
         muted
         playsinline
       >
-        <source src="/Recursos/Fondos/Orbes.mp4" type="video/mp4" />
+        <source src="{base}/Recursos/Fondos/Orbes.mp4" type="video/mp4" />
       </video>
     <CanvasParticles />
     </div>
