@@ -5,14 +5,15 @@
 	"type": "module",
 	"homepage": "https://dalcava.github.io/Mi-portafolio-personal/",
 	"scripts": {
-		"dev": "vite dev",
-		"build": "vite build",
-		"preview": "vite preview",
-		"postbuild": "copy build\\index.html build\\200.html",
-		"deploy": "npm run build && npx gh-pages -d build",
-		"prepare": "svelte-kit sync || echo ''",
-		"format": "prettier --write .",
-		"lint": "prettier --check . && eslint ."
+	"dev": "vite dev",
+	"build": "vite build",
+	"preview": "vite preview",
+	"postbuild": "copy build\\index.html build\\200.html",
+	"deploy": "npm run build && npm run copy-to-docs",
+	"copy-to-docs": "rm -rf docs && mkdir docs && xcopy /E /Y build docs",
+	"prepare": "svelte-kit sync || echo ''",
+	"format": "prettier --write .",
+	"lint": "prettier --check . && eslint ."
 	},
 	"devDependencies": {
 		"@eslint/compat": "^1.2.5",
@@ -22,6 +23,7 @@
 		"@smui/card": "^8.0.0-beta.3",
 		"@sveltejs/adapter-auto": "^4.0.0",
 		"@sveltejs/adapter-static": "^3.0.8",
+		"@sveltejs/adapter-vercel": "^5.7.0",
 		"@sveltejs/kit": "^2.16.0",
 		"@sveltejs/vite-plugin-svelte": "^5.0.0",
 		"@tailwindcss/forms": "^0.5.9",
