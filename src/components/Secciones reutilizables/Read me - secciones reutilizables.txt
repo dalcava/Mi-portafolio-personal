@@ -1,0 +1,115 @@
+<script>
+  import Section1 from '../../components/Secciones reutilizables/seccion_contenido_1.svelte';
+  import Section2 from '../../components/Secciones reutilizables/seccion_contenido_2.svelte';
+  import Section3 from '../../components/Secciones reutilizables/seccion_contenido_3.svelte';
+  import Section4 from '../../components/Secciones reutilizables/seccion_contenido_4.svelte';
+  import Section5 from '../../components/Secciones reutilizables/seccion_contenido_5.svelte';
+  import Section6 from '../../components/Secciones reutilizables/seccion_contenido_6.svelte';
+
+  const commonText = [
+    "Lorem ipsum dolor sit amet, <strong>consectetur adipiscing elit</strong>. Sed do eiusmod tempor incididunt ut labore.",
+    "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.",
+  ];
+</script>
+
+
+
+<!-- Sección 1 -->
+      <Section1
+        title="01. <strong>Challenges</strong> & Learnings"
+        subtitle="What we learned"
+        paragraphs={[
+          "We explored advanced rigging for animation.",
+          "Lighting setups were crucial for product realism.",
+          "We optimized render times without losing quality.",
+          "Experimented with camera motion and timing.",
+          "Learned effective storytelling in 10 seconds.",
+          "Polished composition and color grading."
+        ]}
+        image="/Recursos/Projects/Control/Tribal zelda.png"
+        Alt="Process image"
+      />
+
+
+<!-- Sección 2 -->
+      <Section2
+        title="02. <strong>Challenges</strong> & Learnings"
+        subtitle="What we learned"
+        paragraphs={[
+          "We explored advanced rigging for animation.",
+          "Lighting setups were crucial for product realism.",
+          "We optimized render times without losing quality.",
+          "Experimented with camera motion and timing.",
+          "Learned effective storytelling in 10 seconds.",
+          "Polished composition and color grading."
+        ]}
+        image="/Recursos/Projects/Control/Tribal zelda.png"
+        Alt="Process image"
+      />
+
+
+<!-- Sección 3 -->
+      <Section3
+        title="03. <strong>Challenges</strong> & Learnings"
+        subtitle="What we learned"
+        paragraphs={[
+          "We explored advanced rigging for animation.",
+          "Lighting setups were crucial for product realism.",
+          "We optimized render times without losing quality.",
+          "Experimented with camera motion and timing.",
+          "Learned effective storytelling in 10 seconds.",
+          "Polished composition and color grading."
+        ]}
+      />
+
+
+<!-- Sección 4 -->
+      <Section4
+        title="04. <strong>Challenges</strong> & Learnings"
+        subtitle="What we learned"
+        paragraphs={[
+          "We explored advanced rigging for animation.",
+          "Lighting setups were crucial for product realism.",
+          "We optimized render times without losing quality.",
+          "Experimented with camera motion and timing.",
+          "Learned effective storytelling in 10 seconds.",
+          "Polished composition and color grading."
+        ]}
+        image="/Recursos/Projects/Control/Tribal zelda.png"
+        Alt="Process image"
+      />
+
+
+<!-- Sección 5 -->
+      <Section5
+        title="05. <strong>Challenges</strong> & Learnings"
+        subtitle="What we learned"
+        paragraphs={[
+          "We explored advanced rigging for animation.",
+          "Lighting setups were crucial for product realism.",
+          "We optimized render times without losing quality.",
+          "Experimented with camera motion and timing.",
+          "Learned effective storytelling in 10 seconds.",
+          "Polished composition and color grading."
+        ]}
+        image="/Recursos/Projects/Control/Tribal zelda.png"
+        Alt="Process image"
+      />
+
+
+
+<!-- Sección 6 -->
+      <Section6
+        title="06. <strong>Challenges</strong> & Learnings"
+        subtitle="What we learned"
+        paragraphs={[
+          "We explored advanced rigging for animation.",
+          "Lighting setups were crucial for product realism.",
+          "We optimized render times without losing quality.",
+          "Experimented with camera motion and timing.",
+          "Learned effective storytelling in 10 seconds.",
+          "Polished composition and color grading."
+        ]}        
+        image="/Recursos/Projects/Control/Tribal zelda.png"
+        Alt="Process image"
+      />
