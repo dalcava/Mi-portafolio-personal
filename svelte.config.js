@@ -9,7 +9,7 @@ const config = {
       precompress: false
     }),
     paths: {
-      base: '/Mi-portafolio-personal',
+      base: process.env.NODE_ENV === 'development' ? '' : '/Mi-portafolio-personal'
     }
   }
 };
