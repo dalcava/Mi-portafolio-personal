@@ -1,0 +1,228 @@
+/* Reset global */
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Publica Sans";
+  }
+  
+body {
+    display: flex;
+    align-items: center;
+    min-height: 100vh;
+    background-color: var(--blanco) !important;
+    color: var(--blanco);
+    overflow: auto;
+    flex-direction: column;
+    padding: 32px 32px 0px 32px;
+}
+
+iframe {
+  pointer-events: none;
+}
+
+/* .canvas-container {
+  width: calc(100% - 99px);
+  height: calc((75vw - -98px)* 9 / 16);
+  position: absolute;
+  top: 63px;
+  right: 50px;
+  border-radius: 32px;
+  filter: invert(1);
+  mix-blend-mode: screen;
+} */
+
+
+.control-content {
+  opacity: 1;
+  transform: translateY(20px);
+}
+
+.hero-image,
+.main-title,
+.main-subtitle {
+  clip-path: inset(100% 0% 0% 0%);
+  opacity: 0;
+  will-change: clip-path, opacity;
+}
+
+/* HERO SECTION */
+.hero {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: var(--blanco);
+    width: 100%;
+    transform: translateY(-8px);
+}
+
+.hero-content {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  width: 100%;
+  top: -152px;
+  position: relative;
+}
+
+.hero-text {
+  margin-bottom: 24px;
+  margin-top: 32px;
+  position: sticky;
+  z-index: 5;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 24px 64px;
+  top: 69px;
+}
+
+
+/* .tag-btn {
+display: inline-block;
+padding: 8px 24px;
+background-color: var(--Verde-claro);
+color: var(--blanco);
+font-family: "Publica Sans bold", sans-serif;
+font-size: var(--font-size-XS);
+border: none;
+border-radius: 20px;
+text-transform: none;
+transition: background-color 0.3s ease;
+transform: translate(0, 10px);
+} */
+
+.main-title {
+  font-family: "Thunder", sans-serif;
+  font-size: var(--font-size-XL);
+  font-weight: bold;
+  color: var(--blanco);
+}
+
+.main-subtitle {
+  font-family: "Publica Sans", sans-serif;
+  font-size: var(--font-size-S);
+  color: var(--blanco);
+  line-height: 1.5;
+  max-width: 600px;
+  margin: 0 auto;
+  font-weight: 300;
+  transform: translateY(-16px);
+  text-align: left;
+  position: absolute;
+}
+
+.hero-image {
+  position: relative;
+  width: 100vw;
+  height: fit-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  max-height: calc((100vw - 32px)* 9 / 16);
+  opacity: 1;
+}
+.video-wrapper {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.hero-image iframe {
+  width: calc(100% - 64px);
+  height: calc((100vw - 32px)* 9 / 16);
+  min-height: 100vh;
+  border: none;
+  top: -11px;
+  position: relative;
+  padding: 16px;
+}
+
+/*------------------------------------------------------- CONTENT SECTION--------------------------------------------- */
+.content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: var(--blanco);
+  width: 84%;
+  transform: translateY(-24px);
+  margin-top: 32px;
+  border-radius: 32px;
+  flex-direction: column;
+  gap: 40px;
+}
+
+/* ------------------------------------------ GALLERY SECTION ----------------------------------------------- */
+.gallery {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+  margin: 20px 0 0 0;
+  width: 100%;
+  padding: 32px 32px 0px 32px;
+}
+
+.gallery-row {
+  display: flex;
+  gap: 32px;
+  justify-content: space-between;
+  flex-direction: row;
+  width: 100%;
+}
+
+.gallery-text {
+  max-width: 50%;
+}
+
+.gallery-item {
+  flex: 1;
+  overflow: hidden;
+  width: 100%;
+  height: fit-content;
+}
+
+.gallery-item img {
+  width: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.gallery-item.large {
+  flex: 2; /* Double width for larger images */
+}
+
+.gallery-item iframe {
+  width: calc(40vw - 32px);
+  min-height: calc((40vw - 31px)* 9 / 16);
+  border: none;
+}
+.gallery-item:hover iframe{
+  transform: scale(1.1);
+  transition: all 0.5s ease;
+}
+.giphy-embed {
+  pointer-events: none;
+}
+
+
+.gallery-item img:hover {
+  transform: scale(1.1);
+  transition: all 0.3s ease;
+}
+
+
+
+  /* Puedes agregar media queries según tus necesidades */
+  @media (max-width: 1600px) { }
+  @media (max-width: 1440px) { }
+  @media (max-width: 1200px) { }
+  @media (max-width: 1000px) { }
+  @media (max-width: 700px) { }
+  @media (max-width: 550px) { }
+  @media (max-width: 390px) { }
+  
