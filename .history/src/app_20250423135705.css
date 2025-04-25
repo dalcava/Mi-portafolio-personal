@@ -1,0 +1,118 @@
+@import 'tailwindcss';
+
+@font-face {
+    font-family: 'Thunder';
+    src: url('/Fuentes/Thunder/Thunder-LC.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Thunder Extra';
+    src: url('/Fuentes/Thunder/Thunder-ExtraBoldLC.ttf') format('truetype');
+    font-weight: 800;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Funnel Display';
+    src: url('/Fuentes/Funnel_Display/FunnelDisplay-VariableFont_wght.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Publica Sans Bold';
+    src: url('/Fuentes/Publica/PublicaSans-Medium.otf') format('opentype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Publica Sans';
+    src: url('/Fuentes/Publica/PublicaSans-Light.otf') format('opentype');
+    font-weight: 100;
+}
+@font-face {
+    font-family: 'Publica Sans Thin';
+    src: url('/Fuentes/Publica/PublicaSans-Thin.otf') format('opentype');
+    font-weight: 100;
+}
+
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Publica Sans', sans-serif;
+}
+
+:root {
+    --Azul-claro: #95DEFF;
+    --Azul-oscuro: #004B6B;
+    --Azul-muy-oscuro: #052240;
+    --blanco: #FFFFFF;
+    --blanco-header: #ffffff00;
+    --Resalte-muy-claro: #B2EED4;
+    --Resalte-claro: #64DDA8;
+    --Resalte: #5E00FF;
+    --Resalte-oscuro: #3B0099;
+    --Resalte--muy-oscuro: #1A0033;
+    --Gris-muy-claro: #eaeaf450;
+    --Gris-claro: #D2D2DB;
+    --Gris: #92929C;
+    --Gris-oscuro: #70707B;
+    --Gris-muy-oscuro: #2B2B35;
+    --Transparente: #00000000;
+    --Naranja-claro: #FFAD7B;
+    --Naranja: #FF7F50;
+    --Naranja-oscuro: #CC5500;
+    --Naranja-muy-oscuro: #8B2500;
+
+    --font-size-XXS: 12px;
+    --font-size-XS: 14px;
+    --font-size-S: 16px;
+    --font-size-M: 24px;
+    --font-size-L: 32px;
+    --font-size-XL: 40px;
+    --font-size-XXL: 56px;
+    --font-size-XXXL: 80px;
+
+    --mobile: 768px;
+    --tablet: 1024px;
+    --desktop: 1440px;
+    --desktopXL: 1920px;
+}
+::selection {
+    background-color: var(--Resalte-claro);
+    color: var(--blanco);
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
+}
+::-moz-selection {
+    background-color: var(--Resalte-claro);
+    color: var(--blanco);
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
+}
+
+html, body { 
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE 10+ */
+}
+
+html::-webkit-scrollbar, body::-webkit-scrollbar, .background::-webkit-scrollbar {
+    display: none; /* Chrome, Safari y otros */
+}
+
+body {
+    overflow-x: hidden;
+  }
+
+
+.contador-container {
+position: fixed;
+bottom: 20px;
+left: 20px;
+z-index: 1;
+mix-blend-mode: multiply;
+}
