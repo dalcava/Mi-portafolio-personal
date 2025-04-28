@@ -1,0 +1,526 @@
+<script>
+  import { page } from '$app/stores';
+  import { goto } from '$app/navigation';
+  import { onMount } from 'svelte';
+  import gsap from 'gsap';
+  import Tabs from '../components/Tabs.svelte';
+  import { base } from '$app/paths';
+
+  let palabraFrente;
+  let isMobile = false;
+  let menuOpen = false;
+  let isBright = false; // 👉 nueva variable para manejar el modo bright
+
+  // Detectar si estamos en Home
+  $: isHome = $page.url.pathname === "/";
+
+  const palabras = [
+    "a UI/UX Designer", "an Experience Architect", "a 3D Artist", "an Animator",
+    "a Motion Designer", "a Digital Illustrator", "a 3D Modeler", "an Impostor",
+    "an Interaction Designer", "a Prototyper", "an Interface Creator", "a Visual Storyteller",
+    "a Graphic Designer", "a Product Designer", "Obsessive Compulsive", "a VFX Artist",
+    "a User", "a Digital Experience Manager", "an Illustrator",
+    "Motion Graphics", "a Concept Developer", "Parametric",
+    "a Responsive Design", "a Cat"
+  ];
+
+  function aleatorio(min, max) {
+    return Math.floor(Math.random() * (max - min + 1) + min);
+  }
+
+  function crearPalabra() {
+    const index = aleatorio(0, palabras.length - 1);
+    gsap.to(palabraFrente, {
+      opacity: 0,
+      y: -50,
+      duration: 0.2,
+      onComplete: () => {
+        palabraFrente.innerHTML = palabras[index];
+        gsap.to(palabraFrente, {
+          opacity: 1,
+          y: 0,
+          duration: 0.3
+        });
+      }
+    });
+  }
+
+  onMount(() => {
+    crearPalabra();
+    const interval = setInterval(crearPalabra, 2400);
+
+    const checkScreenSize = () => {
+      isMobile = window.innerWidth < 800;
+    };
+
+    checkScreenSize();
+    window.addEventListener('resize', checkScreenSize);
+
+    if (isHome) {
+      const backgroundEl = document.querySelector('.background');
+
+      const handleScroll = () => {
+        const scrollY = backgroundEl?.scrollTop || 0;
+        isBright = scrollY >= 400 && scrollY <= 8200;
+      };
+
+      backgroundEl?.addEventListener('scroll', handleScroll);
+
+      return () => {
+        clearInterval(interval);
+        window.removeEventListener('resize', checkScreenSize);
+        backgroundEl?.removeEventListener('scroll', handleScroll);
+      };
+    } else {
+      return () => {
+        clearInterval(interval);
+        window.removeEventListener('resize', checkScreenSize);
+      };
+    }
+  });
+</script>
+
+
+<!-- ---------------------------------------------------------------------------------------------------------------------------
+---- --------------------------------------------------Aquí empieza el HTML------------------------------------------------------
+---- ----------------------------------------------------------------------------------------------------------------------- -->
+
+<div use:glassTransition style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 9999;"></div>
+<div class="page-transition-overlay" bind:this={transitionOverlay}></div>
+<!-- Pantalla de carga -->
+<div id="loading-screen">
+  <div class="dot dot1"></div>
+  <div class="dot dot2"></div>
+  <div class="dot dot3"></div>
+  <div class="dot dot4"></div>
+</div>
+
+<!-- Fondo principal -->
+<div class="background" bind:this={scrollContainer}>
+  <div class="hero">
+    <div class="background-elements">
+
+      <video
+        id="home-video"
+        class="video-background"
+        autoplay
+        loop
+        muted
+        playsinline
+      >
+        <source src="{base}/Recursos/Fondos/Orbes.mp4" type="video/mp4" />
+      </video>
+    <CanvasParticles />
+    </div>
+
+  <div class="Complementary-text hidden">
+
+    <h1>Hi! <span>I'm David</span></h1>
+    <div class="Compliment">
+      <h2>UX/UI designer and 3d artist</h2>
+      <h3>Welcome to my portfolio</h3>
+    </div>
+  </div>
+
+    <div class="swiper-scrollbar"></div>
+  </div>
+
+<section class="works-wrap">
+    <div class="works-container">
+      {#if showWorks}
+        <Works {scrollContainer} on:slideProgress={(e) => handleSliderProgress(e.detail)} />
+      {/if}
+    </div>
+</section>
+<section class="about-wrap {showAbout ? 'show' : ''}">
+  <div class="about-container">
+    {#if showAbout}
+    <About />
+    {/if}
+    
+    
+  </div>
+</section>
+<section class="contact-wrap {showAbout ? 'show' : ''}">
+
+
+</section>
+
+  
+
+  <div class="contador-container">
+    <Contador />
+  </div>
+</div>
+
+
+<!-- ---------------------------------------------------------------------------------------------------------------------------
+---- --------------------------------------------------Aquí empieza el CSS------------------------------------------------------
+---- ----------------------------------------------------------------------------------------------------------------------- -->
+<style>
+html, body {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  padding: 0px;
+}
+
+.bright {
+  color: white;
+  mix-blend-mode: difference; /* o lighten, según el efecto que quieras */
+}
+
+.bright img {
+  filter: invert(1) brightness(1.5);
+}
+
+.bright span {
+  color: white;
+}
+
+
+#loading-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: white; /* o lo que uses */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9998;
+  pointer-events: none;
+}
+
+.page-transition-overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	background: white;
+	z-index: 9999;
+	pointer-events: none;
+	clip-path: inset(0 0 0 100%);
+	transition: none;
+}
+
+.background-elements {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  z-index: -1;
+}
+
+.video-background {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  object-fit: cover;
+  transition: width 0.3s ease, height 0.3s ease, border-radius 0.3s ease;
+  width: 100%;
+  height: 100%;
+}
+
+  .dot {
+    width: 16px;
+    height: 16px;
+    background-color: var(--Resalte-claro);
+    border-radius: 50%;
+    margin: 0 8px;
+    animation: rubberJump 1s infinite ease-in-out;
+  }
+
+  .dot1 { animation-delay: 0s; }
+  .dot2 { animation-delay: 0.1s; }
+  .dot3 { animation-delay: 0.2s; }
+  .dot4 { animation-delay: 0.3s; }
+
+  @keyframes rubberJump {
+    0%   { transform: translateY(0) scaleY(1); }
+    25%  { transform: translateY(-20px) scaleY(1.2); }
+    50%  { transform: translateY(0) scaleY(0.8); }
+    75%  { transform: translateY(-10px) scaleY(1.1); }
+    100% { transform: translateY(0) scaleY(1); }
+  }
+  .background {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    display: flex;
+    flex-direction: column;
+    gap: 80px;
+    background: linear-gradient(180deg,rgba(93, 0, 255, 1) 0%, rgba(20, 0, 51, 1) 89%);
+}
+
+
+  .hero {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0px;
+    justify-content: flex-start;
+    overflow: visible;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    z-index: 1;    
+    padding: 24px 120px;
+    background-color: var(--transparent);
+    transition: opacity 0.3s ease;
+    min-height: 180vh
+  }
+
+
+  .transition-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--blanco);
+    z-index: 9999;
+    pointer-events: none;
+    transform: translateY(100%);
+  }
+
+
+
+  .contador-container {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    z-index: 1;
+  }
+  .Complementary-text {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    padding: 16% 0%;
+    top: 15%;
+  }
+
+  .Complementary-text.hidden {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+
+.Compliment{
+  display: flex;
+    flex-direction: column;
+    gap: 16px;
+    justify-content: start;
+    align-items: center;
+    position: absolute;
+    top: 30%;
+    right: 17.4%;
+    transform: translate(0, 156px);
+    width: 24%;
+    height: fit-content;
+    height: fit-content;
+    min-width: 120px;
+}
+
+  .Complementary-text h1 {
+    font-size: var(--font-size-XXL);
+    color: var(--Resalte);
+    font-family: "Publica Sans";
+    font-weight: 700;
+    line-height: 1.2;
+    margin: 0;
+    padding: 0;
+    transform: translateY(0);
+    opacity: 1;
+    transition: transform 0.5s ease, opacity 0.5s ease;
+    width: 6%;
+    mix-blend-mode: difference;
+  }
+  .Complementary-text h1 span {
+    font-size: var(--font-size-XXL);
+    color: var(--Gris-muy-oscuro);
+    font-family: "Publica Sans";
+    font-weight: 700;
+    line-height: 1.2;
+    margin: 0;
+    padding: 0;
+    transform: translateY(0);
+    opacity: 1;
+    transition: transform 0.5s ease, opacity 0.5s ease;
+    width: 6%;
+  }
+  .Complementary-text h2 {
+    font-size: var(--font-size-XXXL);
+    background: linear-gradient(45deg, #2B2B35 27%, #7E7E9B 79%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-family: "Publica Sans thin";
+    font-weight: 700;
+    line-height: 1.1;
+    margin: 0;
+    padding: 0;
+    opacity: 1;
+    transition: transform 0.5s ease, opacity 0.5s ease;
+    text-align: start;
+  }
+  .Complementary-text h3 {
+    font-size: var(--font-size-XXL);
+    color: var(--Resalte);
+    font-family: "Publica Sans";
+    line-height: 1.1;
+    font-weight: 700;
+    margin: 0;
+    padding: 0;
+    opacity: 1;
+    transition: transform 0.5s ease, opacity 0.5s ease;
+    width: 100%;
+    text-align: start;
+  }
+  .Complementary-text span {
+    font-size: var(--font-size-XS);
+    color: var(--Gris);
+    font-family: "Publica Sans thin";
+    line-height: 1.1;
+    margin: 0;
+    padding: 0;
+    opacity: 1;
+    transition: transform 0.5s ease, opacity 0.5s ease;
+    width: 91%;
+    text-align: end;
+  }
+
+  .works-wrap {
+    position: relative;
+    height: 744vh;
+    width: 100%;
+    z-index: 1;
+    overflow: visible;
+  }
+  .works-container {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  z-index: 10;
+}
+
+
+  .about-wrap {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 120px 80px;
+    background-color: var(--blanco);
+    opacity: 0;
+    transition: opacity 0.6s ease-in-out;
+  }
+  
+  .about-container {
+    display: flex;
+    justify-content: end;
+    align-items: flex-start;
+    width: 100%;
+    gap: 80px;
+    padding: 8rem 3rem;
+  }
+  .contact-wrap {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 120px 80px;
+    background-color: var(--blanco);
+    opacity: 0;
+    transition: opacity 0.6s ease-in-out;
+    min-height: 100vh;
+  }
+
+  :global(body) .about-wrap.show {
+    opacity: 1;
+  }
+
+
+
+
+
+@media (max-width: 1360px) {
+
+  
+
+}
+@media (max-width: 1200px) {
+
+  
+
+}
+@media (max-width: 860px) {
+
+  
+    .Complementary-text {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        padding: 0% 0%;
+        top: 15%;
+        left: 10%;
+    }
+
+    
+  .Complementary-text h1 {
+    font-size: var(--font-size-XL);
+    transform: translateY(0);
+    width: 6%;
+  }
+  .Complementary-text h1 span {
+    font-size: var(--font-size-XL);
+    transform: translateY(0);
+    width: 6%;
+  }
+  .Complementary-text h2 {
+    font-size: var(--font-size-XL);
+    opacity: 1;
+    text-align: start;
+  }
+  .Complementary-text h3 {
+    font-size: var(--font-size-M);
+    width: 100%;
+    text-align: start;
+  }
+}
+@media (max-width: 425px) {
+    .scene-wrap {
+        width: 280vw;
+        position: sticky;
+        transform: translateX(-15.2vh) translateY(0%);
+        height: 100vh;
+    }
+    .Complementary-text {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        padding: 0% 0%;
+        top: 4%;
+    }
+    .Complementary-text h2 {
+      font-size: var(--font-size-L);
+    }
+    .Complementary-text h3 {
+      font-size: var(--font-size-M);
+    }
+}
+
+
+</style>
