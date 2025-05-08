@@ -1,0 +1,143 @@
+{
+  ".svelte-kit/generated/server/internal.js": {
+    "file": "internal.js",
+    "name": "internal",
+    "src": ".svelte-kit/generated/server/internal.js",
+    "isEntry": true,
+    "imports": [
+      "_internal.js",
+      "_paths.js"
+    ]
+  },
+  "_Accordion.CtRPtDsi.css": {
+    "file": "_app/immutable/assets/Accordion.CtRPtDsi.css",
+    "src": "_Accordion.CtRPtDsi.css"
+  },
+  "_Accordion.svelte_svelte_type_style_lang.js": {
+    "file": "chunks/Accordion.svelte_svelte_type_style_lang.js",
+    "name": "Accordion.svelte_svelte_type_style_lang",
+    "imports": [
+      "_index.js",
+      "_exports.js"
+    ],
+    "css": [
+      "_app/immutable/assets/Accordion.CtRPtDsi.css"
+    ]
+  },
+  "_Contador.Dmw1LWcN.css": {
+    "file": "_app/immutable/assets/Contador.Dmw1LWcN.css",
+    "src": "_Contador.Dmw1LWcN.css"
+  },
+  "_Tabs.VB2c0c1l.css": {
+    "file": "_app/immutable/assets/Tabs.VB2c0c1l.css",
+    "src": "_Tabs.VB2c0c1l.css"
+  },
+  "_client.js": {
+    "file": "chunks/client.js",
+    "name": "client",
+    "imports": [
+      "_exports.js",
+      "_index.js"
+    ]
+  },
+  "_exports.js": {
+    "file": "chunks/exports.js",
+    "name": "exports",
+    "imports": [
+      "_index.js"
+    ]
+  },
+  "_index.js": {
+    "file": "chunks/index.js",
+    "name": "index"
+  },
+  "_internal.js": {
+    "file": "chunks/internal.js",
+    "name": "internal",
+    "imports": [
+      "_index.js",
+      "_paths.js"
+    ]
+  },
+  "_paths.js": {
+    "file": "chunks/paths.js",
+    "name": "paths"
+  },
+  "node_modules/@sveltejs/kit/src/runtime/components/svelte-5/error.svelte": {
+    "file": "entries/fallbacks/error.svelte.js",
+    "name": "entries/fallbacks/error.svelte",
+    "src": "node_modules/@sveltejs/kit/src/runtime/components/svelte-5/error.svelte",
+    "isEntry": true,
+    "imports": [
+      "_index.js",
+      "_client.js"
+    ]
+  },
+  "node_modules/@sveltejs/kit/src/runtime/server/index.js": {
+    "file": "index.js",
+    "name": "index",
+    "src": "node_modules/@sveltejs/kit/src/runtime/server/index.js",
+    "isEntry": true,
+    "imports": [
+      "_index.js",
+      "_paths.js",
+      "_exports.js",
+      "_internal.js"
+    ]
+  },
+  "src/routes/+layout.js": {
+    "file": "entries/pages/_layout.js",
+    "name": "entries/pages/_layout",
+    "src": "src/routes/+layout.js",
+    "isEntry": true
+  },
+  "src/routes/+layout.svelte": {
+    "file": "entries/pages/_layout.svelte.js",
+    "name": "entries/pages/_layout.svelte",
+    "src": "src/routes/+layout.svelte",
+    "isEntry": true,
+    "imports": [
+      "_index.js",
+      "_client.js",
+      "_paths.js"
+    ],
+    "css": [
+      "_app/immutable/assets/_layout.Dy0T2KNA.css",
+      "_app/immutable/assets/Tabs.VB2c0c1l.css",
+      "_app/immutable/assets/Contador.Dmw1LWcN.css"
+    ]
+  },
+  "src/routes/+page.svelte": {
+    "file": "entries/pages/_page.svelte.js",
+    "name": "entries/pages/_page.svelte",
+    "src": "src/routes/+page.svelte",
+    "isEntry": true,
+    "imports": [
+      "_index.js",
+      "_paths.js",
+      "_client.js",
+      "_Accordion.svelte_svelte_type_style_lang.js"
+    ],
+    "css": [
+      "_app/immutable/assets/_page.7jADx6nU.css",
+      "_app/immutable/assets/Contador.Dmw1LWcN.css",
+      "_app/immutable/assets/Tabs.VB2c0c1l.css"
+    ]
+  },
+  "src/routes/Control/+page.svelte": {
+    "file": "entries/pages/Control/_page.svelte.js",
+    "name": "entries/pages/Control/_page.svelte",
+    "src": "src/routes/Control/+page.svelte",
+    "isEntry": true,
+    "imports": [
+      "_index.js",
+      "_paths.js",
+      "_client.js",
+      "_Accordion.svelte_svelte_type_style_lang.js"
+    ],
+    "css": [
+      "_app/immutable/assets/_page.qjXpDTH8.css",
+      "_app/immutable/assets/Tabs.VB2c0c1l.css"
+    ]
+  }
+}
