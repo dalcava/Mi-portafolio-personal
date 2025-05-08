@@ -10,7 +10,7 @@
 		"preview": "vite preview",
 		"postbuild": "copy build\\index.html build\\200.html",
 		"deploy": "npm run build && npm run copy-to-docs",
-		"copy-to-docs": "rm -rf docs && mkdir docs && xcopy /E /Y build docs",
+		"copy-to-docs": "rimraf docs && mkdir docs && xcopy /E /Y build docs",
 		"prepare": "svelte-kit sync || echo ''",
 		"format": "prettier --write .",
 		"lint": "prettier --check . && eslint ."
@@ -36,6 +36,7 @@
 		"globals": "^16.0.0",
 		"prettier": "^3.4.2",
 		"prettier-plugin-svelte": "^3.3.3",
+		"rimraf": "^6.0.1",
 		"svelte": "^5.0.0",
 		"tailwindcss": "^4.0.0",
 		"vite": "^6.2.6",
