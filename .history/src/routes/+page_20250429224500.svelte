@@ -133,7 +133,7 @@
     }
 
     // Mostrar dark usando GSAP en el overlay
-    if (scrollY > 8400 && isDark) {
+    if (scrollY > 8500 && isDark) {
       isDark = false;
       gsap.to(overlayEl, { opacity: 0, duration: 1, ease: 'power3.out' });
       console.log('Desactivando modo dark (por scroll muy alto)');
