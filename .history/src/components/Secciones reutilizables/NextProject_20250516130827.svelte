@@ -55,9 +55,6 @@
     flex-direction: column;
     gap: 1.5rem;
   }
-  .text-content hr{
-    color: var(--Resalte-claro)
-  }
 
   .pretitle {
     color: var(--blanco);
@@ -84,12 +81,11 @@
     font-weight: 500;
     margin-top: 1rem;
     margin-bottom: 3rem;
-    border-bottom: var(--Resalte-claro) solid 1px;
+    border-bottom: var(--Gris-claro) solid 1px;
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 2rem;
   }
 
   .title {
@@ -116,8 +112,8 @@
 
   .tag {
     display: inline-block;
-    background: var(--Resalte-claro);
-    color: var(--Resalte--muy-oscuro);
+    background: var(--Verde-claro);
+    color: white;
     padding: 6px 18px;
     border-radius: 999px;
     font-size: var(--font-size-XS);
@@ -133,7 +129,6 @@
     min-height: 560px;
     overflow: hidden;
     height: 100%;
-    border-radius: 16px 0 0 0;
   }
 
   .image-wrapper img {

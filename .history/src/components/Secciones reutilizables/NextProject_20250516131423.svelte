@@ -55,9 +55,6 @@
     flex-direction: column;
     gap: 1.5rem;
   }
-  .text-content hr{
-    color: var(--Resalte-claro)
-  }
 
   .pretitle {
     color: var(--blanco);
@@ -117,7 +114,7 @@
   .tag {
     display: inline-block;
     background: var(--Resalte-claro);
-    color: var(--Resalte--muy-oscuro);
+    color: white;
     padding: 6px 18px;
     border-radius: 999px;
     font-size: var(--font-size-XS);
@@ -133,7 +130,6 @@
     min-height: 560px;
     overflow: hidden;
     height: 100%;
-    border-radius: 16px 0 0 0;
   }
 
   .image-wrapper img {

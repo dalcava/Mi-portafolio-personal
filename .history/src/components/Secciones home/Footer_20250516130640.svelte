@@ -26,7 +26,12 @@
         <p class="footer-text">
         Let's connect! I'd be happy to share my experience and discuss how my skills and expertise can contribute to your team.
         </p>
+        <a href="mailto:dalcava96@gmail.com" class="footer-button">
+            <img src="{base}/Recursos/Footer/Mail.svg" alt="About" /> Contact me
+        </a>
+
         <FooterIcons/>
+
       </div>
 
     <div class="footer-gallery">
@@ -80,6 +85,43 @@
   color: var(--blanco);
   max-width: 600px;
   font-size: var(--font-size-S);
+}
+
+.footer-button {
+  display: flex;
+  padding: 32px 80px;
+  background-color: white;
+  color: var(--Resalte);
+  border-radius: 16px;
+  font-family: "Publica Sans", sans-serif;
+  font-size: var(--font-size-S) !important;
+  font-weight: 600 !important;
+  text-decoration: none;
+  gap: 16px;
+  transition: all 0.3s;
+  width: 300px;
+}
+
+.footer-button:hover {
+  background-color: var(--Resalte-claro);
+  color: white;
+}
+
+.footer-icons {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.footer-icons a {
+  color: var(--blanco);
+  font-size: 1.25rem;
+  transition: color 0.3s;
+}
+
+.footer-icons a:hover {
+  color: var(--Resalte);
 }
 
 .footer-gallery {

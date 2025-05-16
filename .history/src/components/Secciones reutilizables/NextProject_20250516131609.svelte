@@ -133,7 +133,6 @@
     min-height: 560px;
     overflow: hidden;
     height: 100%;
-    border-radius: 16px 0 0 0;
   }
 
   .image-wrapper img {

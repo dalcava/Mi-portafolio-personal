@@ -27,6 +27,7 @@
         Let's connect! I'd be happy to share my experience and discuss how my skills and expertise can contribute to your team.
         </p>
         <FooterIcons/>
+
       </div>
 
     <div class="footer-gallery">

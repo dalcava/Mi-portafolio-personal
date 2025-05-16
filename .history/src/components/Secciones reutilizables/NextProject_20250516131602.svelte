@@ -56,7 +56,7 @@
     gap: 1.5rem;
   }
   .text-content hr{
-    color: var(--Resalte-claro)
+    color: var(--blanco)
   }
 
   .pretitle {
@@ -133,7 +133,6 @@
     min-height: 560px;
     overflow: hidden;
     height: 100%;
-    border-radius: 16px 0 0 0;
   }
 
   .image-wrapper img {

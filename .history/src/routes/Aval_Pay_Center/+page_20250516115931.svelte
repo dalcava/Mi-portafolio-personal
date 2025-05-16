@@ -131,7 +131,7 @@
         </p>
         <h1 class="main-title">Aval Pay Center</h1>
       </div>
-      <div class="Section-video">
+      <div class="hero-image">
         <div class="video-wrapper">
           <iframe
             id="vimeoPlayer"
@@ -239,18 +239,18 @@
       />
     
       
-      
-      
+      <NextProject
+        title="Kinetic rush"
+        description="This project was my submission for the Kinetic Rush challenge organized by Clint Jones. The challenge consisted of creating an animation featuring a character running towards or away from an objective. I decided to tell the story of an angel fleeing a chaotic heaven."
+        extraInfo="The scene depicts a crumbling celestial realm, ravaged by conflict. In the background, an explosion marks the demise of a cherub, while our protagonist struggles to escape, only to be ultimately captured by its fate."
+        tag="Passion project"
+        imageSrc="{base}/Recursos/Slider/3D/Kinetic rush-static.webp"
+        imageAlt="Kinetic rush project preview"
+      />
+    
+    
       
     </div>
   </section>
-  <NextProject
-    title="Kinetic rush"
-    description="This project was my submission for the Kinetic Rush challenge organized by Clint Jones. The challenge consisted of creating an animation featuring a character running towards or away from an objective. I decided to tell the story of an angel fleeing a chaotic heaven."
-    extraInfo="The scene depicts a crumbling celestial realm, ravaged by conflict. In the background, an explosion marks the demise of a cherub, while our protagonist struggles to escape, only to be ultimately captured by its fate."
-    tag="Passion project"
-    imageSrc="{base}/Recursos/Slider/3D/Kinetic rush-static.webp"
-    imageAlt="Kinetic rush project preview"
-  />
 </section>
   
