@@ -44,6 +44,7 @@
 	"dependencies": {
 		"@threlte/core": "^8.0.1",
 		"@threlte/extras": "^9.1.0",
+		"@vercel/analytics": "^2.0.1",
 		"gsap": "^3.12.7",
 		"swiper": "^11.2.6",
 		"three": "^0.175.0",
