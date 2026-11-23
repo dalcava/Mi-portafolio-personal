@@ -581,7 +581,7 @@ onMount(() => {
                     <div class="blur"></div>
                 </div>
             </div>
-            <div class="swiper-slide slide-1" data-url="/Control" on:click={handleClick}>
+            <div class="swiper-slide slide-1" data-url="/under-construction" on:click={handleClick}>
                 <div class="image-container static-img">
                     <img src="{base}/Recursos/Slider/UX/Onyo-Static.png" alt="Static Image 1" class="imagen-contenida">
                     <div class="grid">
@@ -599,7 +599,7 @@ onMount(() => {
                     <div class="blur"></div>
                 </div>
             </div>
-            <div class="swiper-slide" data-url="/Control" on:click={handleClick}>
+            <div class="swiper-slide" data-url="/under-construction" on:click={handleClick}>
                 <div class="image-container static-img">
                     <img src="{base}/Recursos/Slider/UX/Colmena-Static.jpg" alt="Static Image 2" class="imagen-contenida">
                     <div class="grid">
@@ -617,7 +617,7 @@ onMount(() => {
                     <div class="blur"></div>
                 </div>
             </div>
-            <div class="swiper-slide" data-url="/Control" on:click={handleClick}>
+            <div class="swiper-slide" data-url="/under-construction" on:click={handleClick}>
                 <div class="image-container static-img">
                     <img src="{base}/Recursos/Slider/UX/CR.webp" alt="Static Image 4" class="imagen-contenida">
                     <div class="grid">
@@ -636,7 +636,7 @@ onMount(() => {
                 </div>
             </div>
             
-            <div class="swiper-slide" data-url="/Control" on:click={handleClick}>
+            <div class="swiper-slide" data-url="/under-construction" on:click={handleClick}>
                 <div class="image-container static-img">
                     <img src="{base}/Recursos/Slider/UX/Promigas-Active.png" alt="Static Image 4" class="imagen-contenida">
                     <div class="grid">

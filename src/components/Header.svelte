@@ -1,6 +1,6 @@
 <script>
   import { page } from '$app/stores';
-  import { goto } from '$app/navigation';
+  import { afterNavigate, goto } from '$app/navigation';
   import { onMount } from 'svelte';
   import gsap from 'gsap';
   import Tabs from '../components/Tabs.svelte';
@@ -24,6 +24,16 @@
     "Motion Graphics", "a Concept Developer", "Parametric", 
     "a Responsive Design", "a Cat"
   ];
+
+  function goToSection(section, top) {
+    const container = document.querySelector('.background');
+    if (isHome && container) {
+      container.scrollTo({ top, behavior: 'smooth' });
+    } else {
+      goto(`${base}/#${section}`);
+    }
+    menuOpen = false;
+  }
 
   function goToAbout(event) {
     menuOpen = false;
@@ -55,6 +65,26 @@
     });
   }
 
+  let scrollEvents;
+
+  afterNavigate(({ from, to }) => {
+    if (from && from.url.pathname === to?.url.pathname) return;
+
+    scrollEvents?.abort();
+    isBright = false;
+    if (to?.route.id !== '/') return;
+
+    const background = document.querySelector('.background');
+    if (!background) return;
+
+    scrollEvents = new AbortController();
+    background.addEventListener('scroll', () => {
+      const { scrollTop, scrollHeight, clientHeight } = background;
+      const reachedBottom = scrollTop + clientHeight >= scrollHeight - 800;
+      isBright = (scrollTop > 1400 && scrollTop < 8100) || reachedBottom;
+    }, { passive: true, signal: scrollEvents.signal });
+  });
+
   onMount(() => {
     crearPalabra();
     const interval = setInterval(crearPalabra, 2400);
@@ -65,40 +95,17 @@
     checkScreenSize();
     window.addEventListener('resize', checkScreenSize);
 
-    // 👉 Detectar el scroll y activar bright SOLO si estamos en home
-    let backgroundEl;
-    let handleScroll;
-
-    if (isHome) {
-      backgroundEl = document.querySelector('.background');
-      handleScroll = () => {
-        const scrollY = backgroundEl?.scrollTop || 0;
-        const scrollHeight = backgroundEl?.scrollHeight || 0;
-        const clientHeight = backgroundEl?.clientHeight || 0;
-
-        // 🔥 Aquí unimos las dos condiciones
-        const reachedBottom = scrollY + clientHeight >= scrollHeight - 800;
-
-        isBright = (scrollY > 1400 && scrollY < 8100) || reachedBottom;
-      };
-
-
-      backgroundEl?.addEventListener('scroll', handleScroll);
-    }
-
     return () => {
       clearInterval(interval);
       window.removeEventListener('resize', checkScreenSize);
-      if (isHome && backgroundEl) {
-        backgroundEl.removeEventListener('scroll', handleScroll);
-      }
+      scrollEvents?.abort();
     };
   });
 </script>
 
 
 
-<header id="header" class="header-section start" class:home-background={isHome} class:bright={isBright}>
+<header id="header" class="header-section start" class:home-background={isHome} class:bright={isHome && isBright}>
   <div class="profile-info">
     
     <AnimatedTooltip label="Let's go back!">
@@ -132,13 +139,13 @@
 
           {#if menuOpen}
             <div class="mobile-menu">
-              <div class="icon-button menu work" on:click={() => { document.querySelector('.background')?.scrollTo({ top: 1200, behavior: 'smooth' }); }}>
+              <div class="icon-button menu work" on:click={() => goToSection('works', 1200)}>
                 <span>Works</span>
               </div>
               <a class="icon-button menu About" href={`${base}/#about`} on:click={goToAbout}>
                 <span>About</span>
               </a>
-              <div class="icon-button menu contact" on:click={() => { document.querySelector('.background')?.scrollTo({ top: 16800, behavior: 'smooth' }); }}>
+              <div class="icon-button menu contact" on:click={() => goToSection('contact', 16800)}>
                 <span>Contact</span>
               </div>
             </div>
@@ -150,7 +157,7 @@
           <div
             class="icon-button menu work"
             class:active-work={isHome}
-            on:click={() => { document.querySelector('.background')?.scrollTo({ top: 2800, behavior: 'smooth' }); }}
+            on:click={() => goToSection('works', 2800)}
           >
             <span>Works</span>
             <img src="{base}/Recursos/header/Proyects.svg" alt="Projects" />
@@ -161,7 +168,7 @@
             <img src="{base}/Recursos/header/About.svg" alt="About" />
           </a>
 
-          <div class="icon-button menu contact" on:click={() => { document.querySelector('.background')?.scrollTo({ top: 16800, behavior: 'smooth' }); }}>
+          <div class="icon-button menu contact" on:click={() => goToSection('contact', 16800)}>
             <span>Contact</span>
             <img src="{base}/Recursos/header/contact.svg" alt="Contact" />
           </div>

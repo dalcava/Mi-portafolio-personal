@@ -547,7 +547,7 @@ onMount(() => {
         <div class="swiper-wrapper">
 
 
-            <div class="swiper-slide" data-url="/Control" on:click={handleClick}>
+            <div class="swiper-slide" data-url="/under-construction" on:click={handleClick}>
                 <div class="image-container static-img">
                     <img src="{base}/Recursos/Slider/3D/Kinetic rush-static.webp" alt="Static Image 5" class="imagen-contenida">
                     <div class="grid">
@@ -583,7 +583,7 @@ onMount(() => {
                     <div class="blur"></div>
                 </div>
             </div>
-            <div class="swiper-slide" data-url="/Control" on:click={handleClick}>
+            <div class="swiper-slide" data-url="/under-construction" on:click={handleClick}>
                 <div class="image-container static-img">
                     <img src="{base}/Recursos/Slider/3D/Duraznos intro.gif" alt="Static Image 7" class="imagen-contenida">
                     <div class="grid">
@@ -601,7 +601,7 @@ onMount(() => {
                     <div class="blur"></div>
                 </div>
             </div>
-            <div class="swiper-slide" data-url="/Control" on:click={handleClick}>
+            <div class="swiper-slide" data-url="/under-construction" on:click={handleClick}>
                 <div class="image-container static-img">
                     <img src="{base}/Recursos/Slider/3D/Chasms call.webp" alt="Static Image 8" class="imagen-contenida">
                     <div class="grid">

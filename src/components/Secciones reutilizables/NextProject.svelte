@@ -1,4 +1,6 @@
 <script>
+  import { base } from '$app/paths';
+  export let href;
   export let pretitle = "Next project";
   export let title = "Kinetic rush";
   export let description = "";
@@ -18,7 +20,7 @@
     </div>
   
   </div>
-  <div class="next-project-section">
+  <a class="next-project-section" href={base + href}>
     <div class="text-content">
       <h3 class="pretitle">Next <span> project</span></h3>
 <!--       <hr /> -->
@@ -31,7 +33,7 @@
     <div class="image-wrapper">
       <img src={imageSrc} alt={imageAlt} />
     </div>
-  </div>
+  </a>
 </seccion>
 
 <style>
@@ -41,6 +43,8 @@
     border-radius: 16px 16px 0 0;
   }
   .next-project-section {
+    color: inherit;
+    text-decoration: none;
     display: flex;
     gap: 3rem;
     align-items: flex-start;
