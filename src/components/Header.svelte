@@ -25,6 +25,15 @@
     "a Responsive Design", "a Cat"
   ];
 
+  function goToAbout(event) {
+    menuOpen = false;
+    const about = document.getElementById('about');
+    if (about && !event.ctrlKey && !event.metaKey && !event.shiftKey && !event.altKey) {
+      event.preventDefault();
+      about.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth', block: 'start' });
+    }
+  }
+
   function aleatorio(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
   }
@@ -126,9 +135,9 @@
               <div class="icon-button menu work" on:click={() => { document.querySelector('.background')?.scrollTo({ top: 1200, behavior: 'smooth' }); }}>
                 <span>Works</span>
               </div>
-              <div class="icon-button menu About" on:click={() => { document.querySelector('.background')?.scrollTo({ top: 8800, behavior: 'smooth' }); }}>
+              <a class="icon-button menu About" href={`${base}/#about`} on:click={goToAbout}>
                 <span>About</span>
-              </div>
+              </a>
               <div class="icon-button menu contact" on:click={() => { document.querySelector('.background')?.scrollTo({ top: 16800, behavior: 'smooth' }); }}>
                 <span>Contact</span>
               </div>
@@ -147,10 +156,10 @@
             <img src="{base}/Recursos/header/Proyects.svg" alt="Projects" />
           </div>
 
-          <div class="icon-button menu About" on:click={() => { document.querySelector('.background')?.scrollTo({ top: 8800, behavior: 'smooth' }); }}>
+          <a class="icon-button menu About" href={`${base}/#about`} on:click={goToAbout}>
             <span>About</span>
             <img src="{base}/Recursos/header/About.svg" alt="About" />
-          </div>
+          </a>
 
           <div class="icon-button menu contact" on:click={() => { document.querySelector('.background')?.scrollTo({ top: 16800, behavior: 'smooth' }); }}>
             <span>Contact</span>
@@ -169,6 +178,7 @@
 
 <!-- Estilos -->
 <style>
+  a.icon-button { color: inherit; text-decoration: none; }
 
   
 .bright {

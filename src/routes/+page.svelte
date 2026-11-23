@@ -21,6 +21,7 @@
 
   let showWorks = false;
   let showAbout = false;
+  let aboutSection;
   let activeTab = null;
 
   let isDark = false;
@@ -132,27 +133,6 @@
     showWorks = false;
   }
 
-  // Mostrar About
-  if ($isVerySmallScreen) {
-    if (scrollY >= 6000 && !showAbout) {
-      showAbout = true;
-    } else if (scrollY < 5700 && showAbout) {
-      showAbout = false;
-    }
-  } else if ($isSmallScreen) {
-    if (scrollY >= 6500 && !showAbout) {
-      showAbout = true;
-    } else if (scrollY < 6500 && showAbout) {
-      showAbout = false;
-    }
-  } else {
-    if (scrollY >= 8500 && !showAbout) {
-      showAbout = true;
-    } else if (scrollY < 8000 && showAbout) {
-      showAbout = false;
-    }
-  }
-
   // ✅ Modo dark ajustado con scrollY dinámico
 if ($isVerySmallScreen) {
   if (scrollY > 5900 && isDark) {
@@ -220,10 +200,19 @@ if ($isVerySmallScreen) {
   }
 }
 
-  backgroundEl.addEventListener('scroll', handleScroll);
+  const aboutObserver = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        showAbout = true;
+        aboutObserver.disconnect();
+      }
+    }, { root: backgroundEl, rootMargin: '0px 0px 50% 0px' });
+    aboutObserver.observe(aboutSection);
+    backgroundEl.addEventListener('scroll', handleScroll);
 
   return () => {
-    backgroundEl.removeEventListener('scroll', handleScroll);
+    aboutObserver.disconnect();
+      window.removeEventListener('resize', updateScreenSize);
+      backgroundEl.removeEventListener('scroll', handleScroll);
   };
 });
 
@@ -303,7 +292,7 @@ if ($isVerySmallScreen) {
       {/if}
     </div>
 </section>
-<section id="about" class="about-wrap {showAbout ? 'show' : ''}">
+<section bind:this={aboutSection} id="about" class="about-wrap {showAbout ? 'show' : ''}">
   <div class="about-container">
     {#if showAbout}
     <About />
@@ -581,7 +570,7 @@ html, body {
 
   .works-wrap {
     position: relative;
-    height: 744vh;
+    min-height: 800vh;
     width: 100%;
     z-index: 1;
     overflow: visible;
@@ -595,6 +584,7 @@ html, body {
 
 
   .about-wrap {
+  scroll-margin-top: 80px;
     position: relative;
     display: flex;
     justify-content: center;

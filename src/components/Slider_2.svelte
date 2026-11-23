@@ -392,17 +392,8 @@ onMount(() => {
 });
 
 
-    const currentScroll = scrollContainer?.scrollTop ?? window.scrollY;
-    const MAX_SCROLL_TO_START = 8200;
-
-    if (currentScroll < MAX_SCROLL_TO_START) {
-        scrollToStart('onMount');
-
-        // También forzamos setTranslate solo si está permitido
-        swiper.setTranslate(0);
-    } else {
-        console.log('[onMount] ⚠️ scrollToStart y setTranslate cancelados. Scroll actual:', currentScroll);
-    }
+    manageScrollNavigation();
+    handleScrollPositionSync();
 
     window.swiper = swiper;
     updateDescription();
