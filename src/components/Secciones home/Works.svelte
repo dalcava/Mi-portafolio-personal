@@ -299,7 +299,7 @@
   }
   .quote h2 {
     font-size: var(--font-size-XXXL);
-    background: linear-gradient(45deg, #5D00FF 27%, #8280FF 79%);
+    background: linear-gradient(45deg, #c5a3ff 27%, #ff7e7e 79%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     -webkit-background-clip: text;

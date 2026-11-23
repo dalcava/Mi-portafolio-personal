@@ -1,5 +1,8 @@
 <script>
 	import '../app.css';
+	import { afterNavigate } from '$app/navigation';
+	import { onDestroy } from 'svelte';
+	import { smoothWheel } from '$lib/smoothWheel';
 	import "../app.css";
 	import { base } from '$app/paths';
 	import { page } from '$app/stores';
@@ -10,6 +13,13 @@
 	export const prerender = false;
 
 	let { children } = $props();
+  let stopWheel;
+  afterNavigate(({ to }) => {
+    stopWheel?.();
+    const scroller = to?.route.id === '/' ? document.querySelector('.background') : document.scrollingElement;
+    if (scroller) stopWheel = smoothWheel(scroller);
+  });
+  onDestroy(() => stopWheel?.());
 </script>
 
 {#if $page.route.id !== '/under-construction'}

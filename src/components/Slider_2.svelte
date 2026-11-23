@@ -34,7 +34,7 @@
 
     const isMobileScreen = () => window.innerWidth < 100;
 
-    let currentTween = null;
+
     
     let scrollFreezeThreshold = SCROLL_START - 50; // 200px antes del scrollStart
 
@@ -65,17 +65,12 @@
     
     
     function getTranslateFromScroll(scrollY) {
-        const start = SCROLL_START;
-        const step = SCROLL_STEP;
-
-        const index = Math.floor((scrollY - start) / step);
-        const relativeScroll = (scrollY - start) % step;
-
-        // Calcular qué tan lejos estamos del índice en píxeles
-        const maxTranslate = swiper.width * swiper.slides.length;
-        const translateX = index * (swiper.width / swiper.params.slidesPerView) + relativeScroll * 0.3;
-
-        return -translateX; // El translate de swiper es negativo
+        const progress = Math.max(0, (scrollY - SCROLL_START) / (window.innerHeight * 1.2));
+        const positions = swiper.slidesGrid;
+        const index = Math.min(Math.floor(progress), positions.length - 1);
+        const start = positions[index] ?? 0;
+        const end = positions[index + 1] ?? start;
+        return -(start + (end - start) * (progress - index));
     }
 
 
@@ -97,21 +92,10 @@
         const scrollY = scrollContainer?.scrollTop ?? window.scrollY;
         const translateX = getTranslateFromScroll(scrollY);
 
-        if (currentTween) {
-            currentTween.kill();
-        }
-
-        currentTween = gsap.to(swiper, {
-            duration: 0.5,
-            ease: "power3.out",
-            overwrite: true,
-            onUpdate: () => {
-                swiper.setTranslate(translateX);
-                swiper.updateProgress();
-                swiper.updateActiveIndex();
-                swiper.updateSlidesClasses();
-            }
-        });
+        swiper.setTranslate(translateX);
+        swiper.updateProgress(translateX);
+        swiper.updateActiveIndex();
+        swiper.updateSlidesClasses();
     }
 
 
@@ -399,18 +383,12 @@ onMount(() => {
     updateDescription();
     animateBullet();
 
-    if (scrollContainer && !isMobileScreen()) {
-        scrollContainer.addEventListener('scroll', () => {
-            manageScrollNavigation();
-            handleScrollPositionSync();
-        });
+    function syncOnScroll() {
+        manageScrollNavigation();
+        handleScrollPositionSync();
     }
-
-    const cleanup = () => {
-        if (scrollContainer && !isMobileScreen()) {
-            scrollContainer.removeEventListener('scroll', handleScrollPositionSync);
-        }
-    };
+    if (!isMobileScreen()) scrollContainer?.addEventListener('scroll', syncOnScroll, { passive: true });
+    const cleanup = () => scrollContainer?.removeEventListener('scroll', syncOnScroll);
 
 
     swiper.on('slideChange', () => {

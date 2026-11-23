@@ -124,7 +124,6 @@
       : 0;
   const scrollY = rawScrollY + offset;
 
-  console.log('📍 scrollY ajustado:', scrollY);
 
   // Mostrar Works
   if (scrollY >= 900 && !showWorks) {
@@ -424,7 +423,7 @@ html, body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(180deg, rgba(12, 0, 29, 1) 75%, rgba(59, 0, 153, 1) 130%);
+    background: linear-gradient(183deg, rgb(19 14 25) 84%, rgb(151 86 255) 130%);
     opacity: 0;
     pointer-events: none;
     z-index: 0;
