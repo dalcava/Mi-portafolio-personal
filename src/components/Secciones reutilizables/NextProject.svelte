@@ -11,11 +11,11 @@
   import FooterIcons from '../Secciones home/Footer-icons.svelte';
 </script>
 
-<seccion class="Next">
+<section class="Next">
   <div class="Contact">
     <h3 class="pretitle"> Did you <span>like the project?</span></h3>
     <div class="contactLayer">
-      <p class="description"><span>Let’s connect! I’d be happy to share the full case study and discuss how my skills and experience can contribute to your team.</span></p>
+      <p class="description"><span>Let’s connect! I’d love to share the case study with your team.</span></p>
       <FooterIcons/>
     </div>
   
@@ -26,7 +26,7 @@
 <!--       <hr /> -->
       <h2 class="title">{title}</h2>
       <p class="description">{description}</p>
-      <p class="extra">{extraInfo}</p>
+      {#if extraInfo}<p class="extra">{extraInfo}</p>{/if}
       <span class="tag">{tag}</span>
     </div>
   
@@ -34,10 +34,11 @@
       <img src={imageSrc} alt={imageAlt} />
     </div>
   </a>
-</seccion>
+</section>
 
 <style>
   .Next{
+    width: 100%;
     background: var(--Resalte--muy-oscuro);
     padding: 16px 0px 0px 160px;
     border-radius: 16px 16px 0 0;
@@ -81,13 +82,13 @@
     width: 100%;
   }
   .contactLayer {
-    padding: 2rem 0rem;
+    padding: 1.5rem 0;
     color: white;
     font-size: var(--font-size-XS);
     font-family: 'Publica Sans';
     font-weight: 500;
     margin-top: 1rem;
-    margin-bottom: 3rem;
+    margin-bottom: 2rem;
     border-bottom: var(--Resalte-claro) solid 1px;
     width: 100%;
     display: flex;
@@ -113,7 +114,7 @@
   }
   .description span {
     text-align: center;
-    width: 640px;
+    max-width: 640px;
     font-weight: 100;
     display: block;
   }
@@ -145,6 +146,22 @@
     min-height: 560px;
     object-fit: cover;
     display: block;
+  }
+
+  @media (min-width: 769px) {
+    .Next {
+      display: grid;
+      grid-template-rows: auto 1fr;
+      min-height: calc(100svh - 80px);
+    }
+    .text-content { gap: 1rem; }
+    .image-wrapper { position: relative; min-height: 0; height: auto; align-self: stretch; }
+    .image-wrapper img { position: absolute; inset: 0; width: 100%; height: 100%; min-height: 0; }
+  }
+
+  .contactLayer :global(.footer-button) { padding-block: 24px; }
+  @media (max-width: 1600px) {
+    .contactLayer :global(.footer-button) { padding-block: 16px; }
   }
 
   @media (max-width: 768px) {

@@ -1,10 +1,21 @@
 <script>
     import { onMount } from 'svelte';
+    import { afterNavigate } from '$app/navigation';
     import { base } from '$app/paths';
     import gsap from 'gsap';
-	import { scale } from 'svelte/transition';
   
     let cursorEl;
+    let pointer;
+    let rippleTimer;
+
+    afterNavigate(({ from, to }) => {
+      if (!cursorEl || from?.url.pathname === to?.url.pathname) return;
+      clearTimeout(rippleTimer);
+      gsap.killTweensOf(cursorEl);
+      cursorEl.classList.remove('ripple');
+      gsap.set(cursorEl, { clearProps: 'all' });
+      if (pointer) gsap.set(cursorEl, { ...pointer, xPercent: -50, yPercent: -50, scale: 1 });
+    });
   
     onMount(() => {
       const moveCursor = (x, y) => {
@@ -20,8 +31,9 @@
         Object.assign(cursorEl.style, styleObj);
       };
   
-      document.addEventListener("mousemove", (e) => {
+      function handleMouseMove(e) {
         const target = e.target;
+        pointer = { x: e.clientX, y: e.clientY };
   
         moveCursor(e.clientX, e.clientY);
   
@@ -87,7 +99,8 @@
           });
   
           cursorEl.classList.add("ripple");
-          setTimeout(() => cursorEl.classList.remove("ripple"), 300);
+          clearTimeout(rippleTimer);
+          rippleTimer = setTimeout(() => cursorEl.classList.remove("ripple"), 300);
         }
   
         // Text elements
@@ -122,7 +135,14 @@
             scale: "1"
           });
         }
-      });
+      }
+      document.addEventListener('mousemove', handleMouseMove);
+      const element = cursorEl;
+      return () => {
+        document.removeEventListener('mousemove', handleMouseMove);
+        clearTimeout(rippleTimer);
+        gsap.killTweensOf(element);
+      };
     });
   </script>
   
@@ -135,6 +155,7 @@
       left: 0;
       width: 16px;
       height: 16px;
+      background-color: var(--Resalte-inverso);
       border-radius: 50%;
       transform: translate(-50%, -50%) scale(1);
       pointer-events: none;
@@ -169,4 +190,3 @@
       }
     }
   </style>
-  

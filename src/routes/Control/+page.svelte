@@ -40,7 +40,9 @@
   onMount(() => {
   const loadingScreen = document.getElementById("loading-screen");
 
-  if (loadingScreen) {
+  if (loadingScreen && document.querySelector('.project-curtain:not([hidden])')) {
+    loadingScreen.style.display = "none";
+  } else if (loadingScreen) {
     gsap.to(loadingScreen, {
       x: "-100%",
       duration: 0.5,
@@ -218,8 +220,7 @@
       
       <NextProject href="/under-construction"
         title="Kinetic rush"
-        description="This project was my submission for the Kinetic Rush challenge organized by Clint Jones. The challenge consisted of creating an animation featuring a character running towards or away from an objective. I decided to tell the story of an angel fleeing a chaotic heaven."
-        extraInfo="The scene depicts a crumbling celestial realm, ravaged by conflict. In the background, an explosion marks the demise of a cherub, while our protagonist struggles to escape, only to be ultimately captured by its fate."
+        description="For Clint Jones's Kinetic Rush challenge, I animated an angel fleeing a crumbling heaven. An explosion marks the fall of a cherub as the angel runs through the wreckage, trying to escape the same fate."
         tag="Passion project"
         imageSrc="{base}/Recursos/Slider/3D/Kinetic rush-static.webp"
         imageAlt="Kinetic rush project preview"

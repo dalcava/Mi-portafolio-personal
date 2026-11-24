@@ -105,7 +105,7 @@
 
 
 
-<header id="header" class="header-section start" class:home-background={isHome} class:bright={isHome && isBright}>
+<header id="header" class="header-section start" class:home-background={isHome} class:bright={$page.route.id === '/under-construction' || (isHome && isBright)}>
   <div class="profile-info">
     
     <AnimatedTooltip label="Let's go back!">

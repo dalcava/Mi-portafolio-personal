@@ -6,6 +6,7 @@
 	import "../app.css";
 	import { base } from '$app/paths';
 	import { page } from '$app/stores';
+	import ProjectCurtain from '../components/ProjectCurtain.svelte';
 	import Header from '../components/Header.svelte';
 	import CustomCursor from '../components/CustomCursor.svelte';
 	import Contador from '../components/Contador.svelte';
@@ -26,6 +27,7 @@
   <CustomCursor />
 {/if}
 <Header />
+<ProjectCurtain />
 
 
 {@render children()}

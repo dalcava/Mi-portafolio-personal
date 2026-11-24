@@ -1,6 +1,7 @@
 <!-- Esta es la página de control -->
 
 <script>
+  import SectionIndex from "./SectionIndex.svelte";
   import { onMount } from "svelte";
   import { base } from '$app/paths';
   import { goto } from "$app/navigation";
@@ -56,7 +57,9 @@ gsap.registerPlugin(ScrollTrigger);
   document.body.classList.add(themeClass);
 
 
-  if (loadingScreen) {
+  if (loadingScreen && document.querySelector('.project-curtain:not([hidden])')) {
+    loadingScreen.style.display = "none";
+  } else if (loadingScreen) {
     gsap.to(loadingScreen, {
       x: "-100%",
       duration: 0.5,
@@ -67,8 +70,9 @@ gsap.registerPlugin(ScrollTrigger);
     });
   }
 
-  window.scrollTo(0, 0);
-  document.documentElement.scrollTop = 0;
+  const initialSection = document.getElementById(location.hash.slice(1));
+  if (initialSection) initialSection.scrollIntoView({ behavior: 'instant' });
+  else window.scrollTo({ top: 0, behavior: 'instant' });
 
   // Hero Intro Animation
 
@@ -236,6 +240,11 @@ gsap.utils.toArray(".split-tittle").forEach((el) => {
 
     @import "../Control/Control.css";
 
+    .index-section { width: 100%; }
+    @media (min-width: 761px) {
+      .content { padding-right: 44px; }
+    }
+
     :global(.seccion.dos) {
         display: flex;
         flex-direction: row;
@@ -258,7 +267,7 @@ gsap.utils.toArray(".split-tittle").forEach((el) => {
 
 
 <section class="body-projects">
-  <section class="hero-project control-content">
+  <section id="overview" class="hero-project control-content">
     <div class="hero-content">
       <div class="hero-text">
         <p class="main-subtitle">
@@ -282,8 +291,10 @@ gsap.utils.toArray(".split-tittle").forEach((el) => {
     </div>
   </section>
   
+  <SectionIndex />
   <section class="content">
-    <AboutProject
+    <div id="context" class="index-section">
+<AboutProject
       imageSrc="{base}/Recursos/Projects/Aval_Pay_Center/Aval pay description.png"
       imageAlt="Tribal Zelda Controller"
       title="Looking for a change"
@@ -292,7 +303,9 @@ gsap.utils.toArray(".split-tittle").forEach((el) => {
       category="3D Product Animation / Fan Art"
       {tools}
     />
-    <Section2
+    </div>
+    <div id="challenge" class="index-section">
+<Section2
       title="<span>Challenges</span> & Learnings"
       subtitle="Enhancing the simplicity of the payment portal was essential"
       paragraphs={[
@@ -301,12 +314,14 @@ gsap.utils.toArray(".split-tittle").forEach((el) => {
       image="{base}/Recursos/Projects/Aval_Pay_Center/Aval pay challenge.png"
       Alt="Process image"
     />
+    </div>
   
     <div class="gallery">
       <div class="gallery-row 1">
       </div>
       
-      <Section1
+      <div id="methodology" class="index-section">
+<Section1
       title="How did we do it?"
       subtitle="Methodology"
       paragraphs={[
@@ -314,13 +329,15 @@ gsap.utils.toArray(".split-tittle").forEach((el) => {
       ]}
       image="/Recursos/Projects/Aval_Pay_Center/Metodología.png" alt="methodology"
       />
+    </div>
 <!--       <img src="/Recursos/Projects/Aval_Pay_Center/AvalPay1.png" alt="methodology"> -->
       
       
       
       
       
-      <Section4
+      <div id="wireframes" class="index-section">
+<Section4
       title="What we dream"
       subtitle="What we learned"
       paragraphs={[
@@ -328,12 +345,14 @@ gsap.utils.toArray(".split-tittle").forEach((el) => {
         "We explored advanced rigging for animation. Lighting setups were crucial for product realism. We optimized render times without losing quality. Experimented with camera motion and timing Learned effective storytelling in 10 seconds. Polished composition and color grading.  <br><br>  We explored advanced rigging for animation. Lighting setups were crucial for product realism. We optimized render times without losing quality. Experimented with camera motion and timing Learned effective storytelling in 10 seconds. Polished composition and color grading."
       ]}
       />
+    </div>
       <Slideshow images={["/Recursos/Projects/Aval_Pay_Center/Wireframes/Wireframe 01.png", "/Recursos/Projects/Aval_Pay_Center/Wireframes/Wireframe 02.png", "/Recursos/Projects/Aval_Pay_Center/Wireframes/Wireframe 03.png", "/Recursos/Projects/Aval_Pay_Center/Wireframes/Wireframe 04.png", "/Recursos/Projects/Aval_Pay_Center/Wireframes/Wireframe 05.png", "/Recursos/Projects/Aval_Pay_Center/Wireframes/Wireframe 06.png", "/Recursos/Projects/Aval_Pay_Center/Wireframes/Wireframe 07.png", "/Recursos/Projects/Aval_Pay_Center/Wireframes/Wireframe 08.png", "/Recursos/Projects/Aval_Pay_Center/Wireframes/Wireframe 09.png", "/Recursos/Projects/Aval_Pay_Center/Wireframes/Wireframe 10.png", "/Recursos/Projects/Aval_Pay_Center/Wireframes/Wireframe 11.png", "/Recursos/Projects/Aval_Pay_Center/Wireframes/Wireframe 12.png", "/Recursos/Projects/Aval_Pay_Center/Wireframes/Wireframe 13.png", "/Recursos/Projects/Aval_Pay_Center/Wireframes/Wireframe 14.png", "/Recursos/Projects/Aval_Pay_Center/Wireframes/Wireframe 15.png"]} />
       
       
-      <img src="/Recursos/Projects/Aval_Pay_Center/NuevoLF.png" alt="Look & Feel">
+      <img id="visual-design" src="/Recursos/Projects/Aval_Pay_Center/NuevoLF.png" alt="Look & Feel">
       
-      <Section6
+      <div id="details" class="index-section">
+<Section6
         title="What we accomplished"
         subtitle="Taking care of the details"
         paragraphs={[
@@ -344,7 +363,8 @@ gsap.utils.toArray(".split-tittle").forEach((el) => {
         Alt="Process image"
         Alt2="Process image"
       />
-      <div class="Section-video">
+    </div>
+      <div id="walkthrough" class="Section-video">
         <div class="video-wrapper">
           <iframe          
             class="video"
@@ -358,7 +378,7 @@ gsap.utils.toArray(".split-tittle").forEach((el) => {
         </div>
       </div>
 
-      <div class="image-gallery">
+      <div id="screens" class="image-gallery">
         <img class="gallery-fade" src="/Recursos/Projects/Aval_Pay_Center/Pantallas 1.png" alt="Pantallas 1" />
         <img class="gallery-fade" src="/Recursos/Projects/Aval_Pay_Center/Pantallas 2.png" alt="Pantallas 2" />
         <img class="gallery-fade" src="/Recursos/Projects/Aval_Pay_Center/Pantallas 3.png" alt="Pantallas 3" />
@@ -375,13 +395,13 @@ gsap.utils.toArray(".split-tittle").forEach((el) => {
       
     </div>
   </section>
-  <NextProject href="/under-construction"
+  <div id="next-project" class="index-section">
+<NextProject href="/under-construction"
     title="Kinetic rush"
-    description="This project was my submission for the Kinetic Rush challenge organized by Clint Jones. The challenge consisted of creating an animation featuring a character running towards or away from an objective. I decided to tell the story of an angel fleeing a chaotic heaven."
-    extraInfo="The scene depicts a crumbling celestial realm, ravaged by conflict. In the background, an explosion marks the demise of a cherub, while our protagonist struggles to escape, only to be ultimately captured by its fate."
+    description="For Clint Jones's Kinetic Rush challenge, I animated an angel fleeing a crumbling heaven. An explosion marks the fall of a cherub as the angel runs through the wreckage, trying to escape the same fate."
     tag="Passion project"
     imageSrc="{base}/Recursos/Slider/3D/Kinetic rush-static.webp"
     imageAlt="Kinetic rush project preview"
   />
+    </div>
 </section>
-  

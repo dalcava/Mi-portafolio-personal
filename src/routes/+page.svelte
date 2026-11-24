@@ -68,6 +68,7 @@
     return;
   }
 
+  const returning = !!document.querySelector('.project-curtain:not([hidden])');
   // Animación de pantalla de carga
   const tl = gsap.timeline({
     onComplete: () => {
@@ -100,11 +101,13 @@
     ease: "power2.out"
   }, "-=1.25");
 
+  if (returning) tl.progress(1);
+
   gsap.to('.Complementary-text', {
     opacity: 1,
     y: 0,
     duration: 1.2,
-    delay: 1.2,
+    delay: returning ? 0 : 1.2,
     ease: 'power3.out',
     onStart: () => {
       document.querySelector('.Complementary-text')?.classList.remove('hidden');

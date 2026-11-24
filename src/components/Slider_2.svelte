@@ -136,7 +136,7 @@
 	const nextPage = slide?.dataset?.url;
 
 	if (nextPage) {
-		goto(nextPage); // Redirige sin recargar la página
+		return goto(base + nextPage);
 	}
 }
 

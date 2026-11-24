@@ -79,7 +79,7 @@
       const loadingScreen = document.getElementById('loading-screen');
       const tl = gsap.timeline({
         onComplete: () => {
-          loadingScreen.style.display = 'none';
+          if (loadingScreen) loadingScreen.style.display = 'none';
           animateBackgroundImage(); // Aquí también
         }
       });
@@ -121,56 +121,7 @@
 
 
 
-    document.querySelectorAll(".image-container, .imagen-contenida, .active-gif").forEach((element) => {
-      element.addEventListener("click", function () {
-        const slide = this.closest(".swiper-slide");
-        const nextPage = slide?.getAttribute("data-url");
-        if (!nextPage) return;
 
-        const image = slide.querySelector(".imagen-contenida");
-        if (!image) return;
-
-        const rect = image.getBoundingClientRect();
-        const clone = image.cloneNode(true);
-
-        const tlClick = gsap.timeline({
-          onComplete: () => {
-            goto(nextPage);
-          }
-        });
-
-        tlClick
-          .to("#page-transition", {
-            transform: "translateY(0%)",
-            duration: 1,
-            ease: "power4.inOut"
-          });
-
-
-        tlClick.to(clone, {
-          top: "0px",
-          left: "0px",
-          width: "100vw",
-          height: "100vh",
-          duration: 0.8,
-          ease: "power2.inOut",
-          borderRadius: "16px",
-        })
-        .to(clone, {
-          clipPath: "inset(100% 0% 0% 0%)",
-          duration: 0.8,
-          ease: "power2.inOut",
-        }, "-=0.5")
-        .to(whiteOverlay, {
-          opacity: 1,
-          duration: 0.5,
-          ease: "power2.inOut",
-        }, "-=0.8");
-
-      });
-    });
-
-    updateDescription();
   });
 </script>
 
