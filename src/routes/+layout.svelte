@@ -5,7 +5,6 @@
 	import { smoothWheel } from '$lib/smoothWheel';
 	import "../app.css";
 	import { base } from '$app/paths';
-	import { page } from '$app/stores';
 	import ProjectCurtain from '../components/ProjectCurtain.svelte';
 	import Header from '../components/Header.svelte';
 	import CustomCursor from '../components/CustomCursor.svelte';
@@ -23,9 +22,7 @@
   onDestroy(() => stopWheel?.());
 </script>
 
-{#if $page.route.id !== '/under-construction'}
-  <CustomCursor />
-{/if}
+<CustomCursor />
 <Header />
 <ProjectCurtain />
 
